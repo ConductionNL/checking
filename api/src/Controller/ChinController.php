@@ -341,7 +341,7 @@ class ChinController extends AbstractController
 
         // Oke we want a user so lets check if we have one
         if (!$this->getUser()) {
-            return $this->redirect($this->generateUrl('app_chin_login', ['code'=>$code]));
+            return $this->redirect($this->generateUrl('app_user_idvault').'?backUrl='.$request->getUri());
         }
 
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
@@ -376,48 +376,10 @@ class ChinController extends AbstractController
 
         if ($request->isMethod('POST') && $request->request->get('method') == 'checkin') {
 
-            //update person
-            $name = $request->request->get('name');
-            $email = $request->request->get('email');
-            $tel = $request->request->get('telephone');
-
             $person = $commonGroundService->getResource($this->getUser()->getPerson());
+            $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
 
-            // Wat doet dit?
-            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['person' => $this->getUser()->getPerson()])['hydra:member'];
-            $user = $user[0];
 
-            if (isset($person['emails'][0])) {
-                //$emailResource = $person['emails'][0];
-                //$emailResource['email'] = $email;
-                // @Hotfix
-                //$emailResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'emails', 'id'=>$emailResource['id']]);
-                //$emailResource = $commonGroundService->updateResource($emailResource);
-                //$person['emails'][0] = 'emails/'.$emailResource['id'];
-            } else {
-                $emailObject['email'] = $email;
-                $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
-                $person['emails'][0] = 'emails/'.$emailObject['id'];
-            }
-
-            if (isset($person['telephones'][0])) {
-                //$telephoneResource = $person['telephones'][0];
-                //$telephoneResource['telephone'] = $tel;
-                // @Hotfix
-                //$telephoneResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'telephones', 'id'=>$telephoneResource['id']]);
-                //$telephoneObject = $commonGroundService->updateResource($telephoneResource);
-                //$person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
-            } elseif ($tel) {
-                $telephoneObject['telephone'] = $tel;
-                $telephoneObject = $commonGroundService->createResource($telephoneObject, ['component' => 'cc', 'type' => 'telephones']);
-                $person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
-            }
-
-            // @Hotfix
-            $person['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'people', 'id'=>$person['id']]);
-            //$person = $commonGroundService->updateResource($person);
-
-            // Lets see if there if there is an active checking
             $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
 
             if ((count($checkIns) > 1) && $checkIns[0]['dateCheckedOut'] == null) {
@@ -430,10 +392,22 @@ class ChinController extends AbstractController
             }
 
             // Create check-in
+
+
+
+            $person['emails'][0] = [];
+            $person['emails'][0]['email'] = $request->get('email');
+
+            $person = $commonGroundService->updateResource($person);
+
+
+            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->getUser()->getUsername()])['hydra:member'][0];
+            $userUrl = $commonGroundService->cleanUrl(['component' => 'uc', 'type' => 'users', 'id' => $user['id']]);
+
             $checkIn = [];
             $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
-            $checkIn['person'] = $person['@id'];
-            $checkIn['userUrl'] = $user['@id'];
+            $checkIn['person'] = $personUrl;
+            $checkIn['userUrl'] = $userUrl;
             if ($session->get('checkingProvider')) {
                 $checkIn['provider'] = $session->get('checkingProvider');
             } else {
