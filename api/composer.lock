@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e54568e90d240fced1646ae5d0bce5d1",
+    "content-hash": "362f09568ccc80ef5c14a846babcbcd7",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -809,6 +809,57 @@
                 "source": "https://github.com/ConductionNL/RocketBundle"
             },
             "time": "2020-10-29T09:57:18+00:00"
+        },
+        {
+            "name": "conduction/spacesbundle",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ConductionNL/SpacesBundle.git",
+                "reference": "6385eea887f8505a694a8c466089ac2aab46eeed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ConductionNL/SpacesBundle/zipball/6385eea887f8505a694a8c466089ac2aab46eeed",
+                "reference": "6385eea887f8505a694a8c466089ac2aab46eeed",
+                "shasum": ""
+            },
+            "require": {
+                "conduction/commongroundbundle": "dev-master || dev-symfony51",
+                "php": "^7.1.3",
+                "twig/extensions": "^1.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Conduction\\SpacesBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ruben van der Linde",
+                    "email": "ruben@conduction.nl"
+                },
+                {
+                    "name": "Conduction",
+                    "homepage": "https://www.conduction.nl"
+                }
+            ],
+            "description": "Symfony Bundle for dutch common ground functionality",
+            "homepage": "https://www.conduction.nl",
+            "keywords": [
+                "spaces",
+                "symfony",
+                "theme"
+            ],
+            "time": "2020-11-23T09:33:53+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -11026,7 +11077,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "conduction/commongroundbundle": 20,
-        "conduction/rocketbundle": 20
+        "conduction/rocketbundle": 20,
+        "conduction/spacesbundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

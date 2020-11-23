@@ -1,103 +1,508 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-    <!-- Hero -->
-    <section class="section-header pb-9 pb-lg-12 bg-primary text-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <img class="navbar-brand-dark rotate-logo" src="./bundles/rocket/assets/img/brand/light.svg" height="120" alt="Logo light">
-                    <h1 class="display-1 mb-2">Stage-platform</h1>
-                    <h2 class="h3 text-muted mb-5">{{'Lift off your career'|trans|capitalize}}</h2>
-                    <!-- Button Modal -->
-                    <div class="d-flex justify-content-center mb-6">
-                        {% if not app.user %}
-                        <a href="{{ path('app_user_idvault') }}" class="btn btn-secondary animate-up-2 mr-4"><span class="fas fa-rocket mr-2 d-none d-sm-inline"></span> {{ 'register'|trans|capitalize }}</a>
-                        <a href="{{ path('app_user_idvault') }}" class="btn btn-outline-white animate-up-2"><span class="fas fa-lock mr-2 d-none d-sm-inline"></span> {{ 'login'|trans|capitalize }}</a>
-                        {% else %}
-                        <a href="{{ path('app_dashboard_index') }}" class="btn btn-secondary animate-up-2 mr-4"><span class="fas fa-rocket mr-2 d-none d-sm-inline"></span> {{ 'dashboard'|trans|capitalize }}</a>
-                        {% endif %}
+    <!-- Hero Section -->
+    <div class="gradient-overlay-half-dark-v3 bg-img-hero" style="background-image: url(../../assets/img/1920x1080/img4.jpg);">
+        <!-- Main Content -->
+        <div class="d-lg-flex align-items-lg-center height-85vh--lg">
+            <div class="container space-2 space-0--lg mt-lg-8">
+                <div class="row justify-content-lg-between align-items-lg-center">
+                    <div class="col-lg-5 mb-7 mb-lg-0">
+                        <!-- Title -->
+                        <span class="d-block text-white text-uppercase mb-2">Join the change</span>
+                        <h1 class="display-4 font-size-48--md-down text-white mb-0">Space service that moves work forward</h1>
+                        <!-- End Title -->
                     </div>
-                    <div class="d-flex justify-content-center flex-column mb-6">
-                        <a href="https://conduction.nl" target="_blank">
-                            <img src="/images/conduction2.png" class="d-block mx-auto mb-3" alt="Conduction Logo" style="width: 100px;">
-                        </a>
+
+                    <div class="col-lg-5">
+                        <!-- Signup Form -->
+                        <div class="bg-white shadow-sm rounded p-6">
+                            <form class="js-validate">
+                                <div class="mb-4">
+                                    <h2 class="h4">Get started for free</h2>
+                                </div>
+
+                                <!-- Input -->
+                                <div class="js-form-message mb-3">
+                                    <div class="js-focus-state input-group input-group form">
+                                        <input type="text" class="form-control form__input" name="username" required
+                                               placeholder="Enter your username"
+                                               aria-label="Enter your username">
+                                    </div>
+                                </div>
+                                <!-- End Input -->
+
+                                <!-- Input -->
+                                <div class="js-form-message mb-3">
+                                    <div class="js-focus-state input-group input-group form">
+                                        <input type="email" class="form-control form__input" name="email" required
+                                               placeholder="Enter your email address"
+                                               aria-label="Enter your email address">
+                                    </div>
+                                </div>
+                                <!-- End Input -->
+
+                                <!-- Input -->
+                                <div class="js-form-message mb-3">
+                                    <div class="js-focus-state input-group input-group form">
+                                        <input type="password" class="form-control form__input" name="password" required
+                                               placeholder="Enter your password"
+                                               aria-label="Enter your password">
+                                    </div>
+                                </div>
+                                <!-- End Input -->
+
+                                <button type="submit" class="btn btn-block btn-primary">Get Started</button>
+                            </form>
+                        </div>
+                        <!-- End Signup Form -->
                     </div>
                 </div>
             </div>
         </div>
-        <div class="pattern bottom"></div>
-    </section>
+        <!-- End Main Content -->
+    </div>
 
-    <div class="section pt-0">
-        <div class="container mt-n10 mt-lg-n12 z-2">
-            <div class="row">
-                <div class="col-12 col-md-6  text-center">
-                    <div class="card border-light p-4">
-                        <div class="card-header pb-0">
-                            <div class="image-md">
-                                <img src="./bundles/rocket/assets//img/icons/research.svg" alt="icon">
+    <div class="d-lg-flex align-items-lg-center height-15vh--lg">
+        <!-- Bottom Content -->
+        <div class="container space-2 space-0--lg">
+            <!-- Slick Carousel -->
+            <div class="js-slick-carousel u-slick"
+                 data-autoplay="true"
+                 data-speed="5000"
+                 data-infinite="true"
+                 data-slides-show="6"
+                 data-responsive='[{
+               "breakpoint": 1200,
+               "settings": {
+                 "slidesToShow": 4
+               }
+             }, {
+               "breakpoint": 992,
+               "settings": {
+                 "slidesToShow": 4
+               }
+             }, {
+               "breakpoint": 768,
+               "settings": {
+                 "slidesToShow": 3
+               }
+             }, {
+               "breakpoint": 576,
+               "settings": {
+                 "slidesToShow": 3
+               }
+             }, {
+               "breakpoint": 480,
+               "settings": {
+                 "slidesToShow": 2
+               }
+             }]'>
+                <div class="js-slide">
+                    <img class="u-clients" src="../../assets/img/clients/amazon.png" alt="Image Description">
+                </div>
+                <div class="js-slide">
+                    <img class="u-clients" src="../../assets/img/clients/google.png" alt="Image Description">
+                </div>
+                <div class="js-slide">
+                    <img class="u-clients" src="../../assets/img/clients/paypal.png" alt="Image Description">
+                </div>
+                <div class="js-slide">
+                    <img class="u-clients" src="../../assets/img/clients/slack.png" alt="Image Description">
+                </div>
+                <div class="js-slide">
+                    <img class="u-clients" src="../../assets/img/clients/samsung.png" alt="Image Description">
+                </div>
+                <div class="js-slide">
+                    <img class="u-clients" src="../../assets/img/clients/airbnb.png" alt="Image Description">
+                </div>
+                <div class="js-slide">
+                    <img class="u-clients" src="../../assets/img/clients/lenovo.png" alt="Image Description">
+                </div>
+                <div class="js-slide">
+                    <img class="u-clients" src="../../assets/img/clients/spotify.png" alt="Image Description">
+                </div>
+            </div>
+            <!-- End Slick Carousel -->
+        </div>
+        <!-- End Bottom Content -->
+    </div>
+    <!-- End Hero Section -->
+
+    <hr class="my-0">
+
+    <!-- Features Section -->
+    <div class="container space-2 space-3--lg">
+        <div class="row justify-content-lg-between">
+            <div class="col-md-4 col-lg-4 mb-7 mb-md-0">
+                <div class="tab-vertical tab-vertical-md py-5 mr-lg-7">
+                    <div class="pr-md-7 mb-5">
+                        <h3 class="h4">3 methods Space can help to grow your business with</h3>
+                    </div>
+
+                    <!-- Tab Nav -->
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active tab-vertical__nav-link" id="v-pills-features-tab" data-toggle="pill" href="#v-pills-features" role="tab" aria-controls="v-pills-features" aria-selected="true">
+                            1. Features
+                        </a>
+                        <a class="nav-link tab-vertical__nav-link" id="v-pills-key-benefits-tab" data-toggle="pill" href="#v-pills-key-benefits" role="tab" aria-controls="v-pills-key-benefits" aria-selected="false">
+                            2. Key benefits
+                        </a>
+                        <a class="nav-link tab-vertical__nav-link" id="v-pills-company-tab" data-toggle="pill" href="#v-pills-company" role="tab" aria-controls="v-pills-company" aria-selected="false">
+                            3. Components
+                        </a>
+                    </div>
+                    <!-- End Tab Nav -->
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <!-- Tab Content -->
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-features" role="tabpanel" aria-labelledby="v-pills-features-tab">
+                        <div class="row">
+                            <div class="col-sm-6 mb-7 mb-sm-9">
+                                <!-- Icon Block -->
+                                <div class="pr-lg-4">
+                                    <img class="max-width-9 mb-2" src="../../assets/svg/components/consult-primary-icon.svg" alt="Image Description">
+                                    <p>This is where we sit down, grab a cup of coffee and dial in the details. Understanding the task at hand and ironing out the wrinkles is key.</p>
+                                    <a href="#">
+                                        Learn More
+                                        <i class="fa fa-angle-right align-middle ml-2"></i>
+                                    </a>
+                                </div>
+                                <!-- End Icon Block -->
                             </div>
-                            <h2 class="h4 mt-3">{{'Students'|trans|capitalize}}</h2>
-                            <p class="mb-0"> {{'Find the best internship that you can do from home'|trans|capitalize}}</p>
+
+                            <div class="col-sm-6 mb-7 mb-sm-9">
+                                <!-- Icon Block -->
+                                <div class="pr-lg-4">
+                                    <img class="max-width-9 mb-2" src="../../assets/svg/components/plan-brown-icon.svg" alt="Image Description">
+                                    <p>Now that we've aligned the details, it's time to get things mapped out and organized. This part is really crucial in keeping the project in line to completion.</p>
+                                    <a href="#">
+                                        Learn More
+                                        <i class="fa fa-angle-right align-middle ml-2"></i>
+                                    </a>
+                                </div>
+                                <!-- End Icon Block -->
+                            </div>
+
+                            <div class="col-sm-6 mb-7 mb-sm-0">
+                                <!-- Icon Block -->
+                                <div class="pr-lg-4">
+                                    <img class="max-width-9 mb-2" src="../../assets/svg/components/create-blue-icon.svg" alt="Image Description">
+                                    <p>The time has come to bring those ideas and plans to life. This is where we really begin to visualize your napkin sketches and make them into beautiful pixels.</p>
+                                    <a href="#">
+                                        Learn More
+                                        <i class="fa fa-angle-right align-middle ml-2"></i>
+                                    </a>
+                                </div>
+                                <!-- End Icon Block -->
+                            </div>
+
+                            <div class="col-sm-6">
+                                <!-- Icon Block -->
+                                <div class="pr-lg-4">
+                                    <img class="max-width-9 mb-2" src="../../assets/svg/components/develop-purple-icon.svg" alt="Image Description">
+                                    <p>Whether through commerce or just an experience to tell your brand's story, the time has come to start using development languages that fit your projects needs.</p>
+                                    <a href="#">
+                                        Learn More
+                                        <i class="fa fa-angle-right align-middle ml-2"></i>
+                                    </a>
+                                </div>
+                                <!-- End Icon Block -->
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <ul class="list-group">
-                                <li class="list-group-item d-flex text-left pl-0">
-                                    <span class="list-icon"><i class="fas fa-check-circle text-success"></i></span><div>{{'Find the best future internships'|trans|capitalize}}</div>
-                                </li>
-                                <li class="list-group-item d-flex text-left pl-0">
-                                    <span class="list-icon"><i class="fas fa-check-circle text-success"></i></span><div> {{'Build and grow your knowledge with tutorials and challenges'|trans|capitalize}}</div>
-                                </li>
-                                <li class="list-group-item d-flex text-left pl-0">
-                                    <span class="list-icon"><i class="fas fa-check-circle text-success"></i></span><div> {{'Come in contact with other students and form teams'|trans|capitalize}}</div>
-                                </li>
-                            </ul>
+                    </div>
+
+                    <div class="tab-pane fade" id="v-pills-key-benefits" role="tabpanel" aria-labelledby="v-pills-key-benefits-tab">
+                        <div class="row align-items-lg-center">
+                            <div class="col-lg-5 mb-7 mb-7 mb-lg-0">
+                                <img class="img-fluid" src="../../assets/img/700x900/img1.jpg" alt="Image Description">
+                            </div>
+
+                            <div class="col-lg-7">
+                                <!-- Description -->
+                                <div class="pl-lg-4">
+                                    <span class="u-label u-label--sm u-label--purple mb-3">Integrations</span>
+                                    <h2 class="h3 mb-3">Key benefits of Space template</h2>
+                                    <p>The time has come to bring those ideas and plans to life. This is where we really begin to visualize your napkin sketches and make them into beautiful pixels.</p>
+                                    <p>Now that we've aligned the details, it's time to get things mapped out and organized. This part is really crucial in keeping the project in line to completion.</p>
+                                    <a href="#">
+                                        Learn More
+                                        <i class="fa fa-angle-right align-middle ml-2"></i>
+                                    </a>
+                                </div>
+                                <!-- End Description -->
+                            </div>
                         </div>
-                        <div class="card-footer pt-0">
-                            <a href="{{ path('app_user_idvault') }}" class="btn btn-block btn-primary"> {{'Join'|trans|capitalize}}<span class="icon icon-xs ml-2"><i class="fas fa-arrow-right"></i></span></a>
+                    </div>
+
+                    <div class="tab-pane fade" id="v-pills-company" role="tabpanel" aria-labelledby="v-pills-company-tab">
+                        <div class="row">
+                            <div class="col-sm-6 mb-7 mb-sm-9">
+                                <!-- Icon Block -->
+                                <div class="pr-lg-4">
+                                    <img class="max-width-9 mb-2" src="../../assets/svg/components/rocket-red-icon.svg" alt="Image Description">
+                                    <p>Now that your brand is all dressed up and ready to party, it's time to release it to the world. By the way, let's celebrate already.</p>
+                                    <a href="#">
+                                        Learn More
+                                        <i class="fa fa-angle-right align-middle ml-2"></i>
+                                    </a>
+                                </div>
+                                <!-- End Icon Block -->
+                            </div>
+
+                            <div class="col-sm-6 mb-7 mb-sm-9">
+                                <!-- Icon Block -->
+                                <div class="pr-lg-4">
+                                    <img class="max-width-9 mb-2" src="../../assets/svg/components/data-analysis-blue-icon.svg" alt="Image Description">
+                                    <p>We get it, you're busy and it's important that someone keeps up with marketing and driving people to your brand. We've got you covered.</p>
+                                    <a href="#">
+                                        Learn More
+                                        <i class="fa fa-angle-right align-middle ml-2"></i>
+                                    </a>
+                                </div>
+                                <!-- End Icon Block -->
+                            </div>
+
+                            <div class="col-sm-6 mb-7 mb-md-9">
+                                <!-- Icon Block -->
+                                <div class="pr-lg-4">
+                                    <img class="max-width-9 mb-2" src="../../assets/svg/components/arrow-primary-icon.svg" alt="Image Description">
+                                    <p>It's important to stay detail oriented with every project we tackle. Staying focused allows us to turn every project we complete into something we love.</p>
+                                    <a href="#">
+                                        Learn More
+                                        <i class="fa fa-angle-right align-middle ml-2"></i>
+                                    </a>
+                                </div>
+                                <!-- End Icon Block -->
+                            </div>
+
+                            <div class="col-sm-6">
+                                <!-- Icon Block -->
+                                <div class="pr-lg-4">
+                                    <img class="max-width-9 mb-2" src="../../assets/svg/components/moving-up-brown-icon.svg" alt="Image Description">
+                                    <p>We strive to embrace and drive change in our industry which allows us to keep our clients relevant and ready to adapt.</p>
+                                    <a href="#">
+                                        Learn More
+                                        <i class="fa fa-angle-right align-middle ml-2"></i>
+                                    </a>
+                                </div>
+                                <!-- End Icon Block -->
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6  text-center">
-                    <div class="card border-light p-4">
-                        <div class="card-header pb-0">
-                            <div class="image-md">
-                                <img src="./bundles/rocket/assets/img/icons/research.svg" alt="icon">
+                <!-- End Tab Content -->
+            </div>
+        </div>
+    </div>
+    <!-- End Features Section -->
+
+    <!-- Mockup Section -->
+    <div class="bg-gray-100">
+        <div class="container space-2-top space-3-top--lg">
+            <!-- Title -->
+            <div class="w-md-80 w-lg-60 text-center mx-md-auto mb-9">
+                <div class="mb-5">
+                    <span class="u-label u-label--sm u-label--purple mb-3">Key features</span>
+                    <h2 class="h1">Create high quality products</h2>
+                    <p class="lead">See how creating and moving projects forward in Space will help your to stay in sync, hit deadlines, and reach your goals.</p>
+                </div>
+
+                <!-- Fancybox -->
+                <a class="js-fancybox u-media-player" href="javascript:;"
+                   data-src="//vimeo.com/167434033"
+                   data-speed="700"
+                   data-animate-in="zoomIn"
+                   data-animate-out="zoomOut"
+                   data-caption="Space - Responsive Website Template">
+            <span class="u-media-player__icon u-media-player__icon--xl u-media-player__icon--box-shadow">
+              <i class="fa fa-play u-media-player__icon-inner"></i>
+            </span>
+                </a>
+                <!-- End Fancybox -->
+            </div>
+            <!-- End Title -->
+
+            <!-- SVG Mockup -->
+            <div class="w-lg-80 mx-auto">
+                <object type="image/svg+xml" data="../../assets/svg/mockups/devices-1.svg"></object>
+            </div>
+            <!-- End SVG Mockup -->
+        </div>
+    </div>
+    <!-- End Mockup Section -->
+
+    <!-- Pricing Section -->
+    <div class="bg-white mt-n9">
+        <div class="container space-3-top space-2-bottom space-4-top--lg space-3-bottom--lg">
+            <!-- Title -->
+            <div class="w-md-80 w-lg-60 text-center mx-md-auto mb-9">
+                <span class="u-label u-label--sm u-label--purple mb-3">Pricing plans</span>
+                <h2>No additional costs. Pay for what you use.</h2>
+                <p>Choose the most suitable service for your needs with reasonable price.</p>
+            </div>
+            <!-- End Title -->
+
+            <div class="row align-items-lg-center">
+                <div class="col-md-6 col-lg-4 order-lg-2 offset-md-3 offset-lg-0 mb-5 mb-md-0">
+                    <!-- Pricing -->
+                    <div class="bg-primary border rounded py-9 p-5">
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="h6 text-white mb-0">Growing</h4>
+                                <span class="u-label u-label--light u-label--sm">Recommended</span>
                             </div>
-                            <h2 class="h4 mt-3">{{'Employers'|trans|capitalize}}</h2>
-                            <p class="mb-0">{{'Aquire next generation talent'|trans|capitalize}}</p>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-group">
-                                <li class="list-group-item d-flex text-left pl-0">
-                                    <span class="list-icon"><i class="fas fa-check-circle text-success"></i></span><div>{{'Find the most suitable interns for your company'|trans|capitalize}}</div>
+                            <div class="text-white mb-2">
+                                <span class="h1">$39</span>
+                                <span>/ month</span>
+                            </div>
+                            <ul class="list-unstyled text-white mb-4">
+                                <li class="d-flex align-items-center py-2">
+                                    <i class="fa fa-check font-size-13 mr-3"></i>
+                                    Community support
                                 </li>
-                                <li class="list-group-item d-flex text-left pl-0">
-                                    <span class="list-icon"><i class="fas fa-check-circle text-success"></i></span><div>{{'Connect with students and teams and make interesting challenges'|trans|capitalize}}</div>
+                                <li class="d-flex align-items-center py-2">
+                                    <i class="fa fa-check font-size-13 mr-3"></i>
+                                    400+ pages
                                 </li>
-                                <li class="list-group-item d-flex text-left pl-0">
-                                    <span class="list-icon"><i class="fas fa-check-circle text-success"></i></span><div>{{'Find other likeminded organizations'|trans|capitalize}}</div>
+                                <li class="d-flex align-items-center py-2">
+                                    <i class="fa fa-check font-size-13 mr-3"></i>
+                                    100+ header variations
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <i class="fa fa-check font-size-13 mr-3"></i>
+                                    20+ home page options
                                 </li>
                             </ul>
                         </div>
-                        <div class="card-footer pt-0">
-                            <a href="{{ path('app_user_idvault') }}" class="btn btn-block btn-primary">{{'Join'|trans|capitalize}}<span class="icon icon-xs ml-2"><i class="fas fa-arrow-right"></i></span></a>
+                        <button type="button" class="btn btn-block btn-sm btn-light">Subscribe Now</button>
+                    </div>
+                    <!-- End Pricing -->
+                </div>
+
+                <div class="col-md-6 col-lg-4 order-lg-1 mb-5 mb-md-0">
+                    <!-- Pricing -->
+                    <div class="bg-white border rounded py-7 p-5">
+                        <div class="mb-4">
+                            <h4 class="h6 text-secondary mb-3">Start</h4>
+                            <div class="mb-2">
+                                <span class="h1 text-dark">Free</span>
+                            </div>
+                            <ul class="list-unstyled mb-4">
+                                <li class="d-flex align-items-center py-2">
+                                    <i class="fa fa-check text-purple font-size-13 mr-3"></i>
+                                    Community support
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <i class="fa fa-check text-purple font-size-13 mr-3"></i>
+                                    400+ pages
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <i class="fa fa-check text-purple font-size-13 mr-3"></i>
+                                    100+ header variations
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <i class="fa fa-check text-purple font-size-13 mr-3"></i>
+                                    20+ home page options
+                                </li>
+                            </ul>
                         </div>
+                        <button type="button" class="btn btn-block btn-sm btn-purple">Start Free Trial</button>
+                    </div>
+                    <!-- End Pricing -->
+                </div>
+
+                <div class="col-md-6 col-lg-4 order-lg-3">
+                    <!-- Pricing -->
+                    <div class="bg-white border rounded py-7 p-5">
+                        <div class="mb-4">
+                            <h4 class="h6 text-secondary mb-3">Enterprise</h4>
+                            <div class="mb-2">
+                                <span class="h1 text-dark">Team</span>
+                            </div>
+                            <ul class="list-unstyled mb-4">
+                                <li class="d-flex align-items-center py-2">
+                                    <i class="fa fa-check text-purple font-size-13 mr-3"></i>
+                                    Community support
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <i class="fa fa-check text-purple font-size-13 mr-3"></i>
+                                    400+ pages
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <i class="fa fa-check text-purple font-size-13 mr-3"></i>
+                                    100+ header variations
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <i class="fa fa-check text-purple font-size-13 mr-3"></i>
+                                    20+ home page options
+                                </li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn btn-block btn-sm btn-purple">See Team Plans</button>
+                    </div>
+                    <!-- End Pricing -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Pricing Section -->
+
+    <!-- Divider -->
+    <div class="w-50 w-lg-35 mx-auto">
+        <hr class="my-0">
+    </div>
+    <!-- End Divider -->
+
+    <!-- Testimonials Section -->
+    <div class="container space-2 space-3--lg">
+        <div class="row justify-content-lg-center">
+            <div class="col-md-6 col-lg-5 mb-7 mb-md-0">
+                <!-- Testimonials -->
+                <div class="text-center px-lg-4">
+                    <div class="mb-2">
+                        <img class="u-avatar rounded-circle mx-auto mb-2" src="../../assets/img/100x100/img1.jpg" alt="Image Description">
+                        <h4 class="h6">Maria Muzynska</h4>
+                    </div>
+                    <blockquote class="text-secondary mb-0">"I love Space! I love the ease of use, I love the fact that I have total creative freedom. The template is really nice and offers quite a large set of options. It's beautiful and the coding is done quickly and seamlessly."</blockquote>
+                </div>
+                <!-- End Testimonials -->
+            </div>
+
+            <div class="col-md-6 col-lg-5">
+                <!-- Testimonials -->
+                <div class="text-center px-lg-4">
+                    <div class="mb-2">
+                        <img class="u-avatar rounded-circle mx-auto mb-2" src="../../assets/img/100x100/img15.jpg" alt="Image Description">
+                        <h4 class="h6">Markus Brown</h4>
+                    </div>
+                    <blockquote class="text-secondary mb-0">"We are incredibly impressed with Space and how well it supports its customers with amazing products and services. One simple subscription gives you access to all our tools, plus so much more."</blockquote>
+                </div>
+                <!-- End Testimonials -->
+            </div>
+        </div>
+    </div>
+    <!-- End Testimonials Section -->
+
+    <!-- CTA -->
+    <div class="gradient-overlay-half-primary-v1">
+        <div class="bg-img-hero" style="background-image: url(../../assets/img/bg/bg2.png);">
+            <div class="container">
+                <div class="row align-items-lg-center text-center text-lg-left space-2">
+                    <div class="col-lg-7">
+                        <h2 class="text-white">Get started with Space</h2>
+                        <p class="lead text-white mb-0">Space gives you everything you need to manage business, build great stuff, and reach your goals.</p>
+                    </div>
+
+                    <div class="col-lg-5 text-lg-right">
+                        <a class="btn btn-purple mb-2 mb-sm-0 mr-sm-2" href="../pages/signup-simple.html">Create Free Account</a>
+                        <a class="btn btn-light mb-2 mb-sm-0" href="../../starter/index.html">Learn More</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {% include 'widgets/positions.html.twig' %}
-
-    {% include 'widgets/tutorials.html.twig' %}
-
-    {% include 'widgets/challanges.html.twig' %}
-
-    {% include 'widgets/features.html.twig' %}
-
-    {# include 'widgets/code.html.twig' #}
-
-    {% include 'widgets/faq.html.twig' %}
 {% endblock %}
