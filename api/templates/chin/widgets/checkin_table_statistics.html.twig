@@ -1,0 +1,76 @@
+<div class="content-background" >
+    <div class="content">
+
+        {% if app.user.person is defined and app.user.person is not empty %}
+            {% set checkins =  commonground_resource_list({'component': 'chin', 'type': 'checkins'},{'user':app.user.person,'limit':1,'order[dateCreated]':'desc'})['hydra:member'] %}
+        {% elseif session.person is defined and session.person is not empty %}
+            {% set checkins =  commonground_resource_list({'component': 'chin', 'type': 'checkins'},{'person':session.person['@id'],'limit':1,'order[dateCreated]':'desc'})['hydra:member'] %}
+        {% endif %}
+
+        {% if app.user.organization is defined and app.user.organization is not empty %}
+        {% if commonground_is_resource(app.user.organization) %}
+            {% set organization = commonground_resource(app.user.organization) %}
+        {% else %}
+            {% set organization = commonground_resource({'component':'kvk','type':'companies', 'id': app.user.organization}) %}
+        {% endif %}
+        {% endif %}
+
+        <h2>{{ 'check-ins'|capitalize }}</h2>
+
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">{{ 'Datum'|trans|capitalize }}</th>
+                <th scope="col">{{ 'Totaal'|trans|capitalize }}</th>
+                <th scope="col">12:00</th>
+                <th scope="col">13:00</th>
+                <th scope="col">14:00</th>
+                <th scope="col">15:00</th>
+                <th scope="col">16:00</th>
+                <th scope="col">17:00</th>
+                <th scope="col">18:00</th>
+                <th scope="col">19:00</th>
+                <th scope="col">20:00</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% set today = 'now' %}
+
+
+                {% set start_date = 'now' %}
+                {% set end_date = 'now' | date_modify('-14 days')%}
+                {% set myValafter = 0 %}
+                {% set myValbefore = -1 %}
+                {% for x in range(start_date|date('U'), end_date|date('U'), 86400 ) %}
+            {% set myValafter = myValafter + 1 %}
+            {% set myValbefore = myValbefore + 1 %}
+            {% set after = 'now' | date_modify('-'~myValafter~' days') %}
+            {% set before = 'now' | date_modify('-'~myValbefore~' days') %}
+            {% set checkinslastday = commonground_resource({'component': 'chin', 'type': 'checkins'},{'organization':organization, 'dateCreated[after]':after, 'dateCreated[before]':before})['hydra:member']|length %}
+
+            <tr>
+                <td>{{ x|date('d/m/Y') }}</td>
+                <td>{{ checkinslastday }}</td>
+                <td>WIP</td>
+                <td>WIP</td>
+                <td>WIP</td>
+                <td>WIP</td>
+                <td>WIP</td>
+                <td>WIP</td>
+                <td>WIP</td>
+                <td>WIP</td>
+                <td>WIP</td>
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div><!-- /.content -->
+</div><!-- /.content-background -->
+
+
+

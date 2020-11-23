@@ -1,0 +1,16 @@
+<div class="definition-list__description">
+    {% if resource.accommodation is defined and resource.accommodation is not empty %}
+        {% set accommodation = commonground_resource(resource.accommodation) %}
+        {% set place = accommodation.place %}
+        {% if place.bagId is defined and place.bagId is not empty %}
+            {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
+        {% endif %}
+        <p style="margin-bottom: 0;"><h2 style="color: black; margin-top: 0;">- {{ place.name }} -</h2></p>
+        {% if adres is defined and adres is not empty %}
+            <p style="color: #000000; margin-bottom: 30px;">
+                <i style="margin-right: 10px;" class="fas fa-map-marker-alt"></i>{{ adres.straat }} {{ adres.huisnummer }}, {{ adres.postcode }} <br>
+                {{ adres.woonplaats }}
+            </p>
+        {% endif %}
+    {% endif %}
+</div>

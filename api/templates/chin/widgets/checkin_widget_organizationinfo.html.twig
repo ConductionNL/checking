@@ -1,0 +1,9 @@
+{% if organization.style.favicon.base64 is defined and organization.style.favicon.base64 is not empty %}
+    <div class="col-xs-12">
+        <img style="width: 30rem; max-width: 100%;" src="{{ organization.style.favicon.base64 }}" alt="">
+    </div>
+{% else %}
+    <div class="col-xs-12">
+        <span style="font-size: 10rem; color: #39870c;" class="icon icon-check"></span>
+    </div>
+{% endif %}

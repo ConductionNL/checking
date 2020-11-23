@@ -1967,7 +1967,7 @@
       </trans-unit>
       <trans-unit id="vZOMaI9" resname="action">
         <source>action</source>
-        <target>aktie</target>
+        <target>actie</target>
       </trans-unit>
       <trans-unit id="XKdjpWk" resname="date created">
         <source>date created</source>
@@ -2335,6 +2335,10 @@
       <trans-unit id="45M8bc5" resname="this student follows these programs">
         <source>this student follows these programs</source>
         <target>deze student volgt deze programma's</target>
+      </trans-unit>
+      <trans-unit id="u1h2Baw" resname="this student is in these teams">
+        <source>this student is in these teams</source>
+        <target>deze student zit in deze teams</target>
       </trans-unit>
       <trans-unit id="COvPX6e" resname="closing date:">
         <source>closing date:</source>
@@ -3090,23 +3094,23 @@
       </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>
-        <target>__text</target>
+        <target>tekst</target>
       </trans-unit>
       <trans-unit id="KGPfSyJ" resname="occupational credential">
         <source>occupational credential</source>
-        <target>__occupational credential</target>
+        <target>beroepskwalificatie</target>
       </trans-unit>
       <trans-unit id="HJmWRsg" resname="showing">
         <source>showing</source>
-        <target>__showing</target>
+        <target>getoond</target>
       </trans-unit>
       <trans-unit id="paIYYYS" resname="out of">
         <source>out of</source>
-        <target>__out of</target>
+        <target>van de</target>
       </trans-unit>
       <trans-unit id="h9Bc0Ig" resname="entries">
         <source>entries</source>
-        <target>__entries</target>
+        <target>objecten</target>
       </trans-unit>
       <trans-unit id="rNpsyuv" resname="Add new">
         <source>Add new</source>
@@ -3226,7 +3230,7 @@
       </trans-unit>
       <trans-unit id="g_FMsAQ" resname="view portfolio">
         <source>view portfolio</source>
-        <target>bekijk portfilio</target>
+        <target>bekijk portfolio</target>
       </trans-unit>
       <trans-unit id="XpyLMgd" resname="you need to login before you can submit">
         <source>you need to login before you can submit</source>

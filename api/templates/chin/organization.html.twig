@@ -1,0 +1,267 @@
+
+{% extends 'base.html.twig' %}
+
+{% block container %}
+
+
+<div class="row">
+    <div class="container background--grijs-2">
+        <div class="col-md-12">
+            <div class="content">
+                <header class="content__header">
+                    <a class="backlink" href="
+                {% if application.defaultConfiguration.configuration.userPage is defined %}/{{ application.defaultConfiguration.configuration.userPage }}{% else %}/{% endif %}">{{ 'back'|trans|capitalize }}</a>
+                    <header class="content__header">
+                        <h1 class="content__header-title">{{ 'personal'|trans|capitalize }}</h1>
+                    </header>
+                </header>
+            </div><!-- ./content -->
+        </div><!-- ./col -->
+    </div><!-- .container -->
+</div><!-- .row -->
+    <div class="row">
+        <div class="container background--grijs-2" style="min-height: 620px">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <aside class="col-md-4 col-sm-modal">
+                    <nav class="sidenav">
+                        {% include 'uc/widgets/organizationMenu.html.twig' %}
+                    </nav>
+                </aside>
+
+                <div class="col-md-8">
+                    <ul class="tab tab--inline" role="tablist">
+                        <li style="background-color: white" class="tab__tab tab__tab--active" role="tab" aria-controls="panel2-1" id="tab2-1"><a href="#panel2-1">{{ 'my info'|trans|capitalize }}</a></li>
+                        <li style="background-color: white" class="tab__tab" role="tab" aria-controls="panel2-2" id="tab2-2"><a href="#panel2-2">{{ 'socials'|trans|capitalize }}</a></li>
+                        <li style="background-color: white" class="tab__tab" role="tab" aria-controls="panel2-3" id="tab2-3"><a href="#panel2-3">{{ 'styling'|trans|capitalize }}</a></li>
+                    </ul>
+
+                    <div class="tab__content tab__content--inline" style="background-color: white">
+
+                        <section style="padding: 10px" class="tab__pane tab__pane--active" id="panel2-1" role="tabpanel" aria-labelledby="tab2-1">
+                            <form method="post" action="{{ path('app_chin_organization') }}">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="name">{{ 'name'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="name" name="name" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.name is defined and organization.name is not empty %}value="{{ organization.name }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="telephone">{{ 'telephone'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="telephone" name="telephone" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.telephones.0.telephone is defined and organization.telephones.0.telephone is not empty %}value="{{ organization.telephones.0.telephone }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="email">{{ 'email'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="email" name="email" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.emails.0.email is defined and organization.emails.0.email is not empty %}value="{{ organization.emails.0.email }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="street">{{ 'street'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="street" name="street" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.adresses.0.street is defined and organization.adresses.0.street is not empty %}value="{{ organization.adresses.0.street }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="houseNumber">{{ 'house number'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="houseNumber" name="houseNumber" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.adresses.0.houseNumber is defined and organization.adresses.0.houseNumber is not empty %}value="{{ organization.adresses.0.houseNumber }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="houseNumberSuffix">{{ 'house number suffix'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="houseNumberSuffix" name="houseNumberSuffix" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.adresses.0.houseNumberSuffix is defined and organization.adresses.0.houseNumberSuffix is not empty %}value="{{ organization.adresses.0.houseNumberSuffix }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="postalCode">{{ 'postal code'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="postalCode" name="postalCode" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.adresses.0.postalCode is defined and organization.adresses.0.postalCode is not empty %}value="{{ organization.adresses.0.postalCode }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="locality">{{ 'locality'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="locality" name="locality" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.adresses.0.locality is defined and organization.adresses.0.locality is not empty %}value="{{ organization.adresses.0.locality }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <button name="info" value="true" class="btn btn-block">{{ 'edit'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section style="padding: 10px" class="tab__pane" id="panel2-2" role="tabpanel" aria-labelledby="tab2-2">
+                            <form method="post" action="{{ path('app_chin_organization') }}">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="website">{{ 'website'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="website" name="website" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.socials.0.website is defined and organization.socials.0.website is not empty %}value="{{ organization.socials.0.website }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="twitter">{{ 'twitter'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="twitter" name="twitter" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.socials.0.twitter is defined and organization.socials.0.twitter is not empty %}value="{{ organization.socials.0.twitter }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="facebook">{{ 'facebook'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="facebook" name="facebook" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.socials.0.facebook is defined and organization.socials.0.facebook is not empty %}value="{{ organization.socials.0.facebook }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="instagram">{{ 'instagram'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="instagram" name="instagram" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.socials.0.instagram is defined and organization.socials.0.instagram is not empty %}value="{{ organization.socials.0.instagram }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="linkedin">{{ 'linkedin'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="linkedin" name="linkedin" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.socials.0.linkedin is defined and organization.socials.0.linkedin is not empty %}value="{{ organization.socials.0.linkedin }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <button name="social" value="true" class="btn btn-block">{{ 'edit'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section style="padding: 10px" class="tab__pane" id="panel2-3" role="tabpanel" aria-labelledby="tab2-3">
+                            <form method="post" action="{{ path('app_chin_organization') }}" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="linkedin">{{ 'logo'|trans|capitalize }}</label>
+                                            </div>
+                                            <input style="border-radius: 1px" type="file" class="form-control-file"
+                                                   id="base64"
+                                                   name="base64"
+                                                {% if favicon.base64 is defined %}
+                                                    value="{{ favicon.base64 }}"
+                                                {% endif %}
+                                            >
+                                        </div>
+                                    </div>
+                                    {% if favicon.base64 is defined and favicon.base64 is not empty %}
+                                        <div class="col-sm-12 col-md-6" style="text-align: center">
+
+                                            <label
+                                                for="huidigeBase64">{{ 'current Logo'|trans|capitalize }}</label>
+                                            <br>
+                                            <div style="padding: 20px; background-color: lightgrey">
+                                                <img style="width: 150px" id="huidigeBase64" src="{{ favicon.base64 }}"
+                                                     alt="Image"/>
+                                            </div>
+
+                                        </div>  <!-- /.col -->
+                                    {% endif %}
+                                </div> <!-- /.row -->
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <button name="style" value="true" class="btn btn-block">{{ 'edit'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </section>
+
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    <div class="content-background" >
+                        <div class="content">
+                            <aside class="hint">
+                                <h2 class="hint__title">{{ 'login required'|trans|capitalize}}</h2>
+                                {{ 'you need to login before you can view this page'|trans|capitalize}}
+                            </aside>
+                            <a data-toggle="modal" data-target="#myModal" onclick="openModal()" class="btn btn--icon">
+                                <i style="margin-right: 10px"  class="icon fas fa-lock"></i>
+                                <span>{{ 'login'|trans|capitalize }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div><!-- .container -->
+    </div><!-- .row -->
+
+
+
+
+    <script>
+        /* Load tab component */
+        System.import('/uno/components/tabs/tabs.js').then(function (module) {
+            /* Select all .tab elements on the page */
+            var tabs = document.querySelectorAll('.tab');
+            /* Initialize all tabs */
+            for (var i = 0; i < tabs.length; i++) {
+                new module.Tabs(tabs.item(i));
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,161 @@
+{% if app.user.person is defined and app.user.person is not empty %}
+{% set person = commonground_resource(app.user.person) %}
+{% endif %}
+<span style="color: black">Uw accountgegevens:</span>
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <input style="height: 35px" type="text" id="additionalName" name="name" placeholder="Naam"
+           class="noFocus input__control input__control--text" required
+           {% if person.name is defined and person.name is not empty %}value="{{ person.name }}"
+           {% elseif user_info.name is defined and user_info.name is not empty %}value="{{ user_info.name }}"{% endif %}>
+</div>
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <input style="height: 35px" type="text" id="additionalName" name="email" placeholder="Email"
+           class="noFocus input__control input__control--text" required
+           {% if person.emails[0].email is defined and person.emails[0].email is not empty %}value="{{ person.emails[0].email }}"
+        {% elseif user_info.email is defined and user_info.email is not empty %}value="{{ user_info.email }}"{% endif %}>
+</div>
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <input style="height: 35px" type="text" id="additionalName" name="telephone" placeholder="Telefoon"
+           class="noFocus input__control input__control--text"
+           {% if person.telephones[0].telephone is defined and person.telephones[0].telephone is not empty %}value="{{ person.telephones[0].telephone }}"
+           {% elseif user_info.telephone is defined and user_info.telephone is not empty %}value="{{ user_info.telephone }}"{% endif %}>
+</div>
+{% if not app.user %}
+<div class="input {% if password_error is defined %}input--invalid{% endif %}" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    {% if password_error is defined %}
+        <div class="input__error" style="margin-top: 5px;">{{ password_error|trans|capitalize }}</div>{% endif %}
+    <input style="height: 35px" type="password" id="password" name="password" placeholder="{{ 'password'|trans|capitalize }}"
+           class="noFocus input__control input__control--text" required>
+    <i style="position:absolute; right: 15px; top: 8px" class="fas fa-eye-slash" onmouseover="mouseoverPass()" onmouseout="mouseoutPass()" role="presentation"></i>
+    {% if password_error is defined %}
+        <div class="notification notification--error" id="my-notification">
+            <div class="notification__content">
+                {% if user_info.email is defined and user_info.email is not empty %}<span>{{ 'there is an existing user with the email:'|trans|capitalize }} {{ user_info.email }}</span><br>{% endif %}
+                <span>{{ 'forgot password'|trans|capitalize }}?</span>
+                <span>{{ 'click'|trans|capitalize }} <a href="{{ path('app_chin_reset') }}">{{ 'here'|trans }}</a> {{ 'to change your password'|trans }}</span>
+            </div>
+            <button type="button" class="notification__close-button" onclick="myNotification.close()">
+                <i class="icon icon-cross"></i>
+                Sluit
+            </button>
+        </div>
+    {% endif %}
+</div>
+{% endif %}
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <div class="input__group input__group--checkbox" style="margin-bottom: 5px;">
+        <input name="hobbies[]" type="checkbox" id="chkbx1"
+               class="input__control input__control--m input__control--checkbox"
+               required="">
+        <label style="line-height: 14px" class="input__label input__label--checkbox" for="chkbx1">Ik voldoe aan de Corona <a
+                href="#"
+                data-toggle="modal"
+                data-target="#questionModal"
+                onclick="openQuestionModal()">vragenlijst</a>
+             horeca</label>
+    </div>
+</div>
+
+<script>
+    let myNotification;
+
+    System.import('/uno/components/notification/notification.js').then(function (module) {
+        myNotification = new module.Notification(document.getElementById('my-notification'));
+    });
+
+    function mouseoverPass() {
+        let obj = document.getElementById('password');
+        obj.type = "text";
+    }
+    function mouseoutPass() {
+        let obj = document.getElementById('password');
+        obj.type = "password";
+    }
+</script>
+
+<script>
+    var questionModal;
+    // Load modal component
+    System.import('/uno/components/modal/modal.js').then(function (module) {
+        questionModal = new module.Modal(document.getElementById('questionModal'));
+    });
+
+    // Called when the user clicks the button
+    function openQuestionModal() {
+        questionModal.open();
+    }
+
+    function closeQuestionModal() {
+        questionModal.close();
+    }
+</script>
+
+<div class="modal modal--backdrop" role="dialog" id="questionModal" tabindex="-1"
+     aria-describedby="modal-description3">
+    <section class="modal__content" role="document">
+        <div id="modal-description3" class="screenreader-only">
+            Vanwege de maatregelen rondom het coronavirus, zijn we verplicht je bij ontvangst de volgende vragen te
+            stellen.
+        </div>
+        <header class="modal__title">
+            <h1>Check</h1>
+        </header>
+
+        <div class="modal__body" tabindex="0">
+            <p>Vanwege de maatregelen rondom het coronavirus,
+                zijn we verplicht je bij ontvangst de volgende vragen te stellen</p>
+
+            <span class="fa-stack">
+                    <span class="far fa-circle fa-stack-2x" style="font-size:24px;margin-top:3px;"></span>
+                    <strong class="fa-stack-1x">1</strong>
+                </span>
+            <span>
+                    Heb je een of meerdere van deze klachten(Hoesten, Neusverkoudheid, Koorts vanaf 38 graden,
+                    Benauwdheidsklachten) gehad in de afgelopen 24 uur?
+                </span><br>
+
+            <span class="fa-stack">
+                    <span class="far fa-circle fa-stack-2x" style="font-size:24px;margin-top:3px;"></span>
+                    <strong class="fa-stack-1x">2</strong>
+                </span>
+            <span>
+                    Heb je op dit moment een huisgenoot met koorts en/of
+                    benauwdheidsklachten?
+                </span><br>
+
+            <span class="fa-stack">
+                    <span class="far fa-circle fa-stack-2x" style="font-size:24px;margin-top:3px;"></span>
+                    <strong class="fa-stack-1x">3</strong>
+                </span>
+            <span>
+                    Heb je het nieuwe coronavirus gehad en is dit de afgelopen 7 dagen
+                    vastgesteld (in een lab)?
+                </span><br>
+
+            <span class="fa-stack">
+                    <span class="far fa-circle fa-stack-2x" style="font-size:24px;margin-top:3px;"></span>
+                    <strong class="fa-stack-1x">4</strong>
+                </span>
+            <span>
+                    Heb je een huisgenoot/gezinslid met het nieuwe coronavirus en heb je
+                    in de afgelopen 14 dagen contact met hem/haar gehad terwijl hij/zij nog
+                    klachten had?
+                </span><br>
+
+            <span class="fa-stack">
+                    <span class="far fa-circle fa-stack-2x" style="font-size:24px;margin-top:3px;"></span>
+                    <strong class="fa-stack-1x">5</strong>
+                </span>
+            <span>
+                    Ben je in quarantaine omdat je direct contact hebt gehad met iemand
+                    waarbij het nieuwe coronavirus is vastgesteld?
+                </span>
+        </div>
+
+        <footer class="modal__footer">
+            <p>Wanneer je een van bovenstaande vragen met ‘ja’ beantwoordt, kunnen
+                we je helaas niet toelaten in ons bedrijf of op ons terras.</p>
+            <button class="modal__close-button btn btn--primary">Bevestig</button>
+        </footer>
+    </section>
+</div>

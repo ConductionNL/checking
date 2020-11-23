@@ -1,0 +1,127 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% if resource.organization is defined and resource.organization is not empty %}
+    {% set organization = commonground_resource(resource.organization) %}
+{% endif %}
+
+{% block style %}
+    <style>
+
+        @media (max-width: 555px) {
+            body {
+                position: fixed;
+                width: 100%;
+            }
+
+            .flash{
+                display: none;
+            }
+        }
+
+        .checkinFont {
+            color: #01689b;
+        }
+
+        .background {
+            background-color: lightgrey;
+        }
+
+        {% if organization.style.css is defined and organization.style.css is not empty %}
+        {{ organization.style.css|raw }}
+        {% endif %}
+    </style>
+{% endblock %}
+
+{% block container %}
+    <div class="container background" style="background-size: 300px; width: 100%; max-width: 100%;">
+        <form action="{{ path('app_chin_reservation',{"code":code}) }}" method="post">
+            <div class="row">
+                <div class="col-md-12 col-sm-12" style="padding: 0;">
+                    <div class="" style="height: calc(100vh - 38px); text-align: center; display: flex; flex-direction: column; justify-content: space-evenly">
+                        <div class="row">
+                            {% include 'chin/widgets/checkin_widget_organizationinfo.html.twig' %}
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
+                            <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 " style="margin-bottom: 15px;">
+                                <div style="width: 100%; background-color: white; border-radius: 20px; padding-top: 20px; padding-bottom: 5px;">
+                                    {% include 'chin/widgets/checkin_widget_nodeinfo.html.twig' %}
+
+                                    {% include 'chin/widgets/checkin_widget_reservation.html.twig' %}
+
+                                    <div style="margin-top: 10px; margin-bottom: 10px; padding: 0 10px;">
+                                        <button style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">
+                                                {{ 'reserve'|trans|capitalize }}</h2></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-1"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div><!-- /.container -->
+
+    <script>
+        var questionModal;
+        // Load modal component
+        System.import('/uno/components/modal/modal.js').then(function (module) {
+            questionModal = new module.Modal(document.getElementById('questionModal'));
+        });
+
+        // Called when the user clicks the button
+        function openQuestionModal() {
+            questionModal.open();
+        }
+
+        function closeQuestionModal() {
+            questionModal.close();
+        }
+    </script>
+
+    <div class="modal modal--backdrop" role="dialog" id="questionModal" tabindex="-1"
+         aria-describedby="modal-description3">
+        <section class="modal__content" role="document">
+            <div id="modal-description3" class="screenreader-only">
+                Vanwege de maatregelen rondom het coronavirus, zijn we verplicht je bij ontvangst de volgende vragen te
+                stellen.
+            </div>
+            <header class="modal__title">
+                <h1>Check</h1>
+            </header>
+
+            <div class="modal__body" tabindex="0">
+                <p>Vanwege de maatregelen rondom het coronavirus,
+                    zijn we verplicht je bij ontvangst de volgende vragen te stellen</p>
+                <ol class="list list--decimal-circled">
+                    <li>Heb je een of meerdere van deze klachten(Hoesten, Neusverkoudheid, Koorts vanaf 38 graden,
+                        Benauwdheidsklachten) gehad in de afgelopen 24 uur?
+                    </li>
+                    <li>Heb je op dit moment een huisgenoot met koorts en/of
+                        benauwdheidsklachten?
+                    </li>
+                    <li>Heb je het nieuwe coronavirus gehad en is dit de afgelopen 7 dagen
+                        vastgesteld (in een lab)?
+                    </li>
+                    <li>Heb je een huisgenoot/gezinslid met het nieuwe coronavirus en heb je
+                        in de afgelopen 14 dagen contact met hem/haar gehad terwijl hij/zij nog
+                        klachten had?
+                    </li>
+                    <li>Ben je in quarantaine omdat je direct contact hebt gehad met iemand
+                        waarbij het nieuwe coronavirus is vastgesteld?
+                    </li>
+                </ol>
+            </div>
+
+            <footer class="modal__footer">
+                <p>Wanneer je een van bovenstaande vragen met ‘ja’ beantwoordt, kunnen
+                    we je helaas niet toelaten in ons bedrijf of op ons terras.</p>
+                <button class="modal__close-button btn btn--primary">Bevestig</button>
+            </footer>
+        </section>
+    </div>
+
+{% endblock %}

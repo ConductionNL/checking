@@ -1,0 +1,39 @@
+<div class="content-background">
+    <div class="content">
+        <div class="row">
+            <div class="col-xs-6">
+                <h2>{{ 'reservations'|trans|capitalize }}</h2>
+            </div>
+        </div>
+        {% if reservations is defined and reservations is not empty %}
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">{{ 'date'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'location'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'number of people'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'under name'|trans|capitalize }}</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for reservation in reservations %}
+                    <tr {% if reservation.event.status == 'cancelled' %} style="text-decoration: line-through; color: grey;" {% endif %}>
+                        <td>{{ reservation.event.startDate|date("H:i d-m-Y") }}</td>
+                        <td>{{ commonground_resource(reservation.event.calendar.resource).name }}</td>
+                        <td>{{ reservation.numberOfParticipants }}</td>
+                        <td>{{ commonground_resource(reservation.underName).name }}</td>
+                        {% if reservation.cantCancel is not defined and reservation.event.status != 'cancelled'  %}
+                            <td><a href="{{ path('app_chin_cancel', {'code':reservation.node.reference, 'reservation':reservation['id']}) }}">{{ 'cancel'|trans|capitalize }}</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <aside class="hint">
+                <h2 class="hint__title">{{ 'no reservations'|trans|capitalize }}</h2>
+            </aside>
+        {% endif %}
+    </div><!-- /.content -->
+</div><!-- /.content-background -->

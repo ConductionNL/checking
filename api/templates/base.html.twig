@@ -1,12 +1,11 @@
 <!--
 
 =========================================================
-* Rocket - Startup Bootstrap Template
+* Spaces - Bootstrap Directory Listing Template
 =========================================================
 
-* Product Page: https://themes.getbootstrap.com/product/rocket/
-* Copyright 2020 Themesberg (https://www.themesberg.com)
-* License (https://themes.getbootstrap.com/licenses/)
+* Product Page: https://themesberg.com/product/bootstrap-themes/spaces-bootstrap-directory-listing-template
+* Copyright 2020 Themesberg EULA (https://www.themesberg.com/licensing)
 
 * Coded by https://themesberg.com
 
@@ -19,117 +18,116 @@
 <html lang="en">
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- Primary Meta Tags -->
-    <title>
-        {% if application|default %}
-            {% if slug is defined and slug is not empty %}
-                {{ slug|capitalize }} |
-            {% endif %}
-            {{ application['name'] }}
-        {% elseif app_name|default %}
-            {% if slug is defined and slug is not empty %}
-                {{ slug|capitalize }} |
-            {% endif %}
-            {{ app_name|capitalize }}
-        {% else %}
-            Stage platform
-        {% endif %}
-    </title>
-    <meta charset="utf-8">
+    <title>Spaces - Bootstrap Directory Listing Template by Themesberg</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="title" content="Conduction - Stage Platform">
-    <meta name="author" content="Conduction">
-    <meta name="description"
-          content="Conduction - Stage Platform">
-    <meta name="keywords"
-          content="bootstrap, bootstrap template, saas website template, saas bootstrap template, saas bootstrap 4 template, saas bootstrap theme, saas bootstrap 4 theme, dashboard, saas dashboard, themesberg"/>
-    <link rel="canonical" href="https://themes.getbootstrap.com/product/rocket/">
+    <meta name="title" content="Spaces - Bootstrap Directory Listing Template by Themesberg">
+    <meta name="author" content="Themesberg">
+    <meta name="description" content="Premium Directory Listing Bootstrap 4 Template featuring 37 hand-crafted pages, a dashboard an Mapbox integration. Spaces also comes with a complete UI Kit featuring over 700 components by Themesberg.">
+    <meta name="keywords" content="bootstrap, bootstrap 4 template, directory listing bootstrap, bootstrap 4 listing, bootstrap listing, bootstrap 4 directory listing template, vector map, leaflet js template, mapbox theme, mapbox template, dashboard, themesberg, user dashboard bootstrap, dashboard bootstrap, ui kit, bootstrap ui kit, premium bootstrap theme" />
+    <link rel="canonical" href="https://themesberg.s3.us-east-2.amazonaws.com/public/products/spaces/thumbnail.jpg">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://demo.themesberg.com/rocket">
-    <meta property="og:title" content="Conduction - Stage Platform">
-    <meta property="og:description"
-          content="Conduction - Stage Platform">
-    <meta property="og:image"
-          content="">
+    <meta property="og:url" content="https://demo.themesberg.com/pixel-pro">
+    <meta property="og:title" content="Spaces - Bootstrap Directory Listing Template by Themesberg">
+    <meta property="og:description" content="Premium Directory Listing Bootstrap 4 Template featuring 37 hand-crafted pages, a dashboard an Mapbox integration. Spaces also comes with a complete UI Kit featuring over 700 components by Themesberg.">
+    <meta property="og:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/spaces/thumbnail.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://demo.themesberg.com/rocket">
-    <meta property="twitter:title" content="Rocket - Bootstrap Startup Dashboard Template">
-    <meta property="twitter:description"
-          content="Conduction - Stage Platform">
-    <meta property="twitter:image"
-          content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/rocket/rocket-preview.jpg">
+    <meta property="twitter:url" content="https://demo.themesberg.com/pixel-pro">
+    <meta property="twitter:title" content="Spaces - Bootstrap Directory Listing Template by Themesberg">
+    <meta property="twitter:description" content="Premium Directory Listing Bootstrap 4 Template featuring 37 hand-crafted pages, a dashboard an Mapbox integration. Spaces also comes with a complete UI Kit featuring over 700 components by Themesberg.">
+    <meta property="twitter:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/spaces/thumbnail.jpg">
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="120x120" href="/bundles/rocket/assets/img/favicon/conduction.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/bundles/rocket/assets/img/favicon/conduction.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/bundles/rocket/assets/img/favicon/conduction.png">
-    <link rel="manifest" href="/bundles/rocket/assets/img/favicon/conduction.png">
-    <link rel="mask-icon" href="/bundles/rocket/assets/img/favicon/conduction.png" color="#ffffff">
+    <link rel="apple-touch-icon" sizes="120x120" href="./assets/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./assets/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="./assets/img/favicon/safari-pinned-tab.svg" color="#ffffff">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
     <!-- Fontawesome -->
-    <script src="https://kit.fontawesome.com/27aca7094d.js" crossorigin="anonymous"></script>
+    <link type="text/css" href="/bundles/spaces/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 
-    <!-- Prism -->
-    <link type="text/css" href="/bundles/rocket/vendor/prismjs/themes/prism.css" rel="stylesheet">
+    <!-- Leaflet JS -->
+    <link type="text/css" href="/bundles/spaces/vendor/leaflet/dist/leaflet.css" rel="stylesheet">
+
+    <!-- Fancybox -->
+    <link rel="stylesheet" href="/bundles/spaces/vendor/@fancyapps/fancybox/dist/jquery.fancybox.min.css">
 
     <!-- VectorMap -->
-    <link rel="stylesheet" href="/bundles/rocket/vendor/jqvmap/dist/jqvmap.min.css">
+    <link rel="stylesheet" href="/bundles/spaces/vendor/jqvmap/dist/jqvmap.min.css">
 
-    <!-- Rocket CSS -->
-    <link type="text/css" href="/bundles/rocket/css/rocket.css" rel="stylesheet">
+    <!-- Main CSS -->
+    <link type="text/css" href="/bundles/spaces/css/spaces.css" rel="stylesheet">
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
+
 
 </head>
 
 <body>
-<header class="header-global">
+{% if noMenu is not defined %}
     {% include 'menu.html.twig' %}
-</header>
-
+{% endif %}
 <main>
-
-    <div class="preloader bg-soft flex-column justify-content-center align-items-center">
-        <img class="loader-element" src="/bundles/rocket/assets/img/brand/dark.svg" height="50" alt="Rocket logo">
-    </div>
-
     {% block content %}
 
     {% endblock %}
-
-
-    {% include 'footer.html.twig' %}
-
 </main>
+{% if noFooter is not defined %}
+    {% include 'footer.html.twig' %}
+{% endif %}
 
 <!-- Core -->
-<script src="/bundles/rocket/vendor/jquery/dist/jquery.min.js"></script>
-<script src="/bundles/rocket/vendor/popper.js/dist/umd/popper.min.js"></script>
-<script src="/bundles/rocket/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/bundles/rocket/vendor/headroom.js/dist/headroom.min.js"></script>
+<script src="/bundles/spaces/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/bundles/spaces/vendor/popper.js/dist/umd/popper.min.js"></script>
+<script src="/bundles/spaces/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/bundles/spaces/vendor/headroom.js/dist/headroom.min.js"></script>
+<script src="/bundles/spaces/vendor/onscreen/dist/on-screen.umd.min.js"></script>
 
-<!-- Vendor JS -->
-<script src="/bundles/rocket/vendor/countup.js/dist/countUp.min.js"></script>
-<script src="/bundles/rocket/vendor/jquery-countdown/dist/jquery.countdown.min.js"></script>
-<script src="/bundles/rocket/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-<script src="/bundles/rocket/vendor/prismjs/prism.js"></script>
+<!-- NoUISlider -->
+<script src="/bundles/spaces/vendor/nouislider/distribute/nouislider.min.js"></script>
+
+<!-- Bootstrap Datepicker -->
+<script src="/bundles/spaces/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+<!-- jQuery Waypoints -->
+<script src="/bundles/spaces/vendor/waypoints/lib/jquery.waypoints.min.js"></script>
+
+<!-- Owl acrousel -->
+<script src="/bundles/spaces/vendor/owl.carousel/dist/owl.carousel.min.js"></script>
+
+<!-- Smooth scroll -->
+<script src="/bundles/spaces/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+
+<!-- Fancybox -->
+<script src="/bundles/spaces/vendor/@fancyapps/fancybox/dist/jquery.fancybox.min.js"></script>
+
+<!-- Sticky sidebar -->
+<script src="/bundles/spaces/vendor/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+
+<!-- Mapbox & Leaflet.js -->
+<script src="/bundles/spaces/vendor/leaflet/dist/leaflet.js"></script>
 
 <!-- Chartist -->
-<script src="/bundles/rocket/vendor/chartist/dist/chartist.min.js"></script>
-<script src="/bundles/rocket/vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+<script src="/bundles/spaces/vendor/chartist/dist/chartist.min.js"></script>
+<script src="/bundles/spaces/vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
 
 <!-- Vector Maps -->
-<script src="/bundles/rocket/vendor/jqvmap/dist/jquery.vmap.min.js"></script>
-<script src="/bundles/rocket/vendor/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script src="/bundles/spaces/vendor/jqvmap/dist/jquery.vmap.min.js"></script>
+<script src="/bundles/spaces/vendor/jqvmap/dist/maps/jquery.vmap.usa.js"></script>
 
-<!-- Rocket JS -->
-<script src="/bundles/rocket/assets/js/rocket.js"></script>
+<!-- Sliderform -->
+<script src="/bundles/spaces/assets/js/jquery.slideform.js"></script>
 
+<!-- Spaces custom Javascript -->
+<script src="/bundles/spaces/assets/js/spaces.js"></script>
 </body>
+
 </html>
