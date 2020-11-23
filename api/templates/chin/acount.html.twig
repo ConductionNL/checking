@@ -1,0 +1,67 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% if resource.organization is defined and resource.organization is not empty %}
+    {% set organization = commonground_resource(resource.organization) %}
+{% endif %}
+
+{% block style %}
+    <style>
+
+        @media (max-width: 555px) {
+            body {
+                position: fixed;
+                width: 100%;
+            }
+
+            .flash{
+                display: none;
+            }
+        }
+
+        .checkinFont {
+            color: #01689b;
+        }
+
+        .background {
+            background-color: lightgrey;
+        }
+
+        {% if organization.style.css is defined and organization.style.css is not empty %}
+        {{ organization.style.css|raw }}
+        {% endif %}
+    </style>
+{% endblock %}
+
+{% block container %}
+<div class="container background" style="background-size: 300px; width: 100%; max-width: 100%;">
+    <form action="{{ path('app_chin_acount',{"code":code}) }}" method="post">
+        <div class="row">
+            <div class="col-md-12 col-sm-12" style="padding: 0;">
+                <div class="" style="height: calc(100vh - 38px); text-align: center; display: flex; flex-direction: column; justify-content: space-evenly">
+                    <div class="row">
+                        {% include 'chin/widgets/checkin_widget_organizationinfo.html.twig' %}
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
+                        <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 " style="margin-bottom: 15px;">
+                            <div style="width: 100%; background-color: white; border-radius: 20px; padding-top: 20px; padding-bottom: 5px;">
+                                {% include 'chin/widgets/checkin_widget_nodeinfo.html.twig' %}
+
+                                {% include 'chin/widgets/checkin_widget_userinfo.html.twig' %}
+
+                                <div style="margin-top: 10px; margin-bottom: 10px; padding: 0 10px;">
+                                    <button style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">
+                                        {{ 'inchecken' }}</h2></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-1"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div><!-- /.container -->
+{% endblock %}

@@ -1,0 +1,48 @@
+{% if organization.contact is defined and organization.contact is not empty %}
+    {% set orgCc = commonground_resource(organization.contact) %}
+        {% if orgCc.socials[0] is defined %}
+            {% set social = orgCc.socials[0] %}
+        {% endif %}
+{% endif %}
+<div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
+<div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 ">
+    {% if social is defined and social is not empty %}
+    <div style="display: flex; justify-content: space-between">
+        {% if social.website is defined and social.website is not empty %}
+            <div style="height: 45px; width:45px; background-color: #01689B; border-radius: 50%">
+                <a target="_blank" href="{{ social.website }}">
+                    <i style="font-size: 2.5rem; line-height: 1.8; color: white;" class="fas fa-globe"></i>
+                </a>
+            </div>
+        {% endif %}
+        {% if social.facebook is defined and social.facebook is not empty %}
+            <div style="height: 45px; width: 45px; background-color: #01689B; border-radius: 50%">
+                <a target="_blank" href="{{ social.facebook }}">
+                    <i style="font-size: 2.5rem; line-height: 1.8; color: white;" class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+        {% endif %}
+        {% if social.instagram is defined and social.instagram is not empty %}
+            <div style="height: 45px; width: 45px; background-color: #01689B; border-radius: 50%">
+                <a target="_blank" href="{{ social.instagram }}">
+                    <i style="font-size: 2.5rem; line-height: 1.8; color: white;" class="fab fa-instagram"></i>
+                </a>
+            </div>
+        {% endif %}
+        {% if social.twitter is defined and social.twitter is not empty %}
+            <div style="height: 45px; width: 45px; background-color: #01689B; border-radius: 50%">
+                <a target="_blank" href="{{ social.twitter }}">
+                    <i style="font-size: 2.5rem; line-height: 1.8; color: white;" class="fab fa-twitter"></i>
+                </a>
+            </div>
+        {% endif %}
+        {% if social.linkedin is defined and social.linkedin is not empty %}
+            <div style="height: 45px; width: 45px; background-color: #01689B; border-radius: 50%">
+                <a target="_blank" href="{{ social.linkedin }}">
+                    <i style="font-size: 2.5rem; line-height: 1.8; color: white;" class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>

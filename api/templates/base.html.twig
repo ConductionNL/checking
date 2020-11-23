@@ -68,30 +68,20 @@
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
 
-    <style>
-        html {
-            background-color: #01689B;
-        }
-    </style>
-
 </head>
 
 <body>
-
 {% if noMenu is not defined %}
     {% include 'menu.html.twig' %}
 {% endif %}
-
 <main>
     {% block content %}
 
     {% endblock %}
 </main>
-
 {% if noFooter is not defined %}
     {% include 'footer.html.twig' %}
 {% endif %}
-
 
 <!-- Core -->
 <script src="/bundles/spaces/vendor/jquery/dist/jquery.min.js"></script>

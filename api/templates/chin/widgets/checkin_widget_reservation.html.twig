@@ -1,0 +1,30 @@
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    {# hier kan door nodes worden geloopt als list waarbij de node van deze code als geselecteerd word weergegeven #}
+    <select class="noFocus input__control input__control--select" name="calendar" id="">
+        {% for node in nodes %}
+            <option value="{{ node['@id'] }}" {% if node.id == resource.id %} selected {% endif %}>{{ node.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <input style="height: 35px" type="date" id="additionalName" name="date"
+           class="noFocus input__control input__control--text" required>
+</div>
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <input style="height: 35px" type="time" id="additionalName" name="time"
+           class="noFocus input__control input__control--text" required>
+</div>
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <input style="height: 35px" type="number" id="additionalName" name="amount" placeholder="{{ 'number of people'|trans|capitalize }}"
+           class="noFocus input__control input__control--text" required>
+</div>
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <textarea style="height: 35px" type="text" id="additionalName" name="comment" placeholder="{{ 'comment'|trans|capitalize }}"
+              class="noFocus input__control input__control--text"></textarea>
+</div>
+{% if error is defined %}
+    <div>
+        <p>{{ error }}</p>
+    </div>
+{% endif %}
+
