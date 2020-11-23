@@ -54,6 +54,8 @@
     <!-- Fontawesome -->
     <link type="text/css" href="/bundles/spaces/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 
+    <script src="https://kit.fontawesome.com/be1c31fb58.js" crossorigin="anonymous"></script>
+
     <!-- Leaflet JS -->
     <link type="text/css" href="/bundles/spaces/vendor/leaflet/dist/leaflet.css" rel="stylesheet">
 
@@ -68,6 +70,11 @@
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
 
+    <style>
+        body {
+            background-color: #01689B;
+        }
+    </style>
 
 </head>
 
@@ -75,11 +82,13 @@
 {% if noMenu is not defined %}
     {% include 'menu.html.twig' %}
 {% endif %}
+
 <main>
     {% block content %}
 
     {% endblock %}
 </main>
+
 {% if noFooter is not defined %}
     {% include 'footer.html.twig' %}
 {% endif %}
@@ -127,7 +136,8 @@
 <script src="/bundles/spaces/assets/js/jquery.slideform.js"></script>
 
 <!-- Spaces custom Javascript -->
-<script src="/bundles/spaces/assets/js/spaces.js"></script>
+{#<script src="/bundles/spaces/assets/js/spaces.js"></script>#}
+
 </body>
 
 </html>
