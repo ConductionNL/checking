@@ -1,0 +1,118 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% if node.organization is defined and node.organization is not empty %}
+    {% set organization = commonground_resource(node.organization) %}
+{% endif %}
+
+{% block style %}
+    <style>
+
+        @media (max-width: 555px) {
+            body {
+                position: fixed;
+                width: 100%;
+            }
+        }
+
+        .checkinFont {
+            color: #01689b;
+        }
+
+        .background {
+            background-color: lightgrey;
+        }
+
+        {% if organization.style.css is defined and organization.style.css is not empty %}
+        {{ organization.style.css|raw }}
+        {% endif %}
+    </style>
+{% endblock %}
+
+{% block container %}
+    <div class="container background" style="background-size: 300px; width: 100%; max-width: 100%;">
+        <form action="{{ path('app_chin_reset') }}" method="post">
+            <div class="row">
+                <div class="col-md-12 col-sm-12" style="padding: 0;">
+                    <div class="" style="height: calc(100vh - 38px); text-align: center; display: flex; flex-direction: column; justify-content: space-evenly">
+                        {% if organization.style.favicon.base64 is defined and organization.style.favicon.base64 is not empty %}
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <img style="width: 30rem;" src="{{ organization.style.favicon.base64 }}" alt="">
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
+                            <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 " style="margin-bottom: 15px;">
+                                <div style="width: 100%; background-color: white; border-radius: 20px; padding-top: 20px; padding-bottom: 5px;">
+                                    {% if token is defined and token is not empty %}
+                                        <a {% if node is defined and node is not empty %} href="{{ path('app_chin_acount',{node: node.reference }) }}" {% else %} href="{{ path('app_default_index') }}" {% endif %} class="backlink" style="display: inline">{{ 'back'|trans|capitalize }}</a>
+                                        <p>{{ 'enter your new password'|trans|capitalize }}</p>
+                                        <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+                                            <input style="height: 35px" type="password" id="password" name="password" placeholder="{{ 'new password'|trans|capitalize }}"
+                                                   class="noFocus input__control input__control--text" required>
+                                            <i style="position:absolute; right: 15px; top: 8px" class="fas fa-eye-slash" onmouseover="mouseoverPass()" onmouseout="mouseoutPass()" role="presentation"></i>
+                                            <input type="hidden" name="selectedUser" {% if selectedUser is defined and selectedUser is not empty %}value="{{ selectedUser }}"{% endif %}>
+                                        </div>
+                                        <div style="margin-top: 10px; margin-bottom: 10px; padding: 0 10px;">
+                                            <button style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">{{ 'submit'|trans|capitalize }}</h2></button>
+                                        </div>
+                                    {% elseif reset is defined %}
+                                        <p>{{ 'your password has been reset'|trans|capitalize }}</p>
+                                        <div style="margin-top: 10px; margin-bottom: 10px; padding: 0 10px;">
+                                            <a {% if node is defined and node is not empty %} href="{{ path('app_chin_acount',{node: node.reference }) }}" {% else %} href="{{ path('app_default_index') }}" {% endif %} style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">{{ 'back'|trans|capitalize }}</h2></a>
+                                        </div>
+                                    {% else %}
+                                        <a {% if node is defined and node is not empty %} href="{{ path('app_chin_acount',{node: node.reference }) }}" {% else %} href="{{ path('app_default_index') }}" {% endif %} class="backlink" style="display: inline">{{ 'back'|trans|capitalize }}</a>
+                                        <p>{{ 'enter the email address of the account you wish to reset'|trans|capitalize }}</p>
+                                        <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+                                            <input style="height: 35px" type="text" id="givenName" name="email" placeholder="{{ 'email'|trans|capitalize }}"
+                                                   class="noFocus input__control input__control--text" required>
+                                            {% if message is defined %}
+                                                <div class="notification notification--success" id="my-notification">
+                                                    <div class="notification__content">
+                                                        <p>Indien je emailadres in ons bestand voorkomt ontvangt je binnen een paar minuten een email van ons met instructies hoe je jouw wachtwoord kunt aanpassen.</p>
+                                                    </div>
+                                                    <button type="button" class="notification__close-button" onclick="myNotification.close()">
+                                                        <i class="icon icon-cross"></i>
+                                                        Sluit
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+
+                                        <div style="margin-top: 10px; margin-bottom: 10px; padding: 0 10px;">
+                                            <button style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">{{ 'submit'|trans|capitalize }}</h2></button>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div><!-- /.container -->
+
+    <script>
+        let myNotification;
+
+        System.import('/uno/components/notification/notification.js').then(function (module) {
+            myNotification = new module.Notification(document.getElementById('my-notification'));
+        });
+
+        function mouseoverPass() {
+            let obj = document.getElementById('password');
+            obj.type = "text";
+        }
+        function mouseoutPass() {
+            let obj = document.getElementById('password');
+            obj.type = "password";
+        }
+    </script>
+{% endblock %}
+
+

@@ -43,6 +43,9 @@
     "conduction/rocketbundle": {
         "version": "dev-main"
     },
+    "conduction/spacesbundle": {
+        "version": "dev-main"
+    },
     "dasprid/enum": {
         "version": "1.0.3"
     },

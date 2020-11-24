@@ -1,0 +1,3 @@
+conduction_spaces:
+  resource: "@SpacesBundle/Resources/config/routes.yaml"
+  prefix: /

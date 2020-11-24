@@ -1,0 +1,77 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% if resource.organization is defined and resource.organization is not empty %}
+    {% set organization = commonground_resource(resource.organization) %}
+{% endif %}
+
+{% block style %}
+    <style>
+
+        @media (max-width: 555px) {
+            body {
+                position: fixed;
+                width: 100%;
+            }
+
+            .flash{
+                display: none;
+            }
+        }
+
+        .checkinFont {
+            color: #01689b;
+        }
+
+        .background {
+            background-color: lightgrey;
+        }
+
+        {% if organization.style.css is defined and organization.style.css is not empty %}
+        {{ organization.style.css|raw }}
+        {% endif %}
+    </style>
+{% endblock %}
+
+{% block container %}
+    <div class="container background" style="background-size: 300px; width: 100%; max-width: 100%;">
+        <form action="{{ path('app_chin_cancel') }}" method="post">
+            <div class="row">
+                <div class="col-md-12 col-sm-12" style="padding: 0;">
+                    <div class="" style="height: calc(100vh - 38px); text-align: center; display: flex; flex-direction: column; justify-content: space-evenly">
+                        <div class="row">
+                            {% include 'chin/widgets/checkin_widget_organizationinfo.html.twig' %}
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
+                            <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 " style="margin-bottom: 15px;">
+                                <div style="width: 100%; background-color: white; border-radius: 20px; padding-top: 20px; padding-bottom: 5px;">
+                                    {% if cancelled is not defined %}
+                                        <h2>{{ 'reservation'|trans|capitalize }}</h2>
+                                        <p>{{ 'date'|trans|capitalize }}: {{ reservation.event.startDate|date("H:i d-m-Y") }}</p>
+                                        <p>{{ 'location'|trans|capitalize }}: {{ commonground_resource(reservation.event.calendar.resource).name }}</p>
+                                        <p>{{ 'number of people'|trans|capitalize }}: {{ reservation.numberOfParticipants }}</p>
+                                        <p>{{ 'under name'|trans|capitalize }}: {{ commonground_resource(reservation.underName).name }}</p>
+                                        <p><strong>{{ 'are you sure you wish to cancel this reservation' }}?</strong></p>
+                                        <div style="margin-top: 10px; margin-bottom: 10px; padding: 0 10px;">
+                                            <input type="hidden" name="reservationId" value="{{ reservation.id }}">
+                                            <button style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">{{ 'yes'|trans|capitalize }}</h2></button>
+                                            <a href="{{ path('app_chin_checkinreservations') }}" style="margin-top: 10px; padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">{{ 'no'|trans|capitalize }}</h2></a>
+                                        </div>
+                                    {% else %}
+                                        <p>{{ 'your reservation has been cancelled'|trans|capitalize }}</p>
+                                        <div style="margin-top: 10px; margin-bottom: 10px; padding: 0 10px;">
+                                            <a href="{{ path('app_chin_checkinreservations') }}" style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">{{ 'back'|trans|capitalize }}</h2></a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div><!-- /.container -->
+{% endblock %}

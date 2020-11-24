@@ -1,0 +1,122 @@
+<div class="content-background">
+    <div class="content">
+        <div class="row">
+            <div class="col-xs-6">
+                <h2>{{ 'nodes'|trans|capitalize }}</h2>
+            </div>
+            <div class="col-xs-6">
+                <button class="btn" style="float: right" data-toggle="modal" data-target="#myModal" onclick="openModal()">{{ 'new'|trans|capitalize }}</button>
+            </div>
+        </div>
+        {% if nodes is defined and nodes is not empty %}
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">{{ 'address'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'checkins'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'max. visitors'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'code'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'qr'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'download qr-code'|trans|capitalize }}</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for node in nodes %}
+                    {% if node.accommodation is defined and commonground_is_resource(node.accommodation) %}
+                        {% set nodeAccommodation = commonground_resource(node.accommodation) %}
+                    {% endif %}
+                    <tr>
+                        <td>
+                            {% if nodeAccommodation['place'] is defined %}
+                                {% if nodeAccommodation['place']['address'] is defined and nodeAccommodation['place']['address'] is not empty %}
+                                    {% if nodeAccommodation['place']['address']['street'] is defined and nodeAccommodation['place']['address']['street'] is not empty %}
+                                        {{ nodeAccommodation['place']['address']['street'] }} {{ nodeAccommodation['place']['address']['houseNumber'] }}
+                                        {% if nodeAccommodation['place']['address']['houseNumberSuffix'] is defined and nodeAccommodation['place']['address']['houseNumberSuffix'] is not empty %}
+                                            {{ nodeAccommodation['place']['address']['houseNumberSuffix'] }}
+                                        {% endif %}
+                                    {% else %}
+                                        {{ nodeAccommodation['place']['address']['postalCode'] }}
+                                    {% endif %}
+                                    {% if nodeAccommodation['place']['address']['locality'] is defined and nodeAccommodation['place']['address']['locality'] is not empty %}
+                                        <br>{{ nodeAccommodation['place']['address']['locality'] }}
+                                    {% endif %}
+                                {% else %}
+                                    {{ 'no address found'|trans|capitalize }}
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if node.type == 'checkin' %}
+                                {% if nodeAccommodation is defined %}
+                                    {% set yesterday = 'now' | date_modify('-1 days') %}
+                                    {% set checkinslast24hours = commonground_resource_list({'component': 'chin', 'type': 'checkins'},{'type':'checkin','node.accommodation':nodeAccommodation['id'], 'dateCreated[after]':yesterday|date("Y-m-d H:i:s")})['hydra:member']|length %}
+                                    {{ checkinslast24hours }}
+                                {% endif %}
+                            {% else %}
+                                {{ 'It is not possible to check in on this QR code!'|trans|capitalize }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if nodeAccommodation['maximumAttendeeCapacity'] is defined %}
+                                {{ nodeAccommodation['maximumAttendeeCapacity'] }}
+                            {% endif %}
+                        </td>
+                        <td>{{ node.reference }}</td>
+                        <td><img style="width: 150px;" src="{{ absolute_url(path('app_chin_render',{"id":node.id})) }}" /></td>
+                        <td>
+                            <a href="https://dev.checking.nu/chin/download/{{ node.id }}.png">Download PNG</a><br><br>
+                            <a href="https://dev.checking.nu/chin/download/{{ node.id }}.svg">Download SVG</a>
+                        </td>
+                        <td><a data-toggle="modal" data-target="#node-{{ node.id }}" onclick="openModal{{ node.id|replace({'-': ''}) }}()">{{ 'edit'|trans|capitalize }}</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <aside class="hint">
+                <h2 class="hint__title">{{ 'no nodes'|trans|capitalize }}</h2>
+            </aside>
+        {% endif %}
+    </div><!-- /.content -->
+</div><!-- /.content-background -->
+
+{# modal for a nieuw node #}
+{% include 'chin/modals/node_modal.html.twig' %}
+<script>
+    let myModal;
+    // Load modal component
+    System.import('/uno/components/modal/modal.js').then(function (module) {
+        myModal = new module.Modal(document.getElementById('node'));
+    });
+
+    // Called when the user clicks the button
+    function openModal() {
+        myModal.open();
+    }
+    // Called when the user clicks the button
+    function closeModal() {
+        myModal.close();
+    }
+</script>
+
+{# modals for existing nodes #}
+{% for node in nodes %}
+    {% include 'chin/modals/node_modal.html.twig' with { 'item':node } %}
+    <script>
+        let myModal{{ node.id|replace({'-': ''}) }};
+        // Load modal component
+        System.import('/uno/components/modal/modal.js').then(function (module) {
+            myModal{{ node.id|replace({'-': ''}) }} = new module.Modal(document.getElementById('node-{{ node.id }}'));
+        });
+
+        // Called when the user clicks the button
+        function openModal{{ node.id|replace({'-': ''}) }}() {
+            myModal{{ node.id|replace({'-': ''}) }}.open();
+        }
+        // Called when the user clicks the button
+        function closeModal{{ node.id|replace({'-': ''}) }}() {
+            myModal{{ node.id|replace({'-': ''}) }}.close();
+        }
+    </script>
+{% endfor %}

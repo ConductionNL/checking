@@ -1,0 +1,50 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% if resource.organization is defined and resource.organization is not empty %}
+    {% set organization = commonground_resource(resource.organization) %}
+{% endif %}
+
+{% block content %}
+    <div class="container">
+        <form action="{{ path('app_chin_checkin',{"code":code}) }}" method="post">
+        <div class="row">
+            <div class="col-12">
+                {% include 'chin/widgets/checkin_widget_organizationinfo.html.twig' %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-12 col-lg-8">
+                <!-- Card -->
+
+                    <div class="card border-light mb-4 mt-4 text-center">
+                        <div class="card-body">
+                            {% include 'chin/widgets/checkin_widget_nodeinfo.html.twig' %}
+
+                            {% include 'chin/widgets/checkin_widget_userinfo.html.twig' %}
+
+                            <div class="mt-2 mb-4">
+                                <button type="submit" class="btn btn-success" name="method" value="checkin">check in</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- End of Card -->
+
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-2 col-lg-4"></div>
+            <div class="col-8 col-lg-4">
+                <div class="d-flex justify-content-between mb-4">
+                    {% include 'chin/widgets/checkin_widget_social.html.twig' %}
+                </div>
+            </div>
+            <div class="col-2 col-lg-4"></div>
+        </div>
+        </form>
+    </div>
+{% endblock %}
