@@ -5,8 +5,8 @@
                 <div class="navbar-collapse-header">
                     <div class="row">
                         <div class="col-6 collapse-brand">
-                            <a href="./index.html">
-                                <img src="./assets/img/brand/dark.svg" height="35" alt="Logo Impact">
+                            <a href="{{ path('app_default_index') }}">
+                                <img src="/bundles/spaces/assets/img/brand/dark.svg" height="35" alt="Logo Impact">
                             </a>
                         </div>
                         <div class="col-6 collapse-close">
@@ -14,6 +14,11 @@
                                data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false"
                                aria-label="Toggle navigation"></a>
                         </div>
+                    </div>
+                    <div class="col-6 collapse-close">
+                        <i class="fas fa-times" data-toggle="collapse" role="button"
+                           data-target="#navbar-default-primary" aria-controls="navbar-default-primary"
+                           aria-expanded="false" aria-label="Toggle navigation"></i>
                     </div>
                 </div>
                 <ul class="navbar-nav navbar-nav-hover justify-content-center">
@@ -51,14 +56,11 @@
                                             <a class="megamenu-link" href="./html/contact.html">Contact</a>
                                         </li>
                                     </ul>
-                                    <h6 class="d-block text-primary">Legal</h6>
-                                    <ul class="list-style-none mb-4">
-                                        <li class="mb-2 megamenu-item">
-                                            <a class="megamenu-link" href="./html/legal.html">Legal center</a>
-                                        </li>
-                                        <li class="mb-2 megamenu-item">
-                                            <a class="megamenu-link" href="./html/terms.html">Terms & agreement</a>
-                                        </li>
+                                </li>
+                                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Second subsubmenu <i class="fas fa-angle-down nav-link-arrow ml-2"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
+                                        <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
                                     </ul>
                                 </div>
                                 <div class="col-6 col-lg-4">
@@ -244,72 +246,30 @@
                         -->
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a href="#" id="dashboardPagesDropdown" class="nav-link dropdown-toggle" aria-expanded="false" data-toggle="dropdown">
-                            <span class="nav-link-inner-text mr-1">Dashboard</span>
-{#                            <i class="fas fa-angle-down nav-link-arrow"></i>#}
-                        </a>
-                        {# Dropdown voorbeeldcode misscien handig voor later#}
-                        <!--
-                        <div class="dropdown-menu dropdown-megamenu-sm p-3 p-lg-4" aria-labelledby="dashboardPagesDropdown">
-                            <div class="row">
-                                <div class="col-6">
-                                    <h6 class="d-block mb-3 text-primary">User dashboard</h6>
-                                    <ul class="list-style-none mb-4">
-                                        <li class="mb-2 megamenu-item">
-                                            <a class="megamenu-link" href="./html/dashboard/account.html">My account</a>
-                                        </li>
-                                        <li class="mb-2 megamenu-item">
-                                            <a class="megamenu-link" href="./html/dashboard/settings.html">Settings</a>
-                                        </li>
-                                        <li class="mb-2 megamenu-item">
-                                            <a class="megamenu-link" href="./html/dashboard/security.html">Security</a>
-                                        </li>
-                                    </ul>
-                                    <h6 class="d-block mb-3 text-primary">Items</h6>
-                                    <ul class="list-style-none">
-                                        <li class="mb-2 megamenu-item">
-                                            <a class="megamenu-link" href="./html/dashboard/my-items.html">My items</a>
-                                        </li>
-                                        <li class="mb-2 megamenu-item">
-                                            <a class="megamenu-link" href="./html/dashboard/edit-item.html">Edit item</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-6">
-                                    <h6 class="d-block mb-3 text-primary">Messaging</h6>
-                                    <ul class="list-style-none mb-4">
-                                        <li class="mb-2 megamenu-item">
-                                            <a class="megamenu-link" href="./html/dashboard/messages.html">Messages</a>
-                                        </li>
-                                        <li class="mb-2 megamenu-item">
-                                            <a class="megamenu-link" href="./html/dashboard/single-message.html">Chat</a>
-                                        </li>
-                                    </ul>
-                                    <h6 class="d-block mb-3 text-primary">Billing</h6>
-                                    <ul class="list-style-none mb-4">
-                                        <li class="mb-2 megamenu-item">
-                                            <a class="megamenu-link" href="./html/dashboard/billing.html">Billing details</a>
-                                        </li>
-                                        <li class="mb-2 megamenu-item">
-                                            <a class="megamenu-link" href="./html/dashboard/invoice.html">Invoice</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        -->
-                    </li>
                 </ul>
             </div>
+            {% if not app.user %}
             <div class="d-none d-lg-block @@cta_button_classes">
-                <a href="#" target="_blank" class="btn btn-md btn-secondary animate-up-2"><i class="fas fa-lock mr-2"></i>Inloggen</a>
+                <a href="{{ path('app_user_idvault') }}" class="btn btn-secondary btn-pricing-plan animate-up-2 mr-3"><i class="fas fa-rocket mr-2"></i>
+                    {{ 'register'|trans|capitalize }}</a>
+                <a href="{{ path('app_user_idvault') }}" class="btn btn-outline-white btn-docs animate-up-2"><i class="fas fa-lock mr-2"></i>
+                    {{ 'login'|trans|capitalize }}</a>
             </div>
+            {% else %}
+
+            {% endif %}
             <div class="d-flex d-lg-none align-items-center">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global"
                         aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation"><span
                         class="navbar-toggler-icon"></span></button>
             </div>
         </div>
-    </nav>
-</header>
+        <div class="d-flex align-items-center">
+            <button class="navbar-toggler ml-2" type="button" data-toggle="collapse"
+                    data-target="#navbar-default-primary" aria-controls="navbar-default-primary"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</nav>

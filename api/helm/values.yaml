@@ -4,18 +4,18 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: stage-platform
-  name: stage-platform
-  title: Stage platform
+  projectName: checking
+  name: checking
+  title: checking
   version: V1.0
   majorVersion: v1
-  id: 5265828b-85fb-4ad5-acd5-ade4da3fc593
+  id: 31a2ad29-ee03-4aa9-be81-abf1fda7bbcc
   description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
   type: application
-  repro: https://github.com/ConductionNL/stage-platform
-  demo: dev.stage-platform.com
-  container: https://hub.docker.com/repository/docker/conduction/stage-platform-php
-  domain: zuid-drecht.nl
+  repro: https://github.com/ConductionNL/checking
+  demo: dev.checking.nu
+  container: https://hub.docker.com/repository/docker/conduction/checking-php
+  domain: checking.nu
   subdomain: false
   subpath: 
   subpathRouting: true
@@ -152,6 +152,6 @@ resources: {}
 
 commonground:
     eherkenning:
-        location: https://zuid-drecht.nl/eherkenning
+        location: https://checking.nu/eherkenning
     digispoof:
-        location: https://zuid-drecht.nl/digispoof
+        location: https://checking.nu/digispoof
