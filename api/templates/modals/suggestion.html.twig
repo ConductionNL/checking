@@ -1,0 +1,54 @@
+<div class="modal fade" id="modal-suggestion" tabindex="-1" role="dialog" aria-labelledby="modal-suggestion" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{ 'do you have a suggestion for us?'|trans|capitalize }}</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    <div class="form-group">
+                        <label for="title">{{ 'title'|trans|capitalize }}</label>
+                        <input type="text" name="properties[titel]" id="title" class="form-control" >
+                    </div>
+                    <div class="form-group">
+                        <label for="description">{{ 'describe your idea'|trans|capitalize }}</label>
+                        <textarea class="form-control" id="description" rows="4" name="properties[tekst]"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="voornaam">Voornaam</label>
+                                <input class="form-control" id="voornaam" style="width: 100%" type="text" name="properties[contact][givenName]">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="tussenvoegsels">Tussenvoegels</label>
+                                <input class="form-control" id="tussenvoegsels" style="width: 100%" type="text" name="properties[contact][additionalName]">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="achternaam">Achternaam</label>
+                                <input class="form-control" id="achternaam" style="width: 100%" type="text" name="properties[contact][familyName]">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input required="" class="form-control" id="email" type="email" name="properties[contact][emails][0][email]">
+                        </div>
+                        <div class="form-group">
+                            <label for="telephone">Telefoonnummer</label>
+                            <input class="form-control" id="telephone" type="tel" name="properties[contact][telephones][0][telephone]">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-sm btn-primary">{{ 'send suggestion'|trans|capitalize }}</button>
+                <button type="button" class="btn btn-link text-danger ml-auto" data-dismiss="modal">{{ 'close'|trans|capitalize }}</button>
+            </div>
+        </div>
+    </div>
+</div>

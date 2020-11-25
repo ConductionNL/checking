@@ -1,3 +1,5 @@
+{% include 'modals/suggestion.html.twig' %}
+{% include 'modals/contact.html.twig' %}
 <footer class="footer py-6 bg-primary text-white">
     <div class="container">
         <div class="row">
@@ -35,8 +37,8 @@
             <div class="col-6 col-xl-3 mb-5 mb-xl-0">
                 <span class="h5">{{ 'other'|trans|capitalize }}</span>
                 <ul class="footer-links mt-2">
-                    <li><a target="_blank" href="#">{{ 'contact form'|trans|capitalize }}</a></li>
-                    <li><a target="_blank" href="#">{{ 'i have an suggestion'|trans|capitalize }}</a></li>
+                    <li><a target="_blank" data-toggle="modal" data-target="#modal-contact">{{ 'contact form'|trans|capitalize }}</a></li>
+                    <li><a target="_blank" data-toggle="modal" data-target="#modal-suggestion">{{ 'i have an suggestion'|trans|capitalize }}</a></li>
                 </ul>
             </div>
         </div>
@@ -54,3 +56,4 @@
         </div>
     </div>
 </footer>
+
