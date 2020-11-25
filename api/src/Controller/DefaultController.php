@@ -53,4 +53,48 @@ class DefaultController extends AbstractController
 
         return $variables;
     }
+
+    /**
+     * @Route("/privacy")
+     * @Template
+     */
+    public function privacyAction(CommonGroundService $commonGroundService, Request $request)
+    {
+        $variables = [];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/about")
+     * @Template
+     */
+    public function aboutAction(CommonGroundService $commonGroundService, Request $request)
+    {
+        $variables = [];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/terms")
+     * @Template
+     */
+    public function termsAction(CommonGroundService $commonGroundService, Request $request)
+    {
+        $variables = [];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/techniek")
+     * @Template
+     */
+    public function techniekAction(CommonGroundService $commonGroundService, Request $request)
+    {
+        $variables = [];
+
+        return $variables;
+    }
 }
