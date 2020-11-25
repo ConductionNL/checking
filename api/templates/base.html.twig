@@ -75,6 +75,10 @@
             background-color:  #01689B; !important;
         }
     </style>
+
+    {% block style %}
+
+    {% endblock %}
 </head>
 
 <body>
@@ -82,7 +86,7 @@
     {% include 'menu.html.twig' %}
 {% endif %}
 
-<main>
+<main id="main">
     {% block content %}
 
     {% endblock %}

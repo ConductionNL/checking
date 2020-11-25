@@ -7,35 +7,35 @@
 
     {% if social is defined and social is not empty %}
         {% if social.website is defined and social.website is not empty %}
-            <a href="{{ social.website }}">
+            <a target="_blank" href="{{ social.website }}">
                 <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
                     <span class="btn-inner-icon"><i class="fas fa-globe"></i></span>
                 </button>
             </a>
         {% endif %}
         {% if social.facebook is defined and social.facebook is not empty %}
-            <a href="{{ social.facebook }}">
+            <a target="_blank" href="{{ social.facebook }}">
                 <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
                     <span class="btn-inner-icon"><i class="fab fa-facebook-f"></i></span>
                 </button>
             </a>
         {% endif %}
         {% if social.instagram is defined and social.instagram is not empty %}
-            <a href="{{ social.instagram }}">
+            <a target="_blank" href="{{ social.instagram }}">
                 <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
                     <span class="btn-inner-icon"><i class="fab fa-instagram"></i></span>
                 </button>
             </a>
         {% endif %}
         {% if social.twitter is defined and social.twitter is not empty %}
-            <a href="{{ social.twitter }}">
+            <a target="_blank" href="{{ social.twitter }}">
                 <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
                     <span class="btn-inner-icon"><i class="fab fa-twitter"></i></span>
                 </button>
             </a>
         {% endif %}
         {% if social.linkedin is defined and social.linkedin is not empty %}
-            <a href="{{ social.linkedin }}">
+            <a target="_blank" href="{{ social.linkedin }}">
                 <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
                     <span class="btn-inner-icon"><i class="fab fa-linkedin-in"></i></span>
                 </button>

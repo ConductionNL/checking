@@ -30,7 +30,7 @@ settings:
   internal: false
   debug: 1
   cache: false
-  sessionDuration: 900
+  sessionDuration: 1209600
   replicaCount: 1
   corsAllowOrigin: ['*']
   trustedHosts: '^.+$'
