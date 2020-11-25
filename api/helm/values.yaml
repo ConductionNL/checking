@@ -15,7 +15,7 @@ settings:
   repro: https://github.com/ConductionNL/checking
   demo: dev.checking.nu
   container: https://hub.docker.com/repository/docker/conduction/checking-php
-  domain: checking.nu
+  domain: zuid-drecht.nl
   subdomain: false
   subpath: 
   subpathRouting: true
@@ -152,6 +152,6 @@ resources: {}
 
 commonground:
     eherkenning:
-        location: https://checking.nu/eherkenning
+        location: https://zuid-drecht.nl/eherkenning
     digispoof:
-        location: https://checking.nu/digispoof
+        location: https://zuid-drecht.nl/digispoof
