@@ -26,8 +26,13 @@ class DashboardController extends AbstractController
      */
     public function indexAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
     {
-        // On an index route we might want to filter based on user input
-        $variables['query'] = array_merge($request->query->all(), $variables['post'] = $request->request->all());
+        $variables = [];
+
+        $person = $commonGroundService->getResource($this->getUser()->getPerson());
+
+        $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
+
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl])['hydra:member'];
 
         return $variables;
     }
