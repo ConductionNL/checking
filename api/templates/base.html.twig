@@ -82,6 +82,27 @@
     {% include 'menu.html.twig' %}
 {% endif %}
 
+{% set flashes = [] %}
+{% for label, messages in app.flashes() %}
+    {% for message in messages %}
+        {% if message not in flashes %}
+            {% set flashes = flashes|merge([message]) %}
+            <div class="alert alert-{% if label == 'error' %}{% set label = 'danger' %}{% endif %}{{ label }} rounded-0 mb-0">
+                <div class="container-md">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Text -->
+                            <p class="text-center mb-0">
+                                {{ message|trans|capitalize }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
 <main>
     {% block content %}
 

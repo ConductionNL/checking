@@ -1,54 +1,106 @@
-<div class="modal fade" id="modal-suggestion" tabindex="-1" role="dialog" aria-labelledby="modal-suggestion" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title">{{ 'do you have a suggestion for us?'|trans|capitalize }}</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="" method="post">
+<div class="modal fade" role="dialog" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModal" aria-hidden="true">
+    <section class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content">
+        <header class="modal-header">
+            <h5>Heeft u een tip voor ons ?</h5>
+            <button class="close"  data-dismiss="modal" aria-label="Close">
+                <i class="icon icon-cross"></i>
+                &times;
+            </button>
+        </header>
+        <div class="modal-body" tabindex="0" lang="en-US">
+            <div class="skiplink-target content" id="main-content">
+                <form method="post">
                     <div class="form-group">
-                        <label for="title">{{ 'title'|trans|capitalize }}</label>
-                        <input type="text" name="properties[titel]" id="title" class="form-control" >
+                        <label class="input__label" for="titel">Titel</label>
+                        <input required="" id="titel" name="properties[titel]" type="text" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="description">{{ 'describe your idea'|trans|capitalize }}</label>
-                        <textarea class="form-control" id="description" rows="4" name="properties[tekst]"></textarea>
+                        <label class="input__label" for="tekst">Beschrijf uw idee</label>
+                        <textarea required="" id="tekst" name="properties[tekst]" class="form-control"></textarea>
+                    </div>
+                    {#
+                    <div class="input input--horizontal">
+                        <input type="file" id="bijlage" class="input__control--file" name="properties[bijlage]" aria-describedby="input-upload-hint">
+                        <span class="btn" role="button">Bestand uploaden</span> <span id="fileName"></span>
+                    </div>
+                    #}
+
+                    {% if app.user.person is defined and app.user.person is not empty %}
+                        <div class="form-group">
+                            <input id="@type" name="properties[contact]" value="{{ app.user.person }}" type="hidden" class="form-control">
+                        </div>
+                    {% elseif session.person is defined and session.person is not empty %}
+                        <div class="form-group">
+                            <input id="@type" name="properties[contact]" value="{{ session.person }}" type="hidden" class="form-control">
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <h2>Uw contact gegevens</h2>
+                            <div class="row" style="margin-bottom: 40px">
+                                <div class="col-md-4">
+                                    <label class="input__label" for="voornaam">Voornaam</label>
+                                    <input class="form-control" style="width: 100%" type="text" name="properties[contact][givenName]">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="input__label" for="achternaam">Tussenvoegels</label>
+                                    <input class="form-control" style="width: 100%" type="text" name="properties[contact][additionalName]">
+                                </div>
+
+                                <div class="col-md-5">
+                                    <label class="input__label" for="achternaam">Achternaam</label>
+                                    <input class="form-control" style="width: 100%" type="text" name="properties[contact][familyName]">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="input__label" for="email">Email</label>
+                                <input required="" class="form-control" type="email" name="properties[contact][emails][0][email]">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="input__label" for="telephone">Telefoonnummer</label>
+                                <input class="form-control" type="tel" name="properties[contact][telephones][0][telephone]">
+                            </div>
+
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <input id="@type" name="@type" value="requests" type="hidden" class="form-control">
                     </div>
                     <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="voornaam">Voornaam</label>
-                                <input class="form-control" id="voornaam" style="width: 100%" type="text" name="properties[contact][givenName]">
-                            </div>
+                        <input id="@component" name="@component" value="vrc" type="hidden" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input id="requestType" name="requestType" value="{{ commonground_cleanurl({"component":"vtc", "type":"request_types", "id":"d92f1462-6a69-449f-8491-e6038af5ca82"}) }}" type="hidden" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input id="processType" name="processType" value="{{ commonground_cleanurl({"component":"ptc", "type":"process_types", "id":"1e814be2-1a60-4869-9386-053826de19c4"}) }}" type="hidden" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input id="organization" name="organization" value="{{ commonground_cleanurl({"component":"wrc", "type":"organizations", "id":"c571bdad-f34c-4e24-94e7-74629cfaccc9"}) }}" type="hidden" class="form-control">
+                    </div>
 
-                            <div class="col-md-3">
-                                <label for="tussenvoegsels">Tussenvoegels</label>
-                                <input class="form-control" id="tussenvoegsels" style="width: 100%" type="text" name="properties[contact][additionalName]">
-                            </div>
-
-                            <div class="col-md-4">
-                                <label for="achternaam">Achternaam</label>
-                                <input class="form-control" id="achternaam" style="width: 100%" type="text" name="properties[contact][familyName]">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input required="" class="form-control" id="email" type="email" name="properties[contact][emails][0][email]">
-                        </div>
-                        <div class="form-group">
-                            <label for="telephone">Telefoonnummer</label>
-                            <input class="form-control" id="telephone" type="tel" name="properties[contact][telephones][0][telephone]">
-                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-secondary">Bevestig</button>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-sm btn-primary">{{ 'send suggestion'|trans|capitalize }}</button>
-                <button type="button" class="btn btn-link text-danger ml-auto" data-dismiss="modal">{{ 'close'|trans|capitalize }}</button>
-            </div>
         </div>
-    </div>
+       </div>
+    </section>
 </div>
+
+<script>
+    var feedbackModal;
+    // Load modal component
+    System.import('/uno/components/modal/modal.js').then(function (module) {
+        feedbackModal = new module.Modal(document.getElementById('feedbackModal'));
+    });
+    // Called when the user clicks the button
+    function openModalFeedback() {
+        feedbackModal.open();
+    }
+</script>
