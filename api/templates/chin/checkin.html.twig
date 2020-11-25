@@ -6,8 +6,20 @@
     {% set organization = commonground_resource(resource.organization) %}
 {% endif %}
 
+{% block style %}
+    <style>
+        .background{
+            background-color: white;
+        }
+
+        {% if organization.style.css is defined and organization.style.css is not empty %}
+        {{ organization.style.css|raw }}
+        {% endif %}
+    </style>
+{% endblock %}
+
 {% block content %}
-    <div class="container">
+    <div class="container background">
         <form action="{{ path('app_chin_checkin',{"code":code}) }}" method="post">
         <div class="row">
             <div class="col-12">

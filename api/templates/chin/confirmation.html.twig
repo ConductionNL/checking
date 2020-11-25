@@ -6,11 +6,23 @@
     {% set organization = commonground_resource(resource.organization) %}
 {% endif %}
 
+{% block style %}
+    <style>
+        .background{
+            background-color: white;
+        }
+
+        {% if organization.style.css is defined and organization.style.css is not empty %}
+        {{ organization.style.css|raw }}
+        {% endif %}
+    </style>
+{% endblock %}
+
 {% block content %}
-    <div class="container">
+    <div class="container background">
         <div class="row">
             <div class="col-12 text-center pt-4">
-                <h1>Succes!</h1>
+                <h1 class="checkinFont">Succes!</h1>
             </div>
         </div>
         <div class="row">
