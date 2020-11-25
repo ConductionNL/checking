@@ -3,6 +3,7 @@
         <div class="card-body p-2">
             <h2 class="h5 font-weight-normal text-center mt-3 mb-0">{{ app.user.name }}</h2>
             <div class="list-group dashboard-menu list-group-sm mt-4">
+                <a href="{{ path('app_dashboard_index') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'overview' %}active {% endif %}">{{ 'overview'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
                 <a href="{{ path('app_dashboard_checkins') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'checkins' %}active {% endif %}">{{ 'checkins'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
                 <a href="{{ path('app_dashboard_codes') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'codes' %}active {% endif %}">{{ 'codes'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
                 <a href="{{ path('app_dashboard_organization') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'organization' %}active {% endif %}">{{ 'organization'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
@@ -17,6 +18,7 @@
         <div class="card-body">
             <div class="row align-items-center">
                 <div class="col-10 d-flex">
+                    <a href="{{ path('app_dashboard_index') }}" class="list-group-item list-group-item-action border-0 {% if activeItem is defined and activeItem == 'overview' %}active {% endif %}">{{ 'overview'|trans|capitalize }}</a>
                     <a href="{{ path('app_dashboard_checkins') }}" class="list-group-item list-group-item-action border-0 {% if activeItem is defined and activeItem == 'checkins' %}active {% endif %}">{{ 'Checkins'|trans|capitalize }}</a>
                     <a href="{{ path('app_dashboard_reservations') }}" class="list-group-item list-group-item-action border-0 {% if activeItem is defined and activeItem == 'reservation' %}active {% endif %}">{{ 'reservations'|trans|capitalize }}</a>
                 </div>
