@@ -1,16 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-transparent navbar-dark navbar-theme-primary">
-    <div class="container position-relative">
-        <a class="navbar-brand mr-lg-3" href="#">
-            <img class="navbar-brand-dark" src="../../assets/brand/light.svg" alt="menuimage">
-            <img class="navbar-brand-light" src="../../assets/brand/dark.svg" alt="menuimage">
-        </a>
-        <div class="navbar-collapse collapse" id="navbar-default-primary">
-            <div class="navbar-collapse-header">
-                <div class="row">
-                    <div class="col-6 collapse-brand">
-                        <a href="#">
-                            <img src="../../assets/img/brand/dark.svg" alt="menuimage">
-                        </a>
+<header class="header-global">
+    <nav id="navbar-main" class="navbar navbar-main navbar-theme-primary navbar-expand-lg headroom py-lg-3 px-lg-12 navbar-dark">
+        <div class="container">
+            <div class="navbar-collapse collapse" id="navbar_global">
+                <div class="navbar-collapse-header">
+                    <div class="row">
+                        <div class="col-6 collapse-brand">
+                            <a href="{{ path('app_default_index') }}">
+                                <img src="/bundles/spaces/assets/img/brand/dark.svg" height="35" alt="Logo Impact">
+                            </a>
+                        </div>
+                        <div class="col-6 collapse-close">
+                            <a href="#navbar_global" role="button" class="fas fa-times" data-toggle="collapse"
+                               data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false"
+                               aria-label="Toggle navigation"></a>
+                        </div>
                     </div>
                     <div class="col-6 collapse-close">
                         <i class="fas fa-times" data-toggle="collapse" role="button"
@@ -18,27 +21,40 @@
                            aria-expanded="false" aria-label="Toggle navigation"></i>
                     </div>
                 </div>
-            </div>
-            <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">About</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown link
-                        <i class="fas fa-angle-down nav-link-arrow ml-2"></i>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Submenu <i class="fas fa-angle-down nav-link-arrow ml-2"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Submenu action</a></li>
-                                <li><a class="dropdown-item" href="#">Another submenu action</a></li>
-                                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Subsubmenu <i class="fas fa-angle-down nav-link-arrow ml-2"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
-                                        <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                <ul class="navbar-nav navbar-nav-hover justify-content-center">
+                    <li class="nav-item dropdown">
+                        <a href="{{ path('app_default_index') }}" id="mainPagesDropdown" class="nav-link dropdown-toggle" aria-expanded="false" data-toggle="dropdown">
+                            <i class="fas fa-home"></i>
+                            <span class="nav-link-inner-text mr-1">Home</span>
+                        </a>
+                        {# Dropdown voorbeeldcode misscien handig voor later#}
+                        <!--
+                        <div class="dropdown-menu dropdown-megamenu p-3 p-lg-4" aria-labelledby="mainPagesDropdown">
+                            <div class="row">
+                                <div class="col-6 col-lg-4">
+                                    <h6 class="d-block mb-3 text-primary">Main pages</h6>
+                                    <ul class="list-style-none mb-4">
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/index.html">Landing</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/index-2.html">Landing 2</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/index-3.html">Landing 3</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/about.html">About</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/pricing.html">Pricing</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/team.html">Team</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/contact.html">Contact</a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Second subsubmenu <i class="fas fa-angle-down nav-link-arrow ml-2"></i></a>
@@ -46,12 +62,207 @@
                                         <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
                                         <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
                                     </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+                                </div>
+                                <div class="col-6 col-lg-4">
+                                    <h6 class="d-block mb-3 text-primary">Listing</h6>
+                                    <ul class="list-style-none mb-4">
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/all-spaces.html">All spaces</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/all-spaces-map.html">Map view</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/all-spaces-sidebar.html">All spaces sidebar</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/single-space.html">Space details</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/profile.html">Profile</a>
+                                        </li>
+                                    </ul>
+                                    <h6 class="d-block mb-3 text-primary">Support</h6>
+                                    <ul class="list-style-none mb-4">
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/support.html">Support center</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/support-topic.html">Support topic</a>
+                                        </li>
+                                    </ul>
+                                    <h6 class="d-block mb-3 text-primary">Blog</h6>
+                                    <ul class="list-style-none mb-4">
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/blog.html">Blog</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/blog-post.html">Blog post</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-6 col-lg-4">
+                                    <h6 class="d-block mb-3 text-primary">User</h6>
+                                    <ul class="list-style-none mb-4">
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/sign-in.html">Sign in</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/sign-up.html">Sign up</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/forgot-password.html">Forgot password</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/reset-password.html">Reset password</a>
+                                        </li>
+                                    </ul>
+                                    <h6 class="d-block mb-3 text-primary">Special</h6>
+                                    <ul class="list-style-none mb-4">
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/404.html">404 Not Found</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/500.html">500 Server Error</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/maintenance.html">Maintenance</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/coming-soon.html">Coming soon</a>
+                                        </li>
+                                        <li class="mb-2 megamenu-item">
+                                            <a class="megamenu-link" href="./html/blank.html">Blank page</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" id="supportDropdown" class="nav-link dropdown-toggle" aria-expanded="false" data-toggle="dropdown">
+                            <span class="nav-link-inner-text mr-1">For organizations</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" id="supportDropdown" class="nav-link dropdown-toggle" aria-expanded="false" data-toggle="dropdown">
+                            <span class="nav-link-inner-text mr-1">How does it work?</span>
+                        </a>
+                        {# Dropdown voorbeeldcode misscien handig voor later#}
+                        <!--
+                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
+
+                            <div class="col-auto px-0">
+                                <div class="list-group list-group-flush">
+                                    <a href="https://themesberg.com/docs/spaces/getting-started/quick-start/" target="_blank"
+                                       class="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
+                                        <span class="icon icon-md icon-secondary"><i class="fas fa-file-alt"></i></span>
+                                        <div class="ml-4">
+                                            <span class="text-dark d-block">Documentation<span class="badge badge-sm badge-secondary ml-2">v3.0</span></span>
+                                            <span class="small">Examples and guides</span>
+                                        </div>
+                                    </a>
+                                    <a href="https://themesberg.com/contact" target="_blank"
+                                       class="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
+                                        <span class="icon icon-md icon-primary"><i
+                                                class="fas fa-microphone-alt"></i></span>
+                                        <div class="ml-4">
+                                            <span class="text-dark d-block">Support</span>
+                                            <span class="small">Looking for answers?</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" id="supportDropdown" class="nav-link dropdown-toggle" aria-expanded="false" data-toggle="dropdown">
+                            <span class="nav-link-inner-text mr-1">Privacy</span>
+                        </a>
+                        {# Dropdown voorbeeldcode misschien handig voor later#}
+                        <!--
+                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
+
+                            <div class="col-auto px-0">
+                                <div class="list-group list-group-flush">
+                                    <a href="https://themesberg.com/docs/spaces/getting-started/quick-start/" target="_blank"
+                                       class="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
+                                        <span class="icon icon-md icon-secondary"><i class="fas fa-file-alt"></i></span>
+                                        <div class="ml-4">
+                                            <span class="text-dark d-block">Documentation<span class="badge badge-sm badge-secondary ml-2">v3.0</span></span>
+                                            <span class="small">Examples and guides</span>
+                                        </div>
+                                    </a>
+                                    <a href="https://themesberg.com/contact" target="_blank"
+                                       class="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
+                                        <span class="icon icon-md icon-primary"><i
+                                                class="fas fa-microphone-alt"></i></span>
+                                        <div class="ml-4">
+                                            <span class="text-dark d-block">Support</span>
+                                            <span class="small">Looking for answers?</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" id="supportDropdown" class="nav-link dropdown-toggle" aria-expanded="false" data-toggle="dropdown">
+                            <span class="nav-link-inner-text mr-1">Terms and conditions</span>
+                        </a>
+                        {# Dropdown voorbeeldcode misscien handig voor later#}
+                        <!--
+                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
+
+                            <div class="col-auto px-0">
+                                <div class="list-group list-group-flush">
+                                    <a href="https://themesberg.com/docs/spaces/getting-started/quick-start/" target="_blank"
+                                       class="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
+                                        <span class="icon icon-md icon-secondary"><i class="fas fa-file-alt"></i></span>
+                                        <div class="ml-4">
+                                            <span class="text-dark d-block">Documentation<span class="badge badge-sm badge-secondary ml-2">v3.0</span></span>
+                                            <span class="small">Examples and guides</span>
+                                        </div>
+                                    </a>
+                                    <a href="https://themesberg.com/contact" target="_blank"
+                                       class="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
+                                        <span class="icon icon-md icon-primary"><i
+                                                class="fas fa-microphone-alt"></i></span>
+                                        <div class="ml-4">
+                                            <span class="text-dark d-block">Support</span>
+                                            <span class="small">Looking for answers?</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+                    </li>
+
+                </ul>
+            </div>
+            {% if not app.user %}
+            <div class="d-none d-lg-block @@cta_button_classes">
+                <a href="{{ path('app_user_idvault') }}" class="btn btn-secondary btn-pricing-plan animate-up-2 mr-3"><i class="fas fa-rocket mr-2"></i>
+                    {{ 'register'|trans|capitalize }}</a>
+                <a href="{{ path('app_user_idvault') }}" class="btn btn-outline-white btn-docs animate-up-2"><i class="fas fa-lock mr-2"></i>
+                    {{ 'login'|trans|capitalize }}</a>
+            </div>
+            {% else %}
+
+            {% endif %}
+            <div class="d-flex d-lg-none align-items-center">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global"
+                        aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation"><span
+                        class="navbar-toggler-icon"></span></button>
+            </div>
         </div>
         <div class="d-flex align-items-center">
             <button class="navbar-toggler ml-2" type="button" data-toggle="collapse"
