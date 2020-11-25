@@ -28,9 +28,8 @@ class OrganizationService
         $this->twig = $twig;
     }
 
-    public function welcomeMail($resource){
-
-
+    public function welcomeMail($resource)
+    {
         if (strpos($resource['@self'], 'wrc') == false) {
             return;
         }
@@ -60,7 +59,6 @@ class OrganizationService
 
         $message = [];
 
-
         if ($this->params->get('app_env') == 'prod') {
             $message['service'] = '/services/eb7ffa01-4803-44ce-91dc-d4e3da7917da';
         } else {
@@ -77,5 +75,4 @@ class OrganizationService
 
         $this->commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
     }
-
 }

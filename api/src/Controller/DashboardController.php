@@ -21,7 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DashboardController extends AbstractController
 {
-
     /**
      * @var FlashBagInterface
      */
@@ -241,7 +240,6 @@ class DashboardController extends AbstractController
      */
     public function organizationAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
     {
-
     }
 
     /**

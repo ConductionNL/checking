@@ -36,8 +36,6 @@ class OrganizationSubscriber implements EventSubscriberInterface
 
         $this->organizationService->welcomeMail($resource);
 
-
         return $event;
     }
-
 }
