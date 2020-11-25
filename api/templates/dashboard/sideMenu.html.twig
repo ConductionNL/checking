@@ -5,9 +5,9 @@
             <div class="list-group dashboard-menu list-group-sm mt-4">
                 <a href="{{ path('app_dashboard_checkins') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'checkins' %}active {% endif %}">{{ 'checkins'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
                 <a href="{{ path('app_dashboard_codes') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'codes' %}active {% endif %}">{{ 'codes'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
-                <a href="{{ path('app_dashboard_userinfo') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'userinfo' %}active {% endif %}">{{ 'user info'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
                 <a href="{{ path('app_dashboard_organization') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'organization' %}active {% endif %}">{{ 'organization'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
                 <a href="{{ path('app_dashboard_reservations') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'reservation' %}active {% endif %}">{{ 'reservations'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
+                <a href="{{ path('app_user_logout') }}" class="btn btn-block btn-danger mt-2">{{ 'logout'|trans|capitalize }}</a>
             </div>
         </div>
     </div>
@@ -16,16 +16,17 @@
     <div class="card bg-white border-light mb-4 mb-lg-5">
         <div class="card-body">
             <div class="row align-items-center">
-                <div class="col-10 d-flex"><a href="./account.html" class="list-group-item list-group-item-action border-0">Overview</a> <a href="./settings.html" class="list-group-item list-group-item-action border-0">Settings</a> <a href="./my-items.html" class="list-group-item list-group-item-action d-none d-sm-block border-0 active">My Items</a> <a href="./security.html" class="list-group-item list-group-item-action d-none d-md-block border-0">Security</a></div>
+                <div class="col-10 d-flex">
+                    <a href="{{ path('app_dashboard_checkins') }}" class="list-group-item list-group-item-action border-0 {% if activeItem is defined and activeItem == 'checkins' %}active {% endif %}">{{ 'Checkins'|trans|capitalize }}</a>
+                    <a href="{{ path('app_dashboard_reservations') }}" class="list-group-item list-group-item-action border-0 {% if activeItem is defined and activeItem == 'reservation' %}active {% endif %}">{{ 'reservations'|trans|capitalize }}</a>
+                </div>
                 <div class="col-2 d-flex justify-content-center">
                     <div class="btn-group dropleft">
                         <button class="btn btn-link dropdown-toggle dropdown-toggle-split mr-2 m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon icon-sm"><span class="fas fa-ellipsis-h icon-secondary fa-lg"></span> </span><span class="sr-only">Toggle Dropdown</span></button>
                         <div class="dropdown-menu">
-                            <a href="{{ path('app_dashboard_checkins') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'checkins' %}active {% endif %}">{{ 'checkins'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
-                            <a href="{{ path('app_dashboard_codes') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'codes' %}active {% endif %}">{{ 'codes'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
-                            <a href="{{ path('app_dashboard_userinfo') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'userinfo' %}active {% endif %}">{{ 'user info'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
-                            <a href="{{ path('app_dashboard_organization') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'organization' %}active {% endif %}">{{ 'organization'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
-                            <a href="{{ path('app_dashboard_reservations') }}" class="d-flex list-group-item list-group-item-action {% if activeItem is defined and activeItem == 'reservation' %}active {% endif %}">{{ 'reservations'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
+                            <a href="{{ path('app_dashboard_codes') }}" class="list-group-item list-group-item-action border-0 {% if activeItem is defined and activeItem == 'codes' %}active {% endif %}">{{ 'codes'|trans|capitalize }}</a>
+                            <a href="{{ path('app_dashboard_organization') }}" class="list-group-item list-group-item-action border-0 {% if activeItem is defined and activeItem == 'organization' %}active {% endif %}">{{ 'organization'|trans|capitalize }}</a>
+                            <a href="{{ path('app_user_logout') }}" class="btn btn-block btn-danger ml-auto mr-auto mt-2" style="width: 90%;">{{ 'logout'|trans|capitalize }}</a>
                         </div>
                     </div>
                 </div>

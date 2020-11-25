@@ -28,7 +28,7 @@
                 </li>
             </ul>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a class="navbar-btn btn btn-sm btn-success lift ml-auto" href="{{ path('app_dashboard_index') }}">
+                <a class="navbar-btn btn btn-sm btn-success lift ml-auto" href="{{ path('app_dashboard_checkins') }}">
                     {{ 'dashboard'|trans|capitalize }}
                 </a>
             {% else %}

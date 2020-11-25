@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container background">
+    <div class="container">
         <form action="{{ path('app_chin_checkin',{"code":code}) }}" method="post">
         <div class="row">
             <div class="col-12">
@@ -59,4 +59,9 @@
         </div>
         </form>
     </div>
+
+    <script>
+        let main = document.getElementById('main');
+        main.classList.add('background');
+    </script>
 {% endblock %}

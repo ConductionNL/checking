@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container background">
+    <div class="container">
         <div class="row">
             <div class="col-12">
                 {% include 'chin/widgets/checkin_widget_organizationinfo.html.twig' %}
@@ -75,4 +75,8 @@
         </div>
     </div>
 
+    <script>
+        let main = document.getElementById('main');
+        main.classList.add('background');
+    </script>
 {% endblock %}
