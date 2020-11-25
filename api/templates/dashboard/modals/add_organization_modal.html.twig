@@ -1,0 +1,79 @@
+<div class="modal fade" id="organizationModal" tabindex="-1" role="dialog" aria-labelledby="organizationModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{ 'organization'|trans|capitalize }}</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ path('app_dashboard_organizations') }}" method="post" enctype="multipart/form-data">
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label for="name">{{ 'name'|trans|capitalize }} <span style="color: red; font-weight: bold">*</span></label>
+                        <input required class="form-control" name="name" id="name" type="text" placeholder="{{ 'name'|trans|capitalize }}">
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">{{ 'email'|trans|capitalize }} <span style="color: red; font-weight: bold">*</span></label>
+                        <input required class="form-control" name="email" id="email" type="email" placeholder="{{ 'email'|trans|capitalize }}">
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label for="description">{{ 'description'|trans|capitalize }} <span style="color: red; font-weight: bold">*</span></label>
+                        <textarea required name="description" class="form-control" id="description" rows="3"></textarea>
+                    </div>
+
+                    <div class="custom-file">
+                        <input onchange="showLogo()" type="file" name="logo" class="custom-file-input" id="logo">
+                        <label class="custom-file-label" for="customFile">{{ 'choose logo'|trans|capitalize }}</label>
+                    </div>
+
+                    <div id="logoHolder" style="text-align: center" class="align-items-center mt-3 bg-gray-200" >
+
+                    </div>
+
+                    <div class="form-check">
+                        <input required type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">{{ 'i agree to the'|trans|capitalize }} <a target="_blank" href="/terms">{{ 'terms and services'|trans }}</a>.</label>
+                    </div>
+
+                    <!-- Submit -->
+                    <button class="btn btn-block btn-primary mt-3 lift">
+                        {{ 'add organization'|trans|capitalize }}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function showLogo(){
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+        async function Main() {
+            let file = document.querySelector('#logo').files[0];
+            let logoHolder = document.querySelector('#logoHolder');
+            logoHolder.innerHTML = '';
+            let logo = document.createElement('img');
+            let base64 = await toBase64(file);
+            logo.setAttribute('style', 'height: 100px;');
+            logo.setAttribute('src', base64);
+            logoHolder.appendChild(logo);
+        }
+
+        Main();
+
+    }
+
+</script>
