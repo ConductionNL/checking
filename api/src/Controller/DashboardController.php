@@ -382,5 +382,4 @@ class DashboardController extends AbstractController
 
         return $variables;
     }
-
 }
