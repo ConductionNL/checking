@@ -12,7 +12,7 @@
                     <div class="card border-light mb-4">
                         <div class="row no-gutters align-items-center">
                             {% if organization.style.favicon.base64 is defined %}
-                                <div class="col-12 col-lg-6 col-xl-4">
+                                <div class="col-12 col-lg-6 col-xl-4 text-center">
                                     <a href="{{ path('app_dashboard_organization', {'id': organization.id}) }}">
                                         <img style="width: 100px; height: 100px" src="{{ organization.style.favicon.base64 }}" alt="private office" class="card-img p-2 rounded-xl">
                                     </a>

@@ -7,6 +7,7 @@ namespace App\Service;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Security;
+use Twig\Environment;
 
 class OrganizationService
 {
@@ -17,14 +18,22 @@ class OrganizationService
 
     private $commonGroundService;
 
-    public function __construct(CommonGroundService $commonGroundService, ParameterBagInterface $params, Security $security)
+    private $twig;
+
+    public function __construct(CommonGroundService $commonGroundService, ParameterBagInterface $params, Security $security, Environment $twig)
     {
         $this->commonGroundService = $commonGroundService;
         $this->params = $params;
         $this->security = $security;
+        $this->twig = $twig;
     }
 
     public function welcomeMail($resource){
+
+
+        if (strpos($resource['@self'], 'wrc') == false) {
+            return;
+        }
 
         $organization = $resource;
         $organizationContact = $this->commonGroundService->getResource($resource['contact']);
@@ -51,6 +60,7 @@ class OrganizationService
 
         $message = [];
 
+
         if ($this->params->get('app_env') == 'prod') {
             $message['service'] = '/services/eb7ffa01-4803-44ce-91dc-d4e3da7917da';
         } else {
@@ -59,8 +69,9 @@ class OrganizationService
         $message['status'] = 'queued';
         $message['subject'] = 'Welcome';
         $html = $this->commonGroundService->getResource(['component'=>'wrc', 'type'=>'templates', 'id'=>'2ca5b662-e941-46c9-ae87-ae0c68d0aa5d'])['content'];
-        $template = $this->get('twig')->createTemplate($html);
-        $message['content'] = $template->render(['node.id' => $node['id']]);
+
+        $template = $this->twig->createTemplate($html);
+        $message['content'] = $template->render(['node' => $node]);
         $message['reciever'] = $organizationContact['emails'][0]['email'];
         $message['sender'] = 'no-reply@conduction.nl';
 

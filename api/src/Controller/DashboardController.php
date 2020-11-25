@@ -141,7 +141,7 @@ class DashboardController extends AbstractController
             $resource['accommodation'] = $commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'accommodations', 'id' => $accommodation['id']]);
             $commonGroundService->saveResource($resource, (['component' => 'chin', 'type' => 'nodes']));
 
-            return $this->redirect($this->generateUrl('app_chin_nodes'));
+            return $this->redirect($this->generateUrl('app_dashboard_codes'));
         }
 
         return $variables;
