@@ -50,7 +50,10 @@
                     {{ 'login'|trans|capitalize }}</a>
             </div>
             {% else %}
-
+                <div class="d-none d-lg-block @@cta_button_classes">
+                    <a href="{{ path('app_dashboard_index') }}" class="btn btn-secondary btn-pricing-plan animate-up-2 mr-3"><i class="fas fa-user mr-2"></i>
+                        {{ 'dashboard'|trans|capitalize }}</a>
+                </div>
             {% endif %}
             <div class="d-flex d-lg-none align-items-center">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global"
@@ -67,3 +70,4 @@
         </div>
     </div>
 </nav>
+</header>
