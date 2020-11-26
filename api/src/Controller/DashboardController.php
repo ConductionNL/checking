@@ -154,10 +154,9 @@ class DashboardController extends AbstractController
     {
         $variables = [];
 
-        if ($request->isMethod('POST') && $request->get('active')){
-
+        if ($request->isMethod('POST') && $request->get('active')) {
             $organizationUrl = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $request->get('organization')]);
-            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'],['username' => $this->getUser()->getUsername()])['hydra:member'][0];
+            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->getUser()->getUsername()])['hydra:member'][0];
 
             $user['organization'] = $organizationUrl;
 
@@ -166,9 +165,9 @@ class DashboardController extends AbstractController
             }
 
             $user = $commonGroundService->updateResource($user);
-            return $this->redirect($this->generateUrl('app_dashboard_organizations'));
 
-        } else if ($request->isMethod('POST')) {
+            return $this->redirect($this->generateUrl('app_dashboard_organizations'));
+        } elseif ($request->isMethod('POST')) {
             $kvk = ' ';
             $name = $request->get('name');
             if ($request->get('kvk')) {
