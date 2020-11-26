@@ -1,0 +1,118 @@
+{% if item.node.organization is defined and item.node.organization is not empty and 'http' in item.node.organization %}
+    {% set org = commonground_resource(item.node.organization) %}
+    {% set orgCc = commonground_resource_list({'component':'cc', 'type':'organizations'}, {'name':org.name})['hydra:member'] %}
+    {% if orgCc[0] is defined and orgCc[0] is not empty %}
+        {% set orgCc = orgCc[0] %}
+        {% if orgCc.socials[0] is defined %}
+            {% set social = orgCc.socials[0] %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+
+<style>
+
+    .checkinFont {
+        color: #01689b;
+    }
+
+    .background {
+        background-color: white;
+    }
+
+    .background{
+        color: white;
+    }
+
+        {% if org.style.css is defined and org.style.css is not empty %}
+    {{ org.style.css|raw }}
+    {% endif %}
+</style>
+
+
+<div class="modal modal--backdrop noFocus" role="dialog" id="checkin-{{ item.id }}" tabindex="-1"
+     aria-describedby="modal-description3">
+    <section class="modal__content noFocus" role="document">
+        <div class="modal__body noFocus background" style="height: 600px;" tabindex="0" lang="en-US">
+            <div class="" style="height: 100%; text-align: center; display: flex; flex-direction: column; justify-content: space-around">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h2 class="checkinFont" style="font-size: 5rem;">Gelukt!</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    {% if org.style.favicon.base64 is defined and org.style.favicon.base64 is not empty %}
+                        <div class="col-xs-12">
+                            <img style="width: 30rem;" src="{{ org.style.favicon.base64 }}" alt="">
+                        </div>
+                    {% else %}
+                        <div class="col-xs-12">
+                            <span style="font-size: 20rem; color: #39870c;" class="icon icon-check"></span>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col-xs-1 col-sm-2 col-md-3 col-lg-3 "></div>
+                    <div class="col-xs-10 col-sm-8 col-md-6  col-lg-6 " style="margin-bottom: 15px;">
+                        <div style="width: 100%; background-color: white; border-radius: 20px; padding-top: 20px; padding-bottom: 20px;">
+                            <img style="width: 130px" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgODI2LjY3IDg0NC43MyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXItZ3JhZGllbnQiIHgxPSIxOTguMzMiIHkxPSIxOTguNzUiIHgyPSI3MDEuNSIgeTI9IjcwMS45MiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzJiODdjMyIvPjxzdG9wIG9mZnNldD0iMC4zNSIgc3RvcC1jb2xvcj0iIzJhOGFjNiIvPjxzdG9wIG9mZnNldD0iMC42MiIgc3RvcC1jb2xvcj0iIzI3OTRjZSIvPjxzdG9wIG9mZnNldD0iMC44OCIgc3RvcC1jb2xvcj0iIzIyYTVkYiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzFmYjBlNCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxnIHN0eWxlPSJpc29sYXRpb246aXNvbGF0ZSI+PGcgaWQ9IkxheWVyXzEiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+PGNpcmNsZSBjeD0iNDE0LjI2IiBjeT0iNDIxLjk0IiByPSI0MDEuMDkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xNzcuMDIgNDE2LjUxKSByb3RhdGUoLTQ1KSIgc3R5bGU9ImZpbGw6IzIyYjFlNSIvPjxwYXRoIGQ9Ik04MTUuMzUsNDIxLjk0cTAtMjAuNDMtMi00MC4zNEw2MzQuMTksMjAyLjQ2aDBhMjAuNzUsMjAuNzUsMCwwLDAtMTcuNTYtOS44SDIxM2EyMC43OSwyMC43OSwwLDAsMC0yMC43MywyMC43M1Y2MTdhMjAuNjgsMjAuNjgsMCwwLDAsNi40NCwxNUwzODguOSw4MjIuMjFjOC4zOS41MiwxNi44NC44MiwyNS4zNi44MkM2MzUuNzgsODIzLDgxNS4zNSw2NDMuNDYsODE1LjM1LDQyMS45NFoiIHN0eWxlPSJmaWxsOnVybCgjbGluZWFyLWdyYWRpZW50KSIvPjxnIHN0eWxlPSJvcGFjaXR5OjAuNzAwMDAwMDAwMDAwMDAwMTttaXgtYmxlbmQtbW9kZTpjb2xvci1idXJuIj48cmVjdCB4PSI1MjYuOTEiIHk9IjY0Ny44NyIgd2lkdGg9IjYxLjc4IiBoZWlnaHQ9IjI1LjgxIiBzdHlsZT0iZmlsbDojMmQyYTI3Ii8+PHJlY3QgeD0iMjY3Ljg1IiB5PSI2NDcuODciIHdpZHRoPSI2MS43OCIgaGVpZ2h0PSIyNS44MSIgc3R5bGU9ImZpbGw6IzJkMmEyNyIvPjxwYXRoIGQ9Ik02NDcsMzQ5LjN2LTQuMTVoMy45YTIwLjczLDIwLjczLDAsMCwwLDIwLjcyLTIwLjczdi0zMi45YTIwLjcyLDIwLjcyLDAsMCwwLTIwLjcyLTIwLjcySDY0N1YyMjNhMjAuNzcsMjAuNzcsMCwwLDAtMjAuNzEtMjAuNzJIMjIyLjU4QTIwLjc5LDIwLjc5LDAsMCwwLDIwMS44NiwyMjNWNjI2LjY2YTIwLjc5LDIwLjc5LDAsMCwwLDIwLjcyLDIwLjcySDYyNi4yNUEyMC43NywyMC43NywwLDAsMCw2NDcsNjI2LjY2VjU4NC4xOWgzLjlhMjAuNzIsMjAuNzIsMCwwLDAsMjAuNzItMjAuNzJWNTMwLjU4YTIwLjczLDIwLjczLDAsMCwwLTIwLjcyLTIwLjc0SDY0N1YzNDkuM1oiIHN0eWxlPSJmaWxsOiMyZDJhMjciLz48L2c+PHJlY3QgeD0iNTE3LjI4IiB5PSI2MzguMjQiIHdpZHRoPSI2MS43OCIgaGVpZ2h0PSIyNS44MSIgc3R5bGU9ImZpbGw6IzQwM2MzYSIvPjxyZWN0IHg9IjI1OC4yMiIgeT0iNjM4LjI0IiB3aWR0aD0iNjEuNzgiIGhlaWdodD0iMjUuODEiIHN0eWxlPSJmaWxsOiM0MDNjM2EiLz48cGF0aCBkPSJNNjM3LjM0LDYxN2EyMC43OCwyMC43OCwwLDAsMS0yMC43MiwyMC43M0gyMTNBMjAuOCwyMC44LDAsMCwxLDE5Mi4yMyw2MTdWMjEzLjM5QTIwLjc5LDIwLjc5LDAsMCwxLDIxMywxOTIuNjZINjE2LjYyYTIwLjc4LDIwLjc4LDAsMCwxLDIwLjcyLDIwLjczWiIgc3R5bGU9ImZpbGw6I2Y0ZjRmNiIvPjxwYXRoIGQ9Ik01OTEuNDQsNjA3SDIzOC4xNEExNS4xOCwxNS4xOCwwLDAsMSwyMjMsNTkxLjg3VjIzOC41NWExNS4xNywxNS4xNywwLDAsMSwxNS4xOC0xNS4xNWgzNTMuM2ExNS4xNywxNS4xNywwLDAsMSwxNS4xNywxNS4xNVY1OTEuODdBMTUuMTgsMTUuMTgsMCwwLDEsNTkxLjQ0LDYwN1pNMjM4LjE0LDIzMy41YTUuMDcsNS4wNywwLDAsMC01LjA3LDUuMDVWNTkxLjg3YTUuMDcsNS4wNywwLDAsMCw1LjA3LDVoMzUzLjNhNS4wNyw1LjA3LDAsMCwwLDUuMDctNVYyMzguNTVhNS4wNyw1LjA3LDAsMCwwLTUuMDctNS4wNVoiIHN0eWxlPSJmaWxsOiNmZmYiLz48cGF0aCBkPSJNNTk1Ljg3LDYxMS44NUgyMzMuNjhhMTUuNTcsMTUuNTcsMCwwLDEtMTUuNTUtMTUuNTRWMjM0LjExYTE1LjU3LDE1LjU3LDAsMCwxLDE1LjU1LTE1LjU1SDU5NS44N2ExNS41NSwxNS41NSwwLDAsMSwxNS41NSwxNS41NXYzNjIuMkExNS41NSwxNS41NSwwLDAsMSw1OTUuODcsNjExLjg1Wk0yMzMuNjgsMjI4Ljk0YTUuMTYsNS4xNiwwLDAsMC01LjE3LDUuMTd2MzYyLjJhNS4xNiw1LjE2LDAsMCwwLDUuMTcsNS4xN0g1OTUuODdhNS4xNyw1LjE3LDAsMCwwLDUuMTgtNS4xN1YyMzQuMTFhNS4xNyw1LjE3LDAsMCwwLTUuMTgtNS4xN1oiIHN0eWxlPSJmaWxsOiNiOGI1YjUiLz48cGF0aCBkPSJNNTUzLjcsNDIzLjA2QTEzNS4wNiwxMzUuMDYsMCwxLDEsNDE4LjY0LDI4OCwxMzUuMDYsMTM1LjA2LDAsMCwxLDU1My43LDQyMy4wNloiIHN0eWxlPSJmaWxsOiNkMmQxZDAiLz48cmVjdCB4PSI1NTkuNTYiIHk9IjI2MS4xNyIgd2lkdGg9IjEwMi4zOSIgaGVpZ2h0PSI3NC4zNSIgcng9IjIwLjczIiBzdHlsZT0iZmlsbDojOWE5Njk1Ii8+PHBhdGggZD0iTTYzNy4zNCwzMzUuNTJINTgwLjI5YTIwLjc0LDIwLjc0LDAsMCwxLTIwLjczLTIwLjcyVjI4MS44OWEyMC43NSwyMC43NSwwLDAsMSwyMC43My0yMC43Mmg1Ny4wNVYyNTdINTgwLjI5YTI0LjksMjQuOSwwLDAsMC0yNC44NywyNC44N1YzMTQuOGEyNC45LDI0LjksMCwwLDAsMjQuODcsMjQuODdoNTcuMDVaIiBzdHlsZT0iZmlsbDojZmZmIi8+PHBhdGggZD0iTTYzNy4zNCw1NzQuNTdINTgwLjI5YTIwLjc1LDIwLjc1LDAsMCwxLTIwLjczLTIwLjczVjUyMWEyMC43NCwyMC43NCwwLDAsMSwyMC43My0yMC43NGg1Ny4wNXYtNC4xNUg1ODAuMjlBMjQuOSwyNC45LDAsMCwwLDU1NS40Miw1MjF2MzIuODhhMjQuOSwyNC45LDAsMCwwLDI0Ljg3LDI0Ljg3aDU3LjA1WiIgc3R5bGU9ImZpbGw6I2ZmZiIvPjxwYXRoIGQ9Ik01ODYuNSwyODMuNDlhNy4yMyw3LjIzLDAsMSwxLTcuMjMtNy4yMkE3LjIyLDcuMjIsMCwwLDEsNTg2LjUsMjgzLjQ5WiIgc3R5bGU9ImZpbGw6IzQ4NDQ0MiIvPjxwYXRoIGQ9Ik01ODYuNSwzMTYuNTJhNy4yMyw3LjIzLDAsMSwxLTcuMjMtNy4yMkE3LjIzLDcuMjMsMCwwLDEsNTg2LjUsMzE2LjUyWiIgc3R5bGU9ImZpbGw6IzQ4NDQ0MiIvPjxwYXRoIGQ9Ik02NDguNjUsMjgzLjQ5YTcuMjMsNy4yMywwLDEsMS03LjIyLTcuMjJBNy4yMiw3LjIyLDAsMCwxLDY0OC42NSwyODMuNDlaIiBzdHlsZT0iZmlsbDojNDg0NDQyIi8+PHBhdGggZD0iTTY0OC42NSwzMTYuNTJhNy4yMyw3LjIzLDAsMSwxLTcuMjItNy4yMkE3LjIzLDcuMjMsMCwwLDEsNjQ4LjY1LDMxNi41MloiIHN0eWxlPSJmaWxsOiM0ODQ0NDIiLz48cGF0aCBkPSJNNjYyLDU1My44NGEyMC43MywyMC43MywwLDAsMS0yMC43MiwyMC43M0g1ODAuMjlhMjAuNzUsMjAuNzUsMCwwLDEtMjAuNzMtMjAuNzNWNTIxYTIwLjc0LDIwLjc0LDAsMCwxLDIwLjczLTIwLjc0aDYwLjk0QTIwLjczLDIwLjczLDAsMCwxLDY2Miw1MjFaIiBzdHlsZT0iZmlsbDojOWE5Njk1Ii8+PHBhdGggZD0iTTU4Ni41LDUyMi41M2E3LjIzLDcuMjMsMCwxLDEtNy4yMy03LjIyQTcuMjIsNy4yMiwwLDAsMSw1ODYuNSw1MjIuNTNaIiBzdHlsZT0iZmlsbDojNDg0NDQyIi8+PHBhdGggZD0iTTU4Ni41LDU1NS41NmE3LjIzLDcuMjMsMCwxLDEtNy4yMy03LjIyQTcuMjQsNy4yNCwwLDAsMSw1ODYuNSw1NTUuNTZaIiBzdHlsZT0iZmlsbDojNDg0NDQyIi8+PHBhdGggZD0iTTY0OC42NSw1MjIuNTNhNy4yMyw3LjIzLDAsMSwxLTcuMjItNy4yMkE3LjIyLDcuMjIsMCwwLDEsNjQ4LjY1LDUyMi41M1oiIHN0eWxlPSJmaWxsOiM0ODQ0NDIiLz48cGF0aCBkPSJNNjQ4LjY1LDU1NS41NmE3LjIzLDcuMjMsMCwxLDEtNy4yMi03LjIyQTcuMjQsNy4yNCwwLDAsMSw2NDguNjUsNTU1LjU2WiIgc3R5bGU9ImZpbGw6IzQ4NDQ0MiIvPjxwYXRoIGQ9Ik01MDAuNzQsNDY3LjkydjI3Ljc2Yy03LjA5LDQuNzYtMTYuMTMsOC44Ni0yNi41OSwxMi4wN1Y0NzQuNDdsLTUuNzUsMzQuOTFhMjAyLjg1LDIwMi44NSwwLDAsMS05Ny41OC0uMDVsLTUuNzQtMzQuODZ2MzMuMjJjLTExLjQ2LTMuNTMtMjEuMjEtOC4xMy0yOC41My0xMy41VjQ2Ny45MmMwLTI3Ljc4LDkuNTEtNTMuNDUsNjEuODktNTguNzNhNDYuNTUsNDYuNTUsMCwwLDAsNDIuNDMsMEM0OTQsNDE0LjM1LDUwMC43NCw0NDAuMDcsNTAwLjc0LDQ2Ny45MlptLTgxLjEyLTE1MS40YTQzLjU3LDQzLjU3LDAsMSwwLDQzLjU1LDQzLjU3QTQzLjU3LDQzLjU3LDAsMCwwLDQxOS42MiwzMTYuNTJaIiBzdHlsZT0iZmlsbDojZmZmIi8+PC9nPjwvZz48L3N2Zz4=" />
+                            <p style="color: black">Je gegevens zijn veilig opgeslagen in de datakluis en voor de komende 14 dagen alleen toegankelijk voor de GGD.</p>
+                            <div style="margin-top: 20px; padding: 0 10px;">
+                                <button style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;" class="modal__close-button noFocus">
+                                    <h2 style="text-transform: capitalize !important; margin-top: 4px;">Sluiten</h2>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-1 col-sm-2 col-md-3 col-lg-3 "></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4 col-xl-5"></div>
+                    {% if social is defined and social is not empty %}
+                        <div class="col-xs-10 col-sm-8 col-md-6  col-lg-4 col-xl-2">
+                            <div style="display: flex; justify-content: space-between">
+                                {% if social.website is defined and social.website is not empty %}
+                                    <div style="height: 35px; width: 35px; background-color: #01689B; border-radius: 50%">
+                                        <a target="_blank" href="{{ social.website }}">
+                                            <i style="font-size: 2rem; line-height: 1.8; color: white;" class="fas fa-globe"></i>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                {% if social.facebook is defined and social.facebook is not empty %}
+                                    <div style="height: 35px; width: 35px; background-color: #01689B; border-radius: 50%">
+                                        <a target="_blank" href="{{ social.facebook }}">
+                                            <i style="font-size: 2rem; line-height: 1.8; color: white;" class="fab fa-facebook-f"></i>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                {% if social.instagram is defined and social.instagram is not empty %}
+                                    <div style="height: 35px; width: 35px; background-color: #01689B; border-radius: 50%">
+                                        <a target="_blank" href="{{ social.instagram }}">
+                                            <i style="font-size: 2rem; line-height: 1.8; color: white;" class="fab fa-instagram"></i>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                {% if social.twitter is defined and social.twitter is not empty %}
+                                    <div style="height: 35px; width: 35px; background-color: #01689B; border-radius: 50%">
+                                        <a target="_blank" href="{{ social.twitter }}">
+                                            <i style="font-size: 2rem; line-height: 1.8; color: white;" class="fab fa-twitter"></i>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                {% if social.linkedin is defined and social.linkedin is not empty %}
+                                    <div style="height: 35px; width: 35px; background-color: #01689B; border-radius: 50%">
+                                        <a target="_blank" href="{{ social.linkedin }}">
+                                            <i style="font-size: 2rem; line-height: 1.8; color: white;" class="fab fa-linkedin-in"></i>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="col-xs-2"></div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

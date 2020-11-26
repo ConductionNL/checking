@@ -1,0 +1,120 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% if resource.organization is defined and resource.organization is not empty %}
+    {% set organization = commonground_resource(resource.organization) %}
+{% endif %}
+
+{% block style %}
+    <style>
+
+        @media (max-width: 555px) {
+            body {
+                position: fixed;
+                width: 100%;
+            }
+        }
+
+        .checkinFont {
+            color: #01689b;
+        }
+
+        .background {
+            background-color: lightgrey;
+        }
+
+        {% if organization.style.css is defined and organization.style.css is not empty %}
+        {{ organization.style.css|raw }}
+        {% endif %}
+    </style>
+{% endblock %}
+
+{% block container %}
+<div class="container background" style="background-size: 300px; width: 100%; max-width: 100%;">
+    <form action="{{ path('app_chin_login',{"code":code}) }}" method="post">
+        <div class="row">
+            <div class="col-md-12 col-sm-12" style="padding: 0;">
+                <div class="" style="height: calc(100vh - 38px); text-align: center; display: flex; flex-direction: column; justify-content: space-evenly">
+                    <div class="row">
+                        {% include 'chin/widgets/checkin_widget_organizationinfo.html.twig' %}
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
+                        <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 " style="margin-bottom: 15px;">
+                            <div style="width: 100%; background-color: white; border-radius: 20px; padding-top: 20px; padding-bottom: 5px;">
+                                {% include 'chin/widgets/checkin_widget_nodeinfo.html.twig' %}
+
+                                <span style="color: black">Aanmelden met</span>
+                                {% if resource.methods is defined and resource.methods is not empty %}
+                                    {% if resource.methods['idin'] is defined and resource.methods['idin'] %}
+                                        <div style="position:relative; margin-top: 5px; padding: 0 10px;">
+                                            <button name="method" value="idin" style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">iDin</h2>
+                                                <img style="width: 35px; height: 35px; position:absolute; left: 40px; top: 3.5px" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAABICAYAAACOVhllAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQwIDc5LjE2MDQ1MSwgMjAxNy8wNS8wNi0wMTowODoyMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjY3RjIwNjAyNzA5MzExRTg4QzVBQUM0Mzc1ODFCNTk0IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjY3RjIwNjAzNzA5MzExRTg4QzVBQUM0Mzc1ODFCNTk0Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzgzMDY3RkY3MDkzMTFFODhDNUFBQzQzNzU4MUI1OTQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzgzMDY4MDA3MDkzMTFFODhDNUFBQzQzNzU4MUI1OTQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6lhQLFAAAOlUlEQVR42uxcC3AU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" />
+                                                </button>
+                                        </div>
+                                    {% endif %}
+                                    {% if resource.methods['idinLogin'] is defined and resource.methods['idinLogin'] %}
+                                        <div style="position:relative; margin-top: 5px; padding: 0 10px;">
+                                            <button name="method" value="idinLogin" style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">iDin login</h2>
+                                                <img style="width: 35px; height: 35px; position:absolute; left: 40px; top: 3.5px" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAABICAYAAACOVhllAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQwIDc5LjE2MDQ1MSwgMjAxNy8wNS8wNi0wMTowODoyMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjY3RjIwNjAyNzA5MzExRTg4QzVBQUM0Mzc1ODFCNTk0IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjY3RjIwNjAzNzA5MzExRTg4QzVBQUM0Mzc1ODFCNTk0Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzgzMDY3RkY3MDkzMTFFODhDNUFBQzQzNzU4MUI1OTQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzgzMDY4MDA3MDkzMTFFODhDNUFBQzQzNzU4MUI1OTQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6lhQLFAAAOlUlEQVR42uxcC3AU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" />
+                                            </button>
+                                        </div>
+                                    {% endif %}
+                                    {% if resource.methods['facebook'] is defined and resource.methods['facebook'] %}
+                                        <div style="position:relative; margin-top: 5px; padding: 0 10px;">
+                                            <button name="method" value="facebook" style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">Facebook</h2>
+                                                <i style="position:absolute; font-size: 20px; left: 53px; top: 11px" class="fab fa-facebook-f"></i>
+                                            </button>
+                                        </div>
+                                    {% endif %}
+                                    {% if resource.methods['google'] is defined and resource.methods['google'] %}
+                                        <div style="position:relative; margin-top: 5px; padding: 0 10px;">
+                                            <button name="method" value="google" style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">Google</h2>
+                                                <i style="position:absolute; font-size: 20px; left: 50px; top: 11px" class="fab fa-google"></i>
+                                            </button>
+                                        </div>
+                                    {% endif %}
+                                    <div style="position:relative; margin-top: 5px; padding: 0 10px;">
+                                        <button name="method" value="acount" style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">Email</h2>
+                                            <i style="position:absolute; font-size: 20px; left: 50px; top: 11px" class="fas fa-envelope"></i>
+                                        </button>
+                                    </div>
+                                {% else %}
+                                    <div style="position:relative; margin-top: 5px; padding: 0 10px;">
+                                        <button name="method" value="acount" style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">Email</h2>
+                                            <i style="position:absolute; font-size: 20px; left: 50px; top: 11px" class="fas fa-envelope"></i>
+                                        </button>
+                                    </div>
+                                {% endif %}
+                                <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+                                    <div class="input__group input__group--checkbox">
+                                        <input checked name="hobbies[]" type="checkbox" id="chkbx1"
+                                               class="input__control input__control--m input__control--checkbox" required>
+                                        <label style="line-height: 14px; color: black;" class="input__label input__label--checkbox" for="chkbx1">
+                                            {{ 'Create a user account so that I can view my data'|trans|capitalize }}
+                                            {# #}
+                                        </label>
+                                    </div>
+                                    <div class="input__group input__group--checkbox">
+                                        <input name="hobbies[]" type="checkbox" id="chkbx2"
+                                               class="input__control input__control--m input__control--checkbox" required="">
+                                        <label style="line-height: 14px; color: black;" class="input__label input__label--checkbox" for="chkbx2">Ik ga akkoord met de <a
+                                                href="/proclaimer" target="_blank">proclaimer</a> en de <a href="/privacy"
+                                                                                                           target="_blank">privacy</a>
+                                            regels</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-1"></div>
+                    </div>
+                    <div class="row">
+                        {% include 'chin/widgets/checkin_widget_social.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div><!-- /.container -->
+{% endblock %}

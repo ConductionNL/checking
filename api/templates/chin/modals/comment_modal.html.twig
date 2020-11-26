@@ -1,0 +1,17 @@
+
+<div class="modal modal--backdrop noFocus" role="dialog" id="reservation-{{ item.id }}" tabindex="-1"
+     aria-describedby="modal-description3">
+    <section class="modal__content" role="document">
+        <header class="modal__title" style="margin-bottom: 20px;">
+            <h1>{{ 'comment'|trans|capitalize }}</h1>
+        </header>
+
+        <div class="modal__body" role="document" tabindex="0">
+            <p>{{ item.comment }}</p>
+        </div>
+
+        <footer class="modal__footer">
+            <button class="modal__close-button btn btn-block">{{ 'close'|trans|capitalize }}</button>
+        </footer>
+    </section>
+</div>

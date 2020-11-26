@@ -1,12 +1,11 @@
 <!--
 
 =========================================================
-* Rocket - Startup Bootstrap Template
+* Spaces - Bootstrap Directory Listing Template
 =========================================================
 
-* Product Page: https://themes.getbootstrap.com/product/rocket/
-* Copyright 2020 Themesberg (https://www.themesberg.com)
-* License (https://themes.getbootstrap.com/licenses/)
+* Product Page: https://themesberg.com/product/bootstrap-themes/spaces-bootstrap-directory-listing-template
+* Copyright 2020 Themesberg EULA (https://www.themesberg.com/licensing)
 
 * Coded by https://themesberg.com
 
@@ -19,117 +18,151 @@
 <html lang="en">
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- Primary Meta Tags -->
-    <title>
-        {% if application|default %}
-            {% if slug is defined and slug is not empty %}
-                {{ slug|capitalize }} |
-            {% endif %}
-            {{ application['name'] }}
-        {% elseif app_name|default %}
-            {% if slug is defined and slug is not empty %}
-                {{ slug|capitalize }} |
-            {% endif %}
-            {{ app_name|capitalize }}
-        {% else %}
-            Stage platform
-        {% endif %}
-    </title>
-    <meta charset="utf-8">
+    <title>Conduction - Checkin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="title" content="Conduction - Stage Platform">
+    <meta name="title" content="Checking">
     <meta name="author" content="Conduction">
-    <meta name="description"
-          content="Conduction - Stage Platform">
-    <meta name="keywords"
-          content="bootstrap, bootstrap template, saas website template, saas bootstrap template, saas bootstrap 4 template, saas bootstrap theme, saas bootstrap 4 theme, dashboard, saas dashboard, themesberg"/>
-    <link rel="canonical" href="https://themes.getbootstrap.com/product/rocket/">
+    <meta name="description" content="Checking">
+    <meta name="keywords" content="Checking, Conduction" />
+    <link rel="canonical" href="https://themesberg.s3.us-east-2.amazonaws.com/public/products/spaces/thumbnail.jpg">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://demo.themesberg.com/rocket">
-    <meta property="og:title" content="Conduction - Stage Platform">
-    <meta property="og:description"
-          content="Conduction - Stage Platform">
-    <meta property="og:image"
-          content="">
+    <meta property="og:url" content="https://demo.themesberg.com/pixel-pro">
+    <meta property="og:title" content="Checking">
+    <meta property="og:description" content="Checking">
+    <meta property="og:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/spaces/thumbnail.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://demo.themesberg.com/rocket">
-    <meta property="twitter:title" content="Rocket - Bootstrap Startup Dashboard Template">
-    <meta property="twitter:description"
-          content="Conduction - Stage Platform">
-    <meta property="twitter:image"
-          content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/rocket/rocket-preview.jpg">
+    <meta property="twitter:url" content="https://demo.themesberg.com/pixel-pro">
+    <meta property="twitter:title" content="Checking">
+    <meta property="twitter:description" content="Checking">
+    <meta property="twitter:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/spaces/thumbnail.jpg">
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="120x120" href="/bundles/rocket/assets/img/favicon/conduction.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/bundles/rocket/assets/img/favicon/conduction.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/bundles/rocket/assets/img/favicon/conduction.png">
-    <link rel="manifest" href="/bundles/rocket/assets/img/favicon/conduction.png">
-    <link rel="mask-icon" href="/bundles/rocket/assets/img/favicon/conduction.png" color="#ffffff">
+    <link rel="icon" href="data:image/gif;base64,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">
+    <link rel="apple-touch-icon" sizes="120x120" href="data:image/gif;base64,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">
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/gif;base64,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">
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/gif;base64,R0lGODlhugCtALMKAEGOtL/Z5oCzzWGhwTGErt/s8s/j7BFxoe/2+QFom////wAAAAAAAAAAAAAAAAAAACH5BAEAAAoALAAAAAC6AK0AAAT/MKRJq704U8W7/2AojmRpnminrWwmtTCcznRt32qsu3t/4cCgsOYrJl7G3nDJbHKSPSQ05qxaidOYNMu6er8jLmwrzoDP6DKLrLag3962hi2fwO/OOoZex/uHehd8cn+FOIEWg22GjDSIFYpqjZMnjxSRAJSamyQAay2ZnKKjniuYo6ibpXOgqa6Nqzwsoa+1eLF7rba7b7iCurzBXr6JwMLHTcSQxsjNQcqXzM7TNdATp9TZ1Z+z2t4p1kfS3+Qf4djl6ebcK7Tq7+fj79/x3fPw7Bru9+T17UMCAgocSLCgwYAFRhxEKKLAQgEjHD6ceHCIP32A2gQIM0fEoBGR/3xYzJdh3w05G0WY8rgCJCEhF0tmVJMyxMoQH1kugkkSg0kbKDm60GmGaJmRpuQ50ih0j9EfT7kgZWUvSFCVHXG2jJplqqx/Qq7azAoip9adz1ggCMC2rVu2BmaWqQniZtmtZyUJMfC2Lxyxdcl+MHsXrbcVBAAoXrzYLgjGkAEMODgAb+GSkRUTsKzN8QfPKIy41DC66DfQOYZiEcl1Q2s75FA/EZxC9OsEpTGUk62ANwnbeXXf3k3bg++mO3JDDb78cPHUTlcrGU799PPZqpeyZu6muvPsgcHXLqK8O/cKxMUbv14C+GXh511bzzD54HERmTVz9jBoYWXSsTHFBP9hg70031xNEMifgd8hOOB+HYQ03YFi0CWEghEy2JmAS2DIgYTJBUhTghB+qGE2gF1YogIg6pCegx2u2CIVIsI4hIcsnkhNfjz2uFhcIlBk0AA9jmCAj0hmxs8X7i35TpNOpgNllDWGSKU6U1654XZaVulily9aCWaDYo6Jh5BoCpRYfis8FJGbDcHpZIrrcVkggPHBNieH4U34XnN3mrYkndCVuSCef5o3KJ+fkeddoPAtOiJWdh4qKKSA3kModn5iqqin6EW5aW+O5onbo5oyWmenlkYKqnyS2thopRki+qqesV6wZpKM1WfQrpBtZmurF/i3opTs/XYdjjPKIGr/ssglgmqteu2pXiXLyqjjk9BSGl2ioZqaJZbdjnVtjsNSe9Sz57aXbbomGsbPfeZ+e+up4paaq7TSCTJtvNXuCwlQ715KrFTkPLSCr2kKsDBlPBJgrD75CWswNZZ0dZu28DqT8RTl0WhqmB+zqq6hJ3+KYsnjNovrvSSzLDK4zo7spcw109xCyLBuifOX+V4MsKsr/wy0zl3867HRR9/LsdDO8Cq1j4hV7N/UjBlZpJlWFUw0167IhiPYooh9LNmbmN0x2ml7nSnbZbutMtycqA013ZPY/TXelOj9Nt9BNixkQt76a3MIEgk+UcxTWLiq4UjzDAXjUDheKL+Rb6yv/88VRjvw4UiP28yofs89tBiUJ2E5p5DDrDmt05Aud7ihb160rI9j7nrQJseu6uWfZ847yr5PWm/rB9PutO0YawAsZLz1yPBARPIoeQIRn30Mb/T2+XcJzGovDPflem86+E/vvXS73c+qPgnhr40M+e0qe/f1+N98ief793s+/On73ujY077cKQ8F8bvf9ghYPvcJMH+g45zuHDjB0MhPaWObHwPrx7+XITCA/9MgfRbCG4Vd0FQTU+D4fse6pn1QXrfrXOFceAKXJQ0M6ACC7GCHPhjaICY+kYsMj0dDE9hQfCYA4gV+4r8srI5UPASgD7eRlKrokIVQ7F0PA4YDJdtagInawR3wcpaCI54wiT1ZohC58ETRXc+NKPBiBcA4gx1qUYpcvIEcKUBHcGANSUAKwR8VY4MjDXJraakiWACXij1OoI+MZIQjsRfJRqbxi5VExSQhmUk/bLKTovgkKFVxyTmOkpSKxMgpKSHKVcKilHx05SRaKctC0LKWnoTlI3FpiFvyEg6+/CUagilMMBCzmMPQZQIOcMjIgLKZkDmAMteVyY+Z8Y5ws2bJQKnNj3EzY9ckHt66mbFvWiKcRRwnOLfZSXJawpyPQOfMIunOR8ATEfIkIyM/FgEAOw==">
+    <link rel="manifest" href="/bundles/spaces/assets/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/bundles/spaces/assets/img/favicon/safari-pinned-tab.svg" color="#ffffff">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
     <!-- Fontawesome -->
-    <script src="https://kit.fontawesome.com/27aca7094d.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/be1c31fb58.js" crossorigin="anonymous"></script>
 
-    <!-- Prism -->
-    <link type="text/css" href="/bundles/rocket/vendor/prismjs/themes/prism.css" rel="stylesheet">
+    <!-- Leaflet JS -->
+    <link type="text/css" href="/bundles/spaces/vendor/leaflet/dist/leaflet.css" rel="stylesheet">
+
+    <!-- Fancybox -->
+    <link rel="stylesheet" href="/bundles/spaces/vendor/@fancyapps/fancybox/dist/jquery.fancybox.min.css">
 
     <!-- VectorMap -->
-    <link rel="stylesheet" href="/bundles/rocket/vendor/jqvmap/dist/jqvmap.min.css">
+    <link rel="stylesheet" href="/bundles/spaces/vendor/jqvmap/dist/jqvmap.min.css">
 
-    <!-- Rocket CSS -->
-    <link type="text/css" href="/bundles/rocket/css/rocket.css" rel="stylesheet">
+    <!-- Main CSS -->
+    <link type="text/css" href="/bundles/spaces/css/spaces.css" rel="stylesheet">
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
+    <style>
+        .bg-primary{
+            background-color:  #01689B; !important;
+        }
+    </style>
 
+    {% block style %}
+
+    {% endblock %}
 </head>
 
 <body>
-<header class="header-global">
+{% if noMenu is not defined %}
     {% include 'menu.html.twig' %}
-</header>
+{% endif %}
 
-<main>
+{% set flashes = [] %}
+{% for label, messages in app.flashes() %}
+    {% for message in messages %}
+        {% if message not in flashes %}
+            {% set flashes = flashes|merge([message]) %}
+            <div class="alert alert-{% if label == 'error' %}{% set label = 'danger' %}{% endif %}{{ label }} rounded-0 mb-0">
+                <div class="container-md">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Text -->
+                            <p class="text-center mb-0">
+                                {{ message|trans|capitalize }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
 
-    <div class="preloader bg-soft flex-column justify-content-center align-items-center">
-        <img class="loader-element" src="/bundles/rocket/assets/img/brand/dark.svg" height="50" alt="Rocket logo">
-    </div>
-
+<main id="main">
     {% block content %}
 
     {% endblock %}
-
-
-    {% include 'footer.html.twig' %}
-
 </main>
 
-<!-- Core -->
-<script src="/bundles/rocket/vendor/jquery/dist/jquery.min.js"></script>
-<script src="/bundles/rocket/vendor/popper.js/dist/umd/popper.min.js"></script>
-<script src="/bundles/rocket/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/bundles/rocket/vendor/headroom.js/dist/headroom.min.js"></script>
+{% if noFooter is not defined %}
+    {% include 'footer.html.twig' %}
+{% endif %}
 
-<!-- Vendor JS -->
-<script src="/bundles/rocket/vendor/countup.js/dist/countUp.min.js"></script>
-<script src="/bundles/rocket/vendor/jquery-countdown/dist/jquery.countdown.min.js"></script>
-<script src="/bundles/rocket/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-<script src="/bundles/rocket/vendor/prismjs/prism.js"></script>
+<!-- Core -->
+<script src="/bundles/spaces/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/bundles/spaces/vendor/popper.js/dist/umd/popper.min.js"></script>
+<script src="/bundles/spaces/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/bundles/spaces/vendor/headroom.js/dist/headroom.min.js"></script>
+<script src="/bundles/spaces/vendor/onscreen/dist/on-screen.umd.min.js"></script>
+
+<!-- NoUISlider -->
+<script src="/bundles/spaces/vendor/nouislider/distribute/nouislider.min.js"></script>
+
+<!-- Bootstrap Datepicker -->
+<script src="/bundles/spaces/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+<!-- jQuery Waypoints -->
+<script src="/bundles/spaces/vendor/waypoints/lib/jquery.waypoints.min.js"></script>
+
+<!-- Owl acrousel -->
+<script src="/bundles/spaces/vendor/owl.carousel/dist/owl.carousel.min.js"></script>
+
+<!-- Smooth scroll -->
+<script src="/bundles/spaces/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+
+<!-- Fancybox -->
+<script src="/bundles/spaces/vendor/@fancyapps/fancybox/dist/jquery.fancybox.min.js"></script>
+
+<!-- Sticky sidebar -->
+<script src="/bundles/spaces/vendor/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+
+<!-- Mapbox & Leaflet.js -->
+<script src="/bundles/spaces/vendor/leaflet/dist/leaflet.js"></script>
 
 <!-- Chartist -->
-<script src="/bundles/rocket/vendor/chartist/dist/chartist.min.js"></script>
-<script src="/bundles/rocket/vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+<script src="/bundles/spaces/vendor/chartist/dist/chartist.min.js"></script>
+<script src="/bundles/spaces/vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
 
 <!-- Vector Maps -->
-<script src="/bundles/rocket/vendor/jqvmap/dist/jquery.vmap.min.js"></script>
-<script src="/bundles/rocket/vendor/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script src="/bundles/spaces/vendor/jqvmap/dist/jquery.vmap.min.js"></script>
+<script src="/bundles/spaces/vendor/jqvmap/dist/maps/jquery.vmap.usa.js"></script>
 
-<!-- Rocket JS -->
-<script src="/bundles/rocket/assets/js/rocket.js"></script>
+<!-- Sliderform -->
+<script src="/bundles/spaces/assets/js/jquery.slideform.js"></script>
+
+<!-- Spaces custom Javascript -->
+<script src="/bundles/spaces/assets/js/spaces.js"></script>
+
+<!-- Spaces custom Javascript -->
+<script src="/js/html5-qrcode.min.js"></script>
 
 </body>
+
 </html>

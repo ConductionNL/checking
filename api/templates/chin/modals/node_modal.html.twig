@@ -1,0 +1,181 @@
+<div class="modal modal--backdrop noFocus" role="dialog" id="node{% if item is defined %}-{{ item.id }}{% endif %}" tabindex="0" aria-describedby="modal-description3">
+    <section class="modal__content" role="document">
+        <form action="{{ path('app_chin_nodes') }}" method="post">
+            <div class="modal__body noFocus" tabindex="0" lang="en-US">
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-xs-6">
+                        <h1>{{ 'node'|trans|capitalize }}</h1>
+                    </div>
+                    <div class="col-xs-6">
+                        <button style="float: right;" class="modal__close-button">
+                            <i class="icon icon-cross"></i>
+                            {{ 'close'|trans|capitalize }}
+                        </button>
+                    </div>
+                </div>
+                <div class="input input--horizontal">
+                    <div>
+                        <label class="input__label" for="name">{{ 'name'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                    </div>
+                    <input required="" type="text" id="name" name="name" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"
+                           {% if item.name is defined and item.name is not empty %}value="{{ item.name }}"{% endif %}>
+                </div>
+                <div class="input input--horizontal">
+                    <div>
+                        <label class="input__label" for="description">{{ 'description'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                    </div>
+                    <textarea
+                        required=""
+                        id="description"
+                        name="description"
+                        aria-describedby="hint_name"
+                        class="input__control input__control--text input__control--xl"
+                    >{% if item.description is defined and item.description is not empty %}{{ item.description }}{% endif %}</textarea>
+                </div>
+
+                {% if item.accommodation is defined and commonground_is_resource(item.accommodation) %}
+                    {% set itemAccommodation = commonground_resource(item.accommodation) %}
+                {% endif %}
+
+                <label class="input__label">{{ 'address'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                <div class="row" style="margin-bottom: 5px">
+                    <div class="col-md-6">
+                        <label class="input__hint" for="street">{{ 'streetname'|trans|capitalize }}</label>
+                        <input id="street" type="text" name="address[street]" style="width: 100%" class="input__control input__control--text"
+                        {% if itemAccommodation['place']['address']['street'] is defined %}value="{{ itemAccommodation['place']['address']['street'] }}"{% endif %}>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="input__hint" for="houseNumber">{{ 'house number'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                        <input required id="houseNumber" type="number" name="address[houseNumber]" style="width: 100%" minlength="1" maxlength="5" class="input__control input__control--text"
+                        {% if itemAccommodation['place']['address']['houseNumber'] is defined %}value="{{ itemAccommodation['place']['address']['houseNumber'] }}"{% endif %}>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="input__hint" for="houseNumberSuffix">{{ 'suffix'|trans|capitalize }}</span>
+                        <input id="houseNumberSuffix" type="text" name="address[houseNumberSuffix]" style="width: 100%" maxlength="5" class="input__control input__control--text"
+                        {% if itemAccommodation['place']['address']['houseNumberSuffix'] is defined %}value="{{ itemAccommodation['place']['address']['houseNumberSuffix'] }}"{% endif %}>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px">
+                    <div class="col-md-6">
+                        <label class="input__hint" for="postalCode">{{ 'postal code'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                        <input required id="postalCode" type="text" name="address[postalCode]" style="width: 100%" pattern="[1-9][0-9]{3}\s?[a-zA-Z]{2}" class="input__control input__control--text"
+                        {% if itemAccommodation['place']['address']['postalCode'] is defined %}value="{{ itemAccommodation['place']['address']['postalCode'] }}"{% endif %}>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="input__hint" for="locality">{{ 'locality'|trans|capitalize }}</label>
+                        <input id="locality" type="text" name="address[locality]" style="width: 100%" class="input__control input__control--text"
+                        {% if itemAccommodation['place']['address']['locality'] is defined %}value="{{ itemAccommodation['place']['address']['locality'] }}"{% endif %}>
+                    </div>
+                </div>
+                <br>
+
+                <div class="input input--horizontal">
+                    <div>
+                        <label class="input__label" for="maximumAttendeeCapacity">{{ 'maximum number of simultaneous visitors'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                    </div>
+                    <input
+                        required=""
+                        id="maximumAttendeeCapacity"
+                        type="number"
+                        name="maximumAttendeeCapacity"
+                        aria-describedby="hint_name"
+                        class="input__control input__control--text input__control--xl"
+                        {% if itemAccommodation is defined and itemAccommodation is not empty and itemAccommodation['maximumAttendeeCapacity'] is defined %}
+                            value="{{ itemAccommodation['maximumAttendeeCapacity'] }}"
+                        {% endif %}
+                    >
+                </div>
+
+                {# Show the qr-code, is going to need some javascript to update when qrConfig inputs changes? #}
+                {% if item is defined %}
+                    <img style="width: 150px;" src="{{ absolute_url(path('app_chin_render',{"id":item.id})) }}" />
+                {% endif %}
+
+                {# Personalize your qr-code #}
+                <div class="row" style="margin-bottom: 5px">
+                    <div class="col-md-6">
+                        <label class="input__label" for="foregroundColor">{{ 'QR-Code foreground color'|trans|capitalize }}</label>
+                        <input id="foregroundColor" type="color" name="qrConfig[foreground_color]"
+                            {% if item.foregroundColor is defined %}
+                                value="{{ item.foregroundColor }}"
+                            {% else %}
+                                value="#000000"
+                            {% endif %}>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="input__label" for="foregroundColor">{{ 'QR-Code background color'|trans|capitalize }}</label>
+                        <input id="foregroundColor" type="color" name="qrConfig[background_color]"
+                            {% if item.backgroundColor is defined %}
+                            value="{{ item.backgroundColor }}"
+                        {% else %}
+                            value="#ffffff"
+                            {% endif %}>
+                    </div>
+                </div>
+
+                <div class="input input--horizontal">
+                    <div>
+                        <label
+                            class="input__label"
+                            for="passthroughUrl">{{ 'passthrough Url'|trans|capitalize }}
+                            <button x-uno-tooltip="" class="tooltip__icon" title="{{ 'This is the webpage that customers will be redirected to after a successful check-in.'|trans|capitalize }}"></button>
+                        </label>
+                    </div>
+                    <input id="passthroughUrl" type="text" name="passthroughUrl" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"
+                           {% if item.passthroughUrl is defined and item.passthroughUrl is not empty %}value="{{ item.passthroughUrl }}"{% else %}placeholder="{{ 'www.horeca-name.nl'|trans }}"{% endif %}>
+                </div>
+
+                {% if itemAccommodation is defined and accommodations is defined and accommodations is not empty %}
+                    {% set break = false %}
+                    {% for accommodation in accommodations if not break %}
+                        {% if itemAccommodation['id'] == accommodation['id']%}
+                            <input type="hidden" name="accommodation" value="{{ commonground_cleanurl({'component':'lc', 'type':'accommodations', 'id': accommodation['id']}) }}">
+                            {% set break = true %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if organization is defined and organization is not empty %}
+                    <input type="hidden" name="organization" value="{{ commonground_cleanurl({'component':'wrc', 'type':'organizations', 'id': organization['id']}) }}">
+                {% endif %}
+
+                {% set nodeID = '' %}
+                {% if item is defined %}
+                    {% set nodeID = item.id|replace({'-': ''}) %}
+                {% endif %}
+                <div class="input input--horizontal">
+
+                    <legend class="input__legend">{{ 'login methodes'|trans|capitalize }}:</legend>
+                    <div class="input__group input__group--checkbox">
+                        <input name="methods[idin]" value="true" type="checkbox" id="idin{{ nodeID }}" class="input__control input__control--l input__control--checkbox"
+                               {% if item.methods is defined %}{% if 'idin' in item.methods|keys %}checked{% endif %}{% else %}checked{% endif %}>
+                        <label class="input__label input__label--checkbox" for="idin{{ nodeID }}">Idin</label>
+                    </div>
+                    <div class="input__group input__group--checkbox">
+                        <input name="methods[facebook]" value="true" type="checkbox" id="facebook{{ nodeID }}" class="input__control input__control--l input__control--checkbox"
+                               {% if item.methods is defined and 'facebook' in item.methods|keys %}checked{% endif %}>
+                        <label class="input__label input__label--checkbox" for="facebook{{ nodeID }}">facebook</label>
+                    </div>
+                    <div class="input__group input__group--checkbox">
+                        <input name="methods[gmail]" value="true" type="checkbox" id="gmail{{ nodeID }}" class="input__control input__control--l input__control--checkbox"
+                               {% if item.methods is defined and 'gmail' in item.methods|keys %}checked{% endif %}>
+                        <label class="input__label input__label--checkbox" for="gmail{{ nodeID }}">gmail</label>
+                    </div>
+                    {% if item['id'] is defined %}
+                        <input type="hidden" id="id" name ="id" value="{{ item['id'] }}">
+                    {% endif %}
+                    {% if item['@id'] is defined %}
+                        <input type="hidden" id="@id" name ="@id" value="{{ item['@id'] }}">
+                    {% endif %}
+                </div>
+            </div>
+            <footer class="modal__footer" lang="en-US">
+                {% if item is defined %}
+                    <button class="btn btn--primary">{{ 'edit'|trans|capitalize }}</button>
+                {% else %}
+                    <button class="btn btn--primary">{{ 'create'|trans|capitalize }}</button>
+                {% endif %}
+            </footer>
+        </form>
+    </section>
+</div>
