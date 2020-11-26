@@ -112,7 +112,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="input__label" for="passthroughUrl">{{ 'passthrough Url'|trans|capitalize }}</label>
+                        <div class="d-flex">
+                            <label class="input__label" for="passthroughUrl">{{ 'passthrough Url'|trans|capitalize }}</label>
+                            <a type="button" class="ml-2" data-toggle="tooltip" data-placement="bottom" data-background-color="white" title="{{ 'This is the webpage that customers will be redirected to after a successful check-in.'|trans|capitalize }}">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        </div>
                         <input id="passthroughUrl" type="text" name="passthroughUrl" aria-describedby="hint_name" class="form-control"
                                {% if item.passthroughUrl is defined and item.passthroughUrl is not empty %}value="{{ item.passthroughUrl }}"{% else %}placeholder="{{ 'www.horeca-name.nl'|trans }}"{% endif %}>
                     </div>

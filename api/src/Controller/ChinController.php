@@ -637,7 +637,7 @@ class ChinController extends AbstractController
             $reservation['event']['calendar'] = '/calendars/'.$variables['calendar']['id'];
             $reservation = $commonGroundService->createResource($reservation, ['component' => 'arc', 'type' => 'reservations']);
 
-            return $this->redirect($this->generateUrl('app_chin_checkinreservations'));
+            return $this->redirect($this->generateUrl('app_dashboard_reservations'));
         }
 
         return $variables;
