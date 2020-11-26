@@ -1079,7 +1079,7 @@
       </trans-unit>
       <trans-unit id="GBIpQki" resname="manage">
         <source>manage</source>
-        <target>beheren</target>
+        <target>beheer</target>
       </trans-unit>
       <trans-unit id="YXITO8h" resname="think about problems instead of positions">
         <source>think about problems instead of positions</source>

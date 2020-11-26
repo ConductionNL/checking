@@ -155,22 +155,24 @@ class DashboardController extends AbstractController
         $variables = [];
 
         if ($request->isMethod('POST')) {
+            $kvk = ' ';
             $name = $request->get('name');
-            $email = $request->get('email');
+            if ($request->get('kvk')) {
+                $kvk = $request->get('kvk');
+            }
             $description = $request->get('description');
 
             $cc = [];
             $cc['name'] = $name;
+            $cc['coc'] = $kvk;
             $cc['description'] = $description;
-            $cc['emails'][0]['name'] = 'email for '.$name;
-            $cc['emails'][0]['email'] = $email;
             $cc['adresses'][0]['name'] = 'address for '.$name;
 
             $cc = $commonGroundService->createResource($cc, ['component' => 'cc', 'type' => 'organizations']);
 
             $wrc = [];
             $wrc['rsin'] = ' ';
-            $wrc['chamberOfComerce'] = ' ';
+            $wrc['chamberOfComerce'] = $kvk;
             $wrc['name'] = $name;
             $wrc['description'] = $description;
             $wrc['contact'] = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'organizations', 'id' => $cc['id']]);

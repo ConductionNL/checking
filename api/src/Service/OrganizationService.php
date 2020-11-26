@@ -70,7 +70,7 @@ class OrganizationService
 
         $template = $this->twig->createTemplate($html);
         $message['content'] = $template->render(['node' => $node]);
-        $message['reciever'] = $organizationContact['emails'][0]['email'];
+        $message['reciever'] = $this->security->getUser()->getUsername();
         $message['sender'] = 'no-reply@conduction.nl';
 
         $this->commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);

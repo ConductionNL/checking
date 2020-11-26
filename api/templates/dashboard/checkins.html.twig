@@ -1,11 +1,28 @@
 {% extends '/dashboard/dashboard.html.twig' %}
 
-{% set activeItem = 'checkins' %}
-
 {% block dashboard %}
     <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-6 col-lg-12">
-            <a href="../submit-item.html" class="btn btn-outline-secondary btn-block mb-4 py-4"><span class="mr-2"><span class="fas fa-plus"></span></span>Submit New Item</a>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <a style="color: white" class="btn btn-secondary animate-up-2 mb-4" data-toggle="collapse" data-target="#readerView" onclick="startQrScan()" id="startScan" ><i class="fas fa-qrcode mr-2"></i>{{ 'scan with camera'|trans|capitalize }}</a>
+                    <a style="color: white" class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#manual-from"><i class="far fa-keyboard mr-2"></i>{{ 'input manually'|trans|capitalize }}</a>
+
+
+                    <div style="width: 100%; height: auto;" id="readerView" class=""></div>
+
+                    <div style="width: 100%; height: auto; display: none;" id="readerSucces"><h2>{{ 'Code scanned successfully, you will be forwarded'|trans|capitalize }}</h2></div>
+
+                    <div class="d-flex justify-content-center mb-2" >
+                        <form action="{{ path('app_chin_checkin') }}" method="post" id="manual-from" class="collapse">
+                            <div class="form-group" style="display: flex">
+                                <input type="text" class="form-control mr-2" name="code" placeholder="{{ 'fill in code'|trans|capitalize }}">
+                                <button type="submit" style="width: -webkit-fill-available;" class="btn mb-2 btn-success">{{ 'go'|trans|capitalize }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         {% if checkins is defined and checkins is not empty %}
             {% for checkin in checkins %}
                     <div class="card border-light mb-4">
@@ -34,4 +51,58 @@
         {% endif %}
         </div>
     </div>
+
+    <script>
+
+        function onScanError(errorMessage) {
+            // handle on error condition, with error message
+            //console.log(errorMessage);
+        }
+
+        function startQrScan() {
+            //document.getElementById('readerView').style.display = 'block';
+            //document.getElementById('startScan').style.display = 'none';
+
+            // This method will trigger user permissions
+            Html5Qrcode.getCameras().then(devices => {
+                /**
+                 * devices would be an array of objects of type:
+                 * { id: "id", label: "label" }
+                 */
+                if (devices && devices.length) {
+                    var cameraId = devices[0].id;
+
+                    const html5QrCode = new Html5Qrcode("readerView");
+                    const config = {fps: 10};
+
+                    //html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess , onScanError);
+
+                    html5QrCode.start(
+                        {facingMode: "environment"},
+                        {
+                            fps: 1,    // Optional frame per seconds for qr code scanning
+                            qrbox: 250  // Optional if you want bounded box UI
+                        },
+                        qrCodeMessage => {
+                            document.getElementById('readerSucces').style.display = 'block';
+                            document.getElementById('readerView').style.display = 'none';
+                            window.location.href = qrCodeMessage;
+                            html5QrCode.stop();
+                            window.alert('QR Code Succesvol Verwerk');
+                        },
+                        errorMessage => {
+                            // parse error, ignore it.
+                        })
+                        .catch(err => {
+                            // Start failed, handle it.
+                            console.log(errorMessage);
+                        });
+
+                }
+            }).catch(err => {
+                console.log("Er is iets mis gegaan bij het verkrijgen van toegang tot de camera");
+            });
+        }
+
+    </script>
 {% endblock %}
