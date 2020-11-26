@@ -88,10 +88,10 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/techniek")
+     * @Route("/organization")
      * @Template
      */
-    public function techniekAction(CommonGroundService $commonGroundService, Request $request)
+    public function organizationAction(CommonGroundService $commonGroundService, Request $request)
     {
         $variables = [];
 
