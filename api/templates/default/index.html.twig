@@ -16,7 +16,7 @@
                 <div class="col-12 text-center">
                     <h1 class="h1 lead px-md-6 mb-5">Checking</h1>
                     <p class="lead mb-4">Makkelijk en veilig</p>
-                    <a onclick="startQrScan()" id="startScan" class="btn btn-secondary animate-up-2 mb-4"><i class="far fa-grcode mr-2"></i>{{ 'scan with camera'|trans|capitalize }}</a>
+                    <a class="btn btn-secondary animate-up-2 mb-4" data-toggle="collapse" data-target="#readerView" onclick="startQrScan()" id="startScan" ><i class="far fa-grcode mr-2"></i>{{ 'scan with camera'|trans|capitalize }}</a>
                     <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#manual-from"><i class="far fa-keyboard mr-2"></i>{{ 'input manually'|trans|capitalize }}</a>
                     <div style="width: 100%; height: auto;" id="readerView"></div>
                     <div style="width: 100%; height: auto; display: none;" id="readerSucces"><h2>{{ 'Code scanned successfully, you will be forwarded'|trans|capitalize }}</h2></div>
@@ -66,8 +66,8 @@
         }
 
         function startQrScan() {
-            document.getElementById('readerView').style.display = 'block';
-            document.getElementById('startScan').style.display = 'none';
+            //document.getElementById('readerView').style.display = 'block';
+            //document.getElementById('startScan').style.display = 'none';
 
             // This method will trigger user permissions
             Html5Qrcode.getCameras().then(devices => {
@@ -79,7 +79,7 @@
                     var cameraId = devices[0].id;
 
                     const html5QrCode = new Html5Qrcode("readerView");
-                    const config = {fps: 10, qrbox: 250};
+                    const config = {fps: 10};
 
                     //html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess , onScanError);
 
