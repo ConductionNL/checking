@@ -20,19 +20,13 @@
             </div>
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
                 <li class="nav-item">
-                    <a href="{{ path('app_default_index') }}" class="nav-link"><i style="font-size: 1.2rem" class="fas fa-home mr-1 d-none d-lg-inline"></i>Home</a>
+                    <a href="{{ path('app_default_index') }}" class="nav-link">{{ 'home'|trans|capitalize }}</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ path('app_default_index') }}" class="nav-link">{{ 'for organizations'|trans|capitalize }}</a>
+                    <a href="{{ path('app_default_organization') }}" class="nav-link">{{ 'for organizations'|trans|capitalize }}</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ path('app_default_index') }}" class="nav-link">{{ 'how does it work'|trans|capitalize }}?</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ path('app_default_index') }}" class="nav-link">{{ 'privacy'|trans|capitalize }}</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ path('app_default_index') }}" class="nav-link">{{ 'terms and conditions'|trans|capitalize }}</a>
+                    <a href="{{ path('app_default_about') }}" class="nav-link">{{ 'how does it work'|trans|capitalize }}?</a>
                 </li>
             </ul>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
