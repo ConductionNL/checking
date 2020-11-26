@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="preloader bg-dark flex-column justify-content-center align-items-center">
+        <div class="position-relative"><img src="../assets/img/brand/light-without-letter.svg" alt="Logo loader"> <img src="../assets/img/brand/letter.svg" class="rotate-letter" alt="Letter loader"></div>
+    </div>
+    <section class="section section-header bg-primary overlay-primary text-white pb-11" data-background="../assets/img/team-hero.jpg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-7 text-center">
+                    <h1 class="display-2 mb-3">{{ 'get in touch today'|trans|capitalize }}</h1>
+                    <p class="lead">{{ 'we are happy to help you with any question you might have'|trans|capitalize }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="section py-0">
+        <div class="container mt-n10">
+            <div class="row">
+                <div class="col-12"><iframe class="map rounded" id="gmap_canvas" src="https://maps.google.com/maps?q=Conduction+B.V.,Netherlands+Amsterdam&t=&z=8&ie=UTF8&iwloc=&output=embed"></iframe></div>
+            </div>
+        </div>
+    </div>
+    <section class="section section-lg pt-6">
+        <div class="container">
+            <div class="row justify-content-center mb-5 mb-lg-6">
+                <div class="col-12 col-md-10 col-lg-8">
+                    <div class="card border-0 p-2 p-md-3">
+                        <div class="card-body px-0">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 text-center d-sm-none d-md-block">
+                                    <div class="icon-box mb-4">
+                                        <div class="icon icon-dark mb-4"><span class="fas fa-phone-volume"></span></div>
+                                        <h2 class="h5 icon-box-title">{{ 'call'|trans|capitalize }}</h2>
+                                        <span>{{ 'phone number comes here' }}</span>
+                                        <div class="text-small text-gray">Mon - Fri, 9am - 4pm</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 text-center">
+                                    <div class="icon-box mb-4">
+                                        <div class="icon icon-dark mb-4"><span class="far fa-paper-plane"></span></div>
+                                        <h2 class="h5 icon-box-title">Email</h2>
+                                        <a href="mailto:info@condiction.nl"><span class="__cf_email__">info@conduction.nl</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mt-4 mt-lg-5">
+                                <div class="col-12">
+                                    <div class="card border-0 p-0 p-md-5">
+                                        <div class="card-header text-center p-0 pb-5">
+                                            <h2>{{ 'got a question or suggestion?'|trans|capitalize }}</h2>
+                                            <p>{{ 'use this form to get in touch with us'|trans|capitalize }}</p>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <form action="{{ path('app_default_contact') }}" method="post">
+                                                <div class="form-group">
+                                                    <label for="name">{{ 'name'|trans|capitalize }} <span style="color: red; font-weight: bold">*</span></label>
+                                                    <div class="input-group mb-4">
+                                                        <div class="input-group-prepend"><span class="input-group-text"><span class="far fa-user-circle"></span></span></div>
+                                                        <input class="form-control" id="name" name="name" placeholder="e.g. Bonnie Green" type="text" aria-label="contact name input" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email">{{ 'email'|trans|capitalize }} <span style="color: red; font-weight: bold">*</span></label>
+                                                    <div class="input-group mb-4">
+                                                        <div class="input-group-prepend"><span class="input-group-text"><span class="far fa-envelope"></span></span></div>
+                                                        <input required class="form-control" id="email" name="email" placeholder="{{ 'example@company.com'|trans }}" type="email" aria-label="contact email input">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="message">{{ 'your message'|trans|capitalize }} <span style="color: red; font-weight: bold">*</span></label>
+                                                    <textarea required class="form-control" name="message" placeholder="{{ 'enter your message...'|trans|capitalize }}" id="message" rows="4"></textarea>
+                                                </div>
+                                                <button type="submit" class="btn btn-block rounded btn-secondary">{{ 'send message'|trans|capitalize }}</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
