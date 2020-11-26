@@ -1,7 +1,5 @@
 {% extends '/dashboard/dashboard.html.twig' %}
 
-{% set activeItem = 'organizations' %}
-
 {% block dashboard %}
     <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-6 col-lg-12">
@@ -25,7 +23,7 @@
                                     </a>
                                     <div class="col d-flex pl-0">
                                         {% if organizationUrl == app.user.organization %}
-                                            <span class="text-success font-small mr-3"><span class="fas fa-check-circle mr-2"></span>{{ 'active' }}</span>
+                                            <span class="text-success font-small mr-3"><span class="fas fa-check-circle mr-2"></span>{{ 'active'|trans|capitalize }}</span>
                                         {% endif %}
                                     </div>
                                 </div>
