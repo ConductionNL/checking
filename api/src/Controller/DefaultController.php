@@ -82,10 +82,10 @@ class DefaultController extends AbstractController
                 $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
             }
             $message['status'] = 'queued';
-            $message['subject'] = 'Contact Form message from'. $request->get('name');
+            $message['subject'] = 'Contact Form message from'.$request->get('name');
             $html = '<p>';
-            $html.= $request->get('message');
-            $html.= '</p>';
+            $html .= $request->get('message');
+            $html .= '</p>';
             $message['content'] = $html;
             $message['reciever'] = 'info@conduction.nl';
             $message['sender'] = $request->get('email');
@@ -95,7 +95,6 @@ class DefaultController extends AbstractController
 
         return $variables;
     }
-
 
     /**
      * @Route("/about")
