@@ -375,10 +375,8 @@ class ChinController extends AbstractController
         $variables['code'] = $code;
 
         if ($request->isMethod('POST') && $request->request->get('method') == 'checkin') {
-
             $person = $commonGroundService->getResource($this->getUser()->getPerson());
             $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
-
 
             $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
 
@@ -393,13 +391,10 @@ class ChinController extends AbstractController
 
             // Create check-in
 
-
-
             $person['emails'][0] = [];
             $person['emails'][0]['email'] = $request->get('email');
 
             $person = $commonGroundService->updateResource($person);
-
 
             $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->getUser()->getUsername()])['hydra:member'][0];
             $userUrl = $commonGroundService->cleanUrl(['component' => 'uc', 'type' => 'users', 'id' => $user['id']]);
@@ -642,7 +637,7 @@ class ChinController extends AbstractController
             $reservation['event']['calendar'] = '/calendars/'.$variables['calendar']['id'];
             $reservation = $commonGroundService->createResource($reservation, ['component' => 'arc', 'type' => 'reservations']);
 
-            return $this->redirect($this->generateUrl('app_chin_checkinreservations'));
+            return $this->redirect($this->generateUrl('app_dashboard_reservations'));
         }
 
         return $variables;

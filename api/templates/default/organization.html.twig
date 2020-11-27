@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="pb-3 pb-lg-3 bg-white text-primary">
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-12 mx-auto">
+                    <div class="timeline timeline-one">
+                        <!-- Timeline Item 1 -->
+                        <div class="timeline-item">
+                            <span class="icon icon-info icon-lg"></span></span>
+                            <h2 class="h5 my-3">{{ 'what is checking?'|trans|capitalize }}</h2>
+                            <p>Checking is een makkelijke en veilige manier van het beschikbaar stellen van persoonlijke gegeven voor een eventueel contactonderzoek door de GGD zonder dat deze inzichtelijk zijn voor anderen.</p>
+                            <p>Wat Checking anders maakt is dat als bezoeker of klant van zijn gegevens niet overdraagt, maar in plaats daarvan ze tijdelijk ter beschikking stelt in een datakluis. De gegevens worden daar slechts uitgehaald op verzoek van de GGD en dan ook alleen aan de GGD verstrekt. Op die manier voorkomen we met zijn allen dat contactgegevens overal rondslingeren met alle gevolgen van dien.</p>
+                            {% if app.user is defined %}
+                                <a href="{{ path('app_dashboard_organizations') }}" class="btn btn-success btn-block">{{ 'join'|trans|capitalize }}</a>
+                            {% else %}
+                                <a href="{{ path('app_user_idvault') }}?backUrl={{ path('app_dashboard_organizations') }}" class="btn btn-success btn-block">{{ 'join'|trans|capitalize }}</a>
+                            {% endif %}
+                        </div>
+                        <!-- Timeline Item 2 -->
+                        <div class="timeline-item">
+                            <span class="icon icon-success"></span>
+                            <h2 class="h5 my-3">{{ 'why checking?'|trans|capitalize }}</h2>
+                            <p>Vanaf heden wordt het vanuit de overheid verplicht om contactgegevens van bezoekers te registreren in het kader van de Corona / Covid-19 epidemie. Met Checking wordt dat een fluitje van een cent en bovendien veilig!</p>
+                            <p>N.B. Voor de Horeca geldt deze verplichting al langer en wij stonden op het punt te starten met het Checking-platform. Na de persconferentie van vandaag (28-9-2020) over het verplichten van bezoekersregistratie voor veel meer sectoren, met name die van de contactberoepen, hebben we snel onze koppen bij elkaar gestoken en besloten dit platform breder toegankelijk te maken. Zo kan iedereen al gebruik maken van het gemak en de veiligheid van Checking! Vind je kleine schoonheidsfoutjes laat het ons dan weten! Dan maken we samen het platform beter.</p>
+                            {% if app.user is defined %}
+                                <a href="{{ path('app_dashboard_organizations') }}" class="btn btn-success btn-block">{{ 'join'|trans|capitalize }}</a>
+                            {% else %}
+                                <a href="{{ path('app_user_idvault') }}?backUrl={{ path('app_dashboard_organizations') }}" class="btn btn-success btn-block">{{ 'join'|trans|capitalize }}</a>
+                            {% endif %}
+                        </div>
+                        <!-- Timeline Item 3 -->
+                        <div class="timeline-item">
+                            <span class="icon icon-danger"></span>
+                            <h2 class="h5 my-3">{{ 'how does checking work?'|trans|capitalize }}</h2>
+                            <p>Bij aankomst bij uw onderneming/organisatie wordt de bezoeker gevraagd een QR-code of NFC sticker te scannen met zijn of haar smartphone. Deze opent de Checking website waar de bezoeker kan inloggen met behulp van Google of Facebook. Vervolgens worden de contactgegevens beschikbaar gesteld en tijdelijk opgeslagen in een datakluis op het Checking-platform. De ondernemer/organisatie heeft geen toegang tot deze gegevens.</p>
+                            <p>Wanneer de GGD constateert dat iemand positief is getest op COVID-19, starten zij een bron- en contactonderzoek. Als uit het contactonderzoek blijkt dat iemand recent bij uw onderneming/organisatie is geweest, dan kan de GGD daar de contactgegevens opvragen van iedereen die op dezelfde dag en tijd aanwezig was.</p>
+                            <p>Uw onderneming/organisatie kan vervolgens een verzoek bij Checking indienen om de benodigde contactgegevens over te dragen aan de GGD. Checking draagt vervolgens die contactgegevens veilig over aan de GGD. Dit scheelt u veel tijd en zorgen!</p>
+                            {% if app.user is defined %}
+                                <a href="{{ path('app_dashboard_organizations') }}" class="btn btn-success btn-block">{{ 'join'|trans|capitalize }}</a>
+                            {% else %}
+                                <a href="{{ path('app_user_idvault') }}?backUrl={{ path('app_dashboard_organizations') }}" class="btn btn-success btn-block">{{ 'join'|trans|capitalize }}</a>
+                            {% endif %}
+                        </div>
+                        <!-- Timeline Item 4 -->
+                        <div class="timeline-item">
+                            <span class="icon icon-success"></span>
+                            <h2 class="h5 my-3">{{ 'costs'|trans|capitalize }}</h2>
+                            <p>Voor bezoekers van een onderneming/organisatie is Checking gratis, de ondernemer betaalt kosten voor deelname aan het platform en het gebruik daarvan.</p>
+                            <p>De kosten voor deelname aan het platform zijn € 25,- p/m (excl. btw) daarvoor worden servers onderhouden, veiligheidstesten uitgevoerd en het platform doorontwikkeld, tevens krijgt de onderneming/organisatie daarvoor 500 check-ins per maand (fair use policy). Bij meer dan 500 check-ins wordt per check-in € 0,05 aan gebruikskosten doorbelast. Verwacht je op voorhand al meer dan 500 check-ins? neem dan hier contact met ons op voor een maatwerk abonnement.</p>
+                            {% if app.user is defined %}
+                                <a href="{{ path('app_dashboard_organizations') }}" class="btn btn-success btn-block">{{ 'join'|trans|capitalize }}</a>
+                            {% else %}
+                                <a href="{{ path('app_user_idvault') }}?backUrl={{ path('app_dashboard_organizations') }}" class="btn btn-success btn-block">{{ 'join'|trans|capitalize }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section bg-white">
+        {% include 'widgets/faq.html.twig' %}
+    </section>
+{% endblock %}

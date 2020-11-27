@@ -52,9 +52,10 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Fontawesome -->
-    <link type="text/css" href="/bundles/spaces/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
+    <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/be1c31fb58.js" crossorigin="anonymous"></script>
 
     <!-- Leaflet JS -->
@@ -74,7 +75,19 @@
         .bg-primary{
             background-color:  #01689B; !important;
         }
+
+        h1, h2 {
+            font-family: \'Lobster\', cursive !important;
+        }
+
+        .h5 {
+            font-family: \'Lobster\', cursive !important;
+        }
     </style>
+
+    {% block style %}
+
+    {% endblock %}
 </head>
 
 <body>
@@ -103,7 +116,7 @@
     {% endfor %}
 {% endfor %}
 
-<main>
+<main id="main">
     {% block content %}
 
     {% endblock %}
@@ -157,6 +170,9 @@
 
 <!-- Spaces custom Javascript -->
 <script src="/bundles/spaces/assets/js/spaces.js"></script>
+
+<!-- Spaces custom Javascript -->
+<script src="/js/html5-qrcode.min.js"></script>
 
 </body>
 

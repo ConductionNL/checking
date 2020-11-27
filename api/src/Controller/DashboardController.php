@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -21,13 +22,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractController
 {
     /**
+     * @var FlashBagInterface
+     */
+    private $flash;
+
+    public function __construct(FlashBagInterface $flash)
+    {
+        $this->flash = $flash;
+    }
+
+    /**
      * @Route("/")
      * @Template
      */
     public function indexAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
     {
-        // On an index route we might want to filter based on user input
-        $variables['query'] = array_merge($request->query->all(), $variables['post'] = $request->request->all());
+        $variables = [];
+
+        $person = $commonGroundService->getResource($this->getUser()->getPerson());
+
+        $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
+
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl])['hydra:member'];
 
         return $variables;
     }
@@ -124,205 +140,173 @@ class DashboardController extends AbstractController
             $resource['accommodation'] = $commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'accommodations', 'id' => $accommodation['id']]);
             $commonGroundService->saveResource($resource, (['component' => 'chin', 'type' => 'nodes']));
 
-            return $this->redirect($this->generateUrl('app_chin_nodes'));
+            return $this->redirect($this->generateUrl('app_dashboard_codes'));
         }
 
         return $variables;
     }
 
     /**
-     * @Route("/organization")
+     * @Route("/organizations")
      * @Template
      */
-    public function organizationAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
+    public function organizationsAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
     {
         $variables = [];
 
-        if ($this->getUser()) {
-            $variables['wrc'] = $commonGroundService->getResource($this->getUser()->getOrganization());
+        if ($request->isMethod('POST') && $request->get('active')) {
+            $organizationUrl = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $request->get('organization')]);
+            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->getUser()->getUsername()])['hydra:member'][0];
 
-            $variables['style'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'styles', 'id' => $variables['wrc']['style']['id']]);
-            $variables['favicon'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'images', 'id' => $variables['wrc']['style']['favicon']['id']]);
+            $user['organization'] = $organizationUrl;
 
-            if (isset($variables['wrc']['contact'])) {
-                $variables['organization'] = $commonGroundService->getResource($variables['wrc']['contact']);
-            }
-        }
-
-        if ($request->isMethod('POST') && $request->get('social')) {
-            $resource = $request->request->all();
-            $organization = [];
-            $organization['@id'] = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'organizations', 'id' => $variables['organization']['id']]);
-            $organization['id'] = $variables['organization']['id'];
-            $organization['socials'][0]['name'] = $variables['organization']['name'];
-            $organization['socials'][0]['description'] = $variables['organization']['name'];
-
-            if (isset($resource['website'])) {
-                $organization['socials'][0]['website'] = $resource['website'];
-            }
-            if (isset($resource['twitter'])) {
-                $organization['socials'][0]['twitter'] = $resource['twitter'];
-            }
-            if (isset($resource['facebook'])) {
-                $organization['socials'][0]['facebook'] = $resource['facebook'];
-            }
-            if (isset($resource['instagram'])) {
-                $organization['socials'][0]['instagram'] = $resource['instagram'];
-            }
-            if (isset($resource['linkedin'])) {
-                $organization['socials'][0]['linkedin'] = $resource['linkedin'];
+            foreach ($user['userGroups'] as &$userGroup) {
+                $userGroup = '/groups/'.$userGroup['id'];
             }
 
-            $variables['organization'] = $commonGroundService->saveResource($organization, ['component' => 'cc', 'type' => 'organizations']);
-        } elseif ($request->isMethod('POST') && $request->get('info')) {
-            $resource = $request->request->all();
-            $organization = [];
-            $organization['@id'] = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'organizations', 'id' => $variables['organization']['id']]);
-            $organization['id'] = $variables['organization']['id'];
+            $user = $commonGroundService->updateResource($user);
 
-            if (isset($resource['name'])) {
-                $organization['name'] = $resource['name'];
+            return $this->redirect($this->generateUrl('app_dashboard_organizations'));
+        } elseif ($request->isMethod('POST')) {
+            $kvk = ' ';
+            $name = $request->get('name');
+            if ($request->get('kvk')) {
+                $kvk = $request->get('kvk');
             }
-            if (isset($resource['email'])) {
-                $organization['emails'][0]['email'] = $resource['email'];
-            }
-            if (isset($resource['telephone'])) {
-                $organization['telephones'][0]['telephone'] = $resource['telephone'];
-            }
-            if (isset($resource['street'])) {
-                $organization['adresses'][0]['street'] = $resource['street'];
-            }
-            if (isset($resource['houseNumber'])) {
-                $organization['adresses'][0]['houseNumber'] = $resource['houseNumber'];
-            }
-            if (isset($resource['houseNumberSuffix'])) {
-                $organization['adresses'][0]['houseNumberSuffix'] = $resource['houseNumberSuffix'];
-            }
-            if (isset($resource['postalCode'])) {
-                $organization['adresses'][0]['postalCode'] = $resource['postalCode'];
-            }
-            if (isset($resource['locality'])) {
-                $organization['adresses'][0]['locality'] = $resource['locality'];
-            }
+            $description = $request->get('description');
 
-            $variables['organization'] = $commonGroundService->saveResource($organization, ['component' => 'cc', 'type' => 'organizations']);
-        } elseif ($request->isMethod('POST') && $request->get('style')) {
-            $resource = $request->request->all();
-            $style = $variables['style'];
-            $style['organizations'] = ['/organizations/'.$variables['wrc']['id']];
-            $style['favicon'] = '/images/'.$variables['favicon']['id'];
+            $cc = [];
+            $cc['name'] = $name;
+            $cc['coc'] = $kvk;
+            $cc['description'] = $description;
+            $cc['adresses'][0]['name'] = 'address for '.$name;
 
-            $favicon = $variables['favicon'];
-            $favicon['organization'] = '/organizations/'.$variables['wrc']['id'];
-            $favicon['style'] = '/styles/'.$variables['style']['id'];
+            $cc = $commonGroundService->createResource($cc, ['component' => 'cc', 'type' => 'organizations']);
 
-            if (isset($_FILES['base64']) && $_FILES['base64']['error'] !== 4) {
-                $path = $_FILES['base64']['tmp_name'];
-                $type = filetype($_FILES['base64']['tmp_name']);
+            $wrc = [];
+            $wrc['rsin'] = ' ';
+            $wrc['chamberOfComerce'] = $kvk;
+            $wrc['name'] = $name;
+            $wrc['description'] = $description;
+            $wrc['contact'] = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'organizations', 'id' => $cc['id']]);
+            if (isset($_FILES['logo']) && $_FILES['logo']['error'] !== 4) {
+                $path = $_FILES['logo']['tmp_name'];
+                $type = filetype($_FILES['logo']['tmp_name']);
                 $data = file_get_contents($path);
-                $favicon['base64'] = 'data:image/'.$type.';base64,'.base64_encode($data);
-                $variables['favicon'] = $commonGroundService->saveResource($favicon, ['component' => 'wrc', 'type' => 'images']);
+                $wrc['style']['name'] = 'style for '.$name;
+                $wrc['style']['description'] = 'style for '.$name;
+                $wrc['style']['css'] = ' ';
+                $wrc['style']['favicon']['name'] = 'logo for '.$name;
+                $wrc['style']['favicon']['description'] = 'logo for '.$name;
+                $wrc['style']['favicon']['base64'] = 'data:image/'.$type.';base64,'.base64_encode($data);
             }
 
-            $variables['style'] = $commonGroundService->saveResource($style, ['component' => 'wrc', 'type' => 'styles']);
-        }
+            $wrc = $commonGroundService->createResource($wrc, ['component' => 'wrc', 'type' => 'organizations']);
 
-        return $variables;
-    }
+            $userGroup = [];
+            $userGroup['name'] = 'organization-'.$name;
+            $userGroup['title'] = 'organization-'.$name;
+            $userGroup['description'] = 'organization group for '.$name;
+            $userGroup['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $wrc['id']]);
 
-    /**
-     * @Route("/userinfo")
-     * @Template
-     */
-    public function userInfoAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
-    {
-        $variables = [];
+            $group = $commonGroundService->createResource($userGroup, ['component' => 'uc', 'type' => 'groups']);
 
-        $variables['person'] = $commonGroundService->getResource($this->getUser()->getPerson());
-
-        if ($request->isMethod('POST') && $request->get('info')) {
-            $resource = $request->request->all();
-            $person = [];
-            $person['@id'] = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $variables['person']['id']]);
-            $person['id'] = $variables['person']['id'];
-
-            if (isset($resource['firstName'])) {
-                $person['givenName'] = $resource['firstName'];
-            }
-            if (isset($resource['lastName'])) {
-                $person['familyName'] = $resource['lastName'];
-            }
-            if (isset($resource['birthday']) && $resource['birthday'] !== '') {
-                $person['birthday'] = $resource['birthday'];
-            }
-            if (isset($resource['email'])) {
-                $person['emails'][0]['email'] = $resource['email'];
-            }
-            if (isset($resource['telephone'])) {
-                $person['telephones'][0]['telephone'] = $resource['telephone'];
-            }
-            if (isset($resource['street'])) {
-                $person['adresses'][0]['street'] = $resource['street'];
-            }
-            if (isset($resource['houseNumber'])) {
-                $person['adresses'][0]['houseNumber'] = $resource['houseNumber'];
-            }
-            if (isset($resource['houseNumberSuffix'])) {
-                $person['adresses'][0]['houseNumberSuffix'] = $resource['houseNumberSuffix'];
-            }
-            if (isset($resource['postalCode'])) {
-                $person['adresses'][0]['postalCode'] = $resource['postalCode'];
-            }
-            if (isset($resource['locality'])) {
-                $person['adresses'][0]['locality'] = $resource['locality'];
-            }
-
-            $variables['person'] = $commonGroundService->saveResource($person, ['component' => 'cc', 'type' => 'people']);
-        } elseif ($request->isMethod('POST') && $request->get('password')) {
-            $newPassword = $request->get('newPassword');
-            $repeatPassword = $request->get('repeatPassword');
-
-            if ($newPassword !== $repeatPassword) {
-                $variables['error'] = true;
-
-                return $variables;
-            } else {
-                $credentials = [
-                    'username'   => $this->getUser()->getUsername(),
-                    'password'   => $request->request->get('currentPassword'),
-                    'csrf_token' => $request->request->get('_csrf_token'),
-                ];
-
-                $user = $commonGroundService->createResource($credentials, ['component'=>'uc', 'type'=>'login'], false, true, false, false);
-
-                if (!$user) {
-                    $variables['wrongPassword'] = true;
-
-                    return $variables;
-                }
-
-                $users = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['username'=> $this->getUser()->getUsername()], true, false, true, false, false)['hydra:member'];
+            $users = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->getUser()->getUsername()])['hydra:member'];
+            if (count($users) > 0) {
+                $organizations = [];
                 $user = $users[0];
 
-                $user['password'] = $newPassword;
-
-                $this->addFlash('success', 'wachtwoord aangepast');
-                $commonGroundService->updateResource($user);
-
-                $message = [];
-
-                if ($params->get('app_env') == 'prod') {
-                    $message['service'] = '/services/eb7ffa01-4803-44ce-91dc-d4e3da7917da';
-                } else {
-                    $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
+                $userGroups = [];
+                foreach ($user['userGroups'] as $userGroup) {
+                    array_push($userGroups, '/groups/'.$userGroup['id']);
                 }
-                $message['status'] = 'queued';
-                $message['data'] = ['receiver' => $variables['person']['name']];
-                $message['content'] = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'templates', 'id'=>'4125221c-74e0-46f9-97c9-3825a2011012']);
-                $message['reciever'] = $user['username'];
-                $message['sender'] = 'no-reply@conduction.nl';
 
-                $commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
+                $user['userGroups'] = $userGroups;
+                $user['userGroups'][] = '/groups/'.$group['id'];
+                $wrcUrl = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $wrc['id']]);
+                $user['organization'] = $wrcUrl;
+
+                $commonGroundService->updateResource($user);
+            }
+        }
+
+        if ($this->getUser()) {
+            $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
+            $users = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->getUser()->getUsername()])['hydra:member'];
+            if (count($users) > 0) {
+                $organizations = [];
+                $user = $users[0];
+                foreach ($user['userGroups'] as $group) {
+                    $organization = $commonGroundService->getResource($group['organization']);
+                    if (!in_array($organization, $organizations) && $organization['id'] !== $application['organization']['id']) {
+                        $organizations[] = $organization;
+                    }
+                }
+                $variables['organizations'] = $organizations;
+            }
+        }
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/organizations/{id}")
+     * @Template
+     */
+    public function organizationAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params, $id)
+    {
+        $variables = [];
+
+        $variables['organization'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'organizations', 'id' => $id]);
+        if (key_exists('contact', $variables['organization']) and !empty($variables['organization']['contact'])) {
+            $variables['cc'] = $commonGroundService->getResource($variables['organization']['contact']);
+        }
+
+        if ($request->isMethod('POST') && $request->get('updateInfo')) {
+            $name = $request->get('name');
+            if (isset($_FILES['logo']) && $_FILES['logo']['error'] !== 4) {
+                if (key_exists('style', $variables['organization']) and !empty($variables['organization']['style'])) {
+                    if (key_exists('favicon', $variables['organization']['style']) and !empty($variables['organization']['style']['favicon'])) {
+                        $icon = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'images', 'id' => $variables['organization']['style']['favicon']['id']]);
+                    } else {
+                        // create icon for the style ?
+                    }
+                } else {
+                    // create style and icon ?
+                }
+                $path = $_FILES['logo']['tmp_name'];
+                $type = filetype($_FILES['logo']['tmp_name']);
+                $data = file_get_contents($path);
+                $icon['name'] = 'logo for '.$name;
+                $icon['description'] = 'logo for '.$name;
+                $icon['base64'] = 'data:image/'.$type.';base64,'.base64_encode($data);
+                $commonGroundService->saveResource($icon);
+            }
+
+            $organization = $variables['organization'];
+            $organization['name'] = $name;
+            $organization['description'] = $request->get('description');
+            if (key_exists('style', $organization) and !empty($organization['style'])) {
+                $organization['style'] = '/styles/'.$organization['style']['id'];
+            }
+            $commonGroundService->updateResource($organization);
+
+            if (key_exists('cc', $variables)) {
+                $cc = $variables['cc'];
+                $cc['name'] = $name;
+                $cc['coc'] = $request->get('coc');
+                $address = [];
+                $address['name'] = 'address for '.$name;
+                $address['street'] = $request->get('street');
+                $address['houseNumber'] = $request->get('houseNumber');
+                $address['houseNumberSuffix'] = $request->get('houseNumberSuffix');
+                $address['postalCode'] = $request->get('postalCode');
+                $address['locality'] = $request->get('locality');
+                $cc['adresses'][0] = $address;
+                $commonGroundService->updateResource($cc);
+
+                $variables['organization'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'organizations', 'id' => $id]);
+                $variables['cc'] = $commonGroundService->getResource($variables['organization']['contact']);
             }
         }
 
@@ -382,5 +366,4 @@ class DashboardController extends AbstractController
 
         return $variables;
     }
-
 }

@@ -1,8 +1,16 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar-theme-primary">
     <div class="container position-relative">
+        <a class="navbar-brand mr-lg-3" href="{{ path('app_default_index') }}">
+            <i class="fas fa-qrcode"></i>
+        </a>
         <div class="navbar-collapse collapse" id="navbar-default-primary">
             <div class="navbar-collapse-header">
                 <div class="row">
+                    <div class="col-6 collapse-brand">
+                        <a href="{{ path('app_default_index') }}">
+                            <i class="fas fa-qrcode"></i>
+                        </a>
+                    </div>
                     <div class="col-6 collapse-close">
                         <i class="fas fa-times" data-toggle="collapse" role="button"
                            data-target="#navbar-default-primary" aria-controls="navbar-default-primary"
@@ -12,27 +20,53 @@
             </div>
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
                 <li class="nav-item">
-                    <a href="{{ path('app_default_index') }}" class="nav-link"><i style="font-size: 1.2rem" class="fas fa-home mr-1 d-none d-lg-inline"></i>Home</a>
+                    <a href="{{ path('app_default_index') }}" class="nav-link">{{ 'home'|trans|capitalize }}</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ path('app_default_index') }}" class="nav-link">{{ 'for organizations'|trans|capitalize }}</a>
+                    <a href="{{ path('app_default_organization') }}" class="nav-link">{{ 'for organizations'|trans|capitalize }}</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ path('app_default_index') }}" class="nav-link">{{ 'how does it work'|trans|capitalize }}?</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ path('app_default_index') }}" class="nav-link">{{ 'privacy'|trans|capitalize }}</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ path('app_default_index') }}" class="nav-link">{{ 'terms and conditions'|trans|capitalize }}</a>
+                    <a href="{{ path('app_default_about') }}" class="nav-link">{{ 'how does it work'|trans|capitalize }}?</a>
                 </li>
             </ul>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a class="navbar-btn btn btn-sm btn-success lift ml-auto" href="{{ path('app_dashboard_index') }}">
-                    {{ 'dashboard'|trans|capitalize }}
-                </a>
+                <ul class="navbar-nav navbar-nav-hover ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="d-flex">
+                                <div class="avatar avatar-xl">
+                                    <img
+                                        class="avatar-img rounded-circle"
+                                        src="https://eu.ui-avatars.com/api/?name={{ commonground_resource(app.user.person).givenName }}{% if commonground_resource(app.user.person).familyName is defined %}+{{ commonground_resource(app.user.person).familyName }}{% endif %}&background=335EEA&rounded=true&color=fff&bold=true"
+                                        style="width: 40px; opacity: 1;"
+                                    >
+                                </div>
+                                <div class="d-flex align-items-center ml-2">
+                                    {{ app.user.name }}
+                                </div>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{ path('app_dashboard_index') }}">{{ 'overview'|trans|capitalize }}</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_dashboard_checkins') }}">{{ 'checkins'|trans|capitalize }}</a></li>
+                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">{{ 'manage'|trans|capitalize }} <i class="fas fa-angle-down nav-link-arrow ml-2"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{ path('app_dashboard_organizations') }}">{{ 'organizations'|trans|capitalize }}</a></li>
+                                    {%  if app.user.organization is defined and app.user.organization is not empty %}
+                                        <li><a class="dropdown-item" href="{{ path('app_dashboard_codes') }}">{{ 'codes'|trans|capitalize }}</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ path('app_dashboard_reservations') }}">{{ 'reservations'|trans|capitalize }}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
             {% else %}
-                <a style="" class="navbar-btn btn btn-sm btn-success lift ml-auto" href="{{ path('app_user_idvault') }}?backUrl={{ path('app_dashboard_checkins') }}">
+                <a style="" class="navbar-btn btn btn-sm btn-danger lift mr-2 ml-auto" href="{{ path('app_user_idvault') }}?backUrl={{ path('app_dashboard_checkins') }}">
+                    {{ 'register'|trans|capitalize }}
+                </a>
+                <a style="" class="navbar-btn btn btn-sm btn-success lift" href="{{ path('app_user_idvault') }}?backUrl={{ path('app_dashboard_checkins') }}">
                     {{ 'login'|trans|capitalize }}
                 </a>
             {% endif %}

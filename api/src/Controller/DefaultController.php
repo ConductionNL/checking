@@ -66,6 +66,37 @@ class DefaultController extends AbstractController
     }
 
     /**
+     * @Route("/contact")
+     * @Template
+     */
+    public function contactAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
+    {
+        $variables = [];
+
+        if ($request->isMethod('POST')) {
+            $message = [];
+
+            if ($params->get('app_env') == 'prod') {
+                $message['service'] = '/services/eb7ffa01-4803-44ce-91dc-d4e3da7917da';
+            } else {
+                $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
+            }
+            $message['status'] = 'queued';
+            $message['subject'] = 'Contact Form message from'.$request->get('name');
+            $html = '<p>';
+            $html .= $request->get('message');
+            $html .= '</p>';
+            $message['content'] = $html;
+            $message['reciever'] = 'info@conduction.nl';
+            $message['sender'] = $request->get('email');
+
+            $commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
+        }
+
+        return $variables;
+    }
+
+    /**
      * @Route("/about")
      * @Template
      */
@@ -88,10 +119,21 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/techniek")
+     * @Route("/organization")
      * @Template
      */
-    public function techniekAction(CommonGroundService $commonGroundService, Request $request)
+    public function organizationAction(CommonGroundService $commonGroundService, Request $request)
+    {
+        $variables = [];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/tech")
+     * @Template
+     */
+    public function techAction(CommonGroundService $commonGroundService, Request $request)
     {
         $variables = [];
 
