@@ -10,6 +10,29 @@
                     <li><a target="_blank" href="https://www.rabobank.nl/">Rabobank</a></li>
                     <li><a target="_blank" href="https://www.khn.nl/">Koninklijke Horeca Nederland</a></li>
                     <li><a target="_blank" href="https://www.commonground.nl/">Commonground</a></li>
+                    <li class="mt-5">
+                        <a id="footerMenu" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">
+                            {% set query = app.request.attributes.get('_route_params') %}
+                            {% if app.request.locale == 'en'  %}
+                                <img src="/bundles/rocket/assets/img/flags/united-kingdom.svg" style="width: 16px; opacity: 1 !important;" alt="USA Flag" class="mr-2">{{ 'english'|trans|capitalize }}
+                            {% elseif app.request.locale == 'nl'  %}
+                                <img src="/bundles/rocket/assets/img/flags/netherlands.svg" style="width: 16px; opacity: 1 !important;" alt="NL Flag" class="mr-2">{{ 'dutch'|trans|capitalize }}
+                            {% else %}
+                                {{ 'no curent language could be established'|trans|capitalize }}
+                            {% endif %}
+                            <i class="fas fa-chevron-down ml-1"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="footerMenu">
+                            <li>
+                                {% set query = query|merge({'_locale': 'en'}) %}
+                                <a style="color: black !important; width: 40px;" href="{{ absolute_url(path(app.request.attributes.get('_route'), query)) }}" class="hover-bg-black-30 ml-2 dropdown-item"><img style="width: 16px; opacity: 1 !important;" src="/bundles/rocket/assets/img/flags/united-kingdom.svg" alt="UK Flag" class="mr-2">{{ 'english'|trans|capitalize }}</a>
+                            </li>
+                            <li>
+                                {% set query = query|merge({'_locale': 'nl'}) %}
+                                <a style="color: black !important; width: 40px;" href="{{ absolute_url(path(app.request.attributes.get('_route'), query)) }}" class="hover-bg-black-30 ml-2 dropdown-item"><img style="width: 16px; opacity: 1 !important;" src="/bundles/rocket/assets/img/flags/netherlands.svg" alt="NL Flag" class="mr-2">{{ 'dutch'|trans|capitalize }}</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <div class="col-6 col-xl-3 mb-5 mb-xl-0">
@@ -18,6 +41,7 @@
                     <li><a target="_blank" href="{{ path('app_default_about') }}">{{ 'how does it work'|trans|capitalize }}</a></li>
                     <li><a target="_blank" href="{{ path('app_default_privacy') }}">{{ 'privacy'|trans|capitalize }}</a></li>
                     <li><a target="_blank" href="{{ path('app_default_terms') }}">{{ 'terms and conditions'|trans|capitalize }}</a></li>
+                    <li><a target="_blank" href="{{ path('app_default_tech') }}">{{ 'technique'|trans|capitalize }}</a></li>
                 </ul>
             </div>
             <div class="col-6 col-xl-3 mb-5 mb-xl-0">
@@ -33,13 +57,6 @@
                     </div>
                     <input type="hidden" value="1024" name="group[25353][1024]">
                 </form>
-            </div>
-            <div class="col-6 col-xl-3 mb-5 mb-xl-0">
-                <span class="h5">{{ 'other'|trans|capitalize }}</span>
-                <ul class="footer-links mt-2">
-                    <li><a target="_blank" data-toggle="modal" data-target="#modal-contact">{{ 'contact form'|trans|capitalize }}</a></li>
-                    <li><a target="_blank" data-toggle="modal" data-target="#feedbackModal">{{ 'i have an suggestion'|trans|capitalize }}</a></li>
-                </ul>
             </div>
         </div>
         <hr class="my-3 my-lg-5">
