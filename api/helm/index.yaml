@@ -1,16 +1,29 @@
 apiVersion: v1
 entries:
-  pan:
+  checking:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2020-09-17T17:32:27.004444862Z"
-    description: '&quot;Naast deze JSON rest API is er ook een [graphql](/graphql)
-      interface beschikbaar.&quot;'
-    digest: 7e789a3e9dfbc444e111a1a781a841cda4acaf47bb85b2823495b8a6d9e27e95
-    home: www.zuid-drecht.nl
-    icon: www.zuid-drecht.nl
-    name: pan
+    created: "2020-11-28T07:15:59.3272358Z"
+    description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
+      beschikbaar.
+    digest: a4f71eaebd8024423bdbbf04b645827e931cea86cac60310420f82164ab9b0b1
+    home: www.checking.nu
+    icon: www.checking.nu
+    name: checking
     urls:
-    - pan-0.1.0.tgz
+    - checking-0.1.0.tgz
     version: 0.1.0
-generated: "2020-09-17T17:32:27.000345154Z"
+  stage-platform:
+  - apiVersion: v1
+    appVersion: V1.0
+    created: "2020-11-28T07:15:59.334682Z"
+    description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
+      beschikbaar.
+    digest: 790f23d533d146a77ebfa029747fb23d2315c9b29e2ec9aaef90ac8bee277f79
+    home: www.stage-platform.com
+    icon: www.stage-platform.com
+    name: stage-platform
+    urls:
+    - stage-platform-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-11-28T07:15:59.3229033Z"

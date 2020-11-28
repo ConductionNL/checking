@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container mt-5 mb-5">
+    {% if app.user is not defined %}
+        <div style="height: 500px" class="container mt-5 mb-5">
+            <p>{{ 'you must be logged in to view the dashboard'|trans|capitalize }}</p>
+            <p>{{ 'click'|trans|capitalize }} <a href="{{ path('app_user_idvault') }}?backurl={{ path('app_dashboard_index') }}">{{ 'here'|trans }}</a> {{ 'to login'|trans }}</p>
+        </div>
+    {% else %}
+        <div class="row pt-5 pt-md-0">
+            {% include '/dashboard/sideMenu.html.twig' %}
+            <div class="col-12 col-lg-8">
+                {% block dashboard %}
+
+                {% endblock %}
+            </div>
+        </div>
+    {% endif %}
+    </div>
+{% endblock %}

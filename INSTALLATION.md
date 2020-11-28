@@ -77,7 +77,6 @@ First we always need to update our dependencies
 ```CLI
 $ helm dependency update ./api/helm
 ```
-
 If you want to create a new instance
 ```CLI
 $ helm install --name pc-dev ./api/helm  --kubeconfig="api/helm/conduction-kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1

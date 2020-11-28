@@ -4,21 +4,21 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: pan
-  name: pan
-  title: Proto Applicatie NL Design
+  projectName: checking
+  name: checking
+  title: checking
   version: V1.0
   majorVersion: v1
   id: 31a2ad29-ee03-4aa9-be81-abf1fda7bbcc
   description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
   type: application
-  repro: https://github.com/ConductionNL/pan
-  demo: www.zuid-drecht.nl
-  container: https://hub.docker.com/repository/docker/conduction/pc-php
+  repro: https://github.com/ConductionNL/checking
+  demo: dev.checking.nu
+  container: https://hub.docker.com/repository/docker/conduction/checking-php
   domain: zuid-drecht.nl
   subdomain: false
-  subpath: false
-  subpathRouting: 
+  subpath: 
+  subpathRouting: true
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
@@ -29,8 +29,8 @@ settings:
   web: false
   internal: false
   debug: 1
-  cache: 1
-  sessionDuration: 900
+  cache: false
+  sessionDuration: 1209600
   replicaCount: 1
   corsAllowOrigin: ['*']
   trustedHosts: '^.+$'
@@ -149,3 +149,9 @@ resources: {}
   # requests:
   #  cpu: 100m
   #  memory: 128Mi
+
+commonground:
+    eherkenning:
+        location: https://zuid-drecht.nl/eherkenning
+    digispoof:
+        location: https://zuid-drecht.nl/digispoof

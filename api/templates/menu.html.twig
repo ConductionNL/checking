@@ -1,82 +1,83 @@
-{% set currentPath = path(app.request.attributes.get('_route'),
-    app.request.attributes.get('_route_params')) %}
-
-<nav class="top-nav" id="docs-nav">
-    <div class="container">
-        <ul class="navigation">
-            {% set currentPath = path(app.request.attributes.get('_route'),
-                app.request.attributes.get('_route_params')) %}
-
-            {% if application.defaultConfiguration.configuration.mainMenu is defined %}
-                {% set menu = commonground_resource(application.defaultConfiguration.configuration.mainMenu) %}
-                {% for item in menu.menuItems|sort((a, b) => a.order <=> b.order) %}
-                    <li class="navigation__item col-xs" >
-                        <a class="navigation__link {% if item.href == currentPath %} navigation__link--active {% endif %}"
-                           href="{{ item.href }}">
-                            <i class="{{ item.icon }}" role="presentation"></i> {{ item.name }}
+<nav class="navbar navbar-expand-lg navbar-dark navbar-theme-primary">
+    <div class="container position-relative">
+        <a class="navbar-brand mr-lg-3 " href="{{ path('app_default_index') }}">
+            <i class="fas fa-qrcode "></i>
+        </a>
+        <div class="navbar-collapse collapse" id="navbar-default-primary">
+            <div class="navbar-collapse-header">
+                <div class="row">
+                    <div class="col-6 collapse-brand">
+                        <a href="{{ path('app_default_index') }}">
+                            <i class="fas fa-qrcode"></i>
                         </a>
-                    </li>
-                {% endfor %}
-                <li class="navigation__item navigation__item--has-popout col-xs-hidden">
-                    <a class="navigation__link" href="#"><i class="icon icon-hamburger" role="presentation"></i> Menu</a>
-                    <div class="navigation__popout">
-                        <ul class="list list--links list--chevrons navigation__popout-items">
-                            {% for item in menu.menuItems|sort((a, b) => a.order <=> b.order) %}
-                            <li class="navigation__popout-item  {% if item.href == currentPath %} navigation__link--active {% endif %}">
-                                <a class="navigation__popout-link" href="{{ item.href }}"><i class="{{ item.icon }}" role="presentation"></i> {{ item.name }}</a>
-                            </li>
-                            {% endfor %}
-                        </ul>
                     </div>
-                </li>
-            {% endif %}
-        </ul>
-
-        <div class="top-nav__block top-nav__block--right" style="display: flex; justify-content: flex-end">
-
-            <ul class="navigation">
-
-                {# onderstaande is nu bij wijze van hotfix, de ventigid het coole rechts zwevende menu item #}
-                {% if not app.user %}
-                    <li class="navigation__item">
-                        <a class="navigation__link" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i
-                                style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}
-                        </a>
-                    </li>
-                {% else %}
-                    {% if application.defaultConfiguration.configuration.userPage is defined %}
-                        <li class="navigation__item">
-                            <a href="/{{ application.defaultConfiguration.configuration.userPage }}" title="Profile"
-                               class="navigation__link  ">
-                                <i style="margin-right: 10px" class="fas fa-user"></i>
-                                <span>{{ app.user.name }}</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                    <li class="navigation__item">
-                        <a href="{{ path('app_user_logout') }}" title="Profile" class="navigation__link  ">
-                            <i style="margin-right: 10px" class="fas fa-unlock"></i>
-                            <span>{{ 'logout'|trans|capitalize }}</span>
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
-            {% if application.defaultConfiguration.configuration.search is defined %}
-            <form method="post" action="{{ path('app_search_index') }}"
-                  style="float: right; margin-left: 20px;">
-                <div class="input nav--input">
-                    <div class="input__control-group nav--input__control-group" style="
-    margin-top: 10px;
-    margin-bottom: 0px;
-">
-                        <input type="search" id="search" name="search"
-                               class="input__control input__control--m input__control--search">
-                        <button class="btn btn--icon" title="Zoeken"><i class="icon icon-magnifier"
-                                                                        role="presentation"></i></button>
+                    <div class="col-6 collapse-close">
+                        <i class="fas fa-times" data-toggle="collapse" role="button"
+                           data-target="#navbar-default-primary" aria-controls="navbar-default-primary"
+                           aria-expanded="false" aria-label="Toggle navigation"></i>
                     </div>
                 </div>
-            </form>
+            </div>
+            <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+                <li class="nav-item">
+                    <a href="{{ path('app_default_index') }}" class="nav-link">{{ 'home'|trans|capitalize }}</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_default_organization') }}" class="nav-link">{{ 'for organizations'|trans|capitalize }}</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_default_about') }}" class="nav-link">{{ 'how does it work'|trans|capitalize }}?</a>
+                </li>
+            </ul>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <ul class="navbar-nav navbar-nav-hover ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="d-flex">
+                                <div class="avatar avatar-xl">
+                                    <img
+                                        class="avatar-img rounded-circle"
+                                        src="https://eu.ui-avatars.com/api/?name={{ commonground_resource(app.user.person).givenName }}{% if commonground_resource(app.user.person).familyName is defined %}+{{ commonground_resource(app.user.person).familyName }}{% endif %}&background=335EEA&rounded=true&color=fff&bold=true"
+                                        style="width: 40px; opacity: 1;"
+                                    >
+                                </div>
+                                <div class="d-flex align-items-center ml-2">
+                                    {{ app.user.name }}
+                                </div>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{ path('app_dashboard_index') }}">{{ 'overview'|trans|capitalize }}</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_dashboard_checkins') }}">{{ 'checkins'|trans|capitalize }}</a></li>
+                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">{{ 'manage'|trans|capitalize }} <i class="fas fa-angle-down nav-link-arrow ml-2"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{ path('app_dashboard_organizations') }}">{{ 'organizations'|trans|capitalize }}</a></li>
+                                    {%  if app.user.organization is defined and app.user.organization is not empty %}
+                                        <li><a class="dropdown-item" href="{{ path('app_dashboard_codes') }}">{{ 'codes'|trans|capitalize }}</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ path('app_dashboard_reservations') }}">{{ 'reservations'|trans|capitalize }}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            {% else %}
+                <a style="" class="navbar-btn btn btn-sm btn-danger lift mr-2 ml-auto" href="{{ path('app_user_idvault') }}?backUrl={{ path('app_dashboard_checkins') }}">
+                    {{ 'register'|trans|capitalize }}
+                </a>
+                <a style="" class="navbar-btn btn btn-sm btn-success lift" href="{{ path('app_user_idvault') }}?backUrl={{ path('app_dashboard_checkins') }}">
+                    {{ 'login'|trans|capitalize }}
+                </a>
             {% endif %}
+        </div>
+        <div class="d-flex align-items-center">
+            <button class="navbar-toggler ml-2" type="button" data-toggle="collapse"
+                    data-target="#navbar-default-primary" aria-controls="navbar-default-primary"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
     </div>
 </nav>
+</header>

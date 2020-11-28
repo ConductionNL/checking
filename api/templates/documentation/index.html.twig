@@ -1,0 +1,100 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <section class="section-header bg-primary text-white pb-9 pb-lg-12 mb-4 mb-lg-6">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <h2 class="h1">Got questions?</h2>
+                </div>
+            </div>
+        </div>
+        <div class="pattern bottom"></div>
+    </section>
+    <div class="section section-lg pt-0">
+        <div class="container mt-n8 mt-lg-n12 z-2">
+            <div class="row justify-content-center">
+                <div class="col col-md-10">
+                    <!--Accordion-->
+                    <div class="accordion shadow-soft">
+                        <div class="card card-sm card-body border-soft mb-0">
+                            <a href="#panel-what-is-pixel" data-target="#panel-what-is-pixel"
+                               class="accordion-panel-header" data-toggle="collapse" role="button" aria-expanded="false"
+                               aria-controls="panel-what-is-pixel">
+                                <span class="icon-title h6 mb-0 font-weight-bold">{{ 'what is rocket?'|trans|capitalize }}</span>
+                                <span class="icon"><i class="fas fa-plus"></i></span>
+                            </a>
+                            <div class="collapse" id="panel-what-is-pixel">
+                                <div class="pt-3">
+                                    <p>{{ 'Rocket is a premium web template that you can use to showcase and present your Software as a Service business. We used the most popular CSS framework Bootstrap for the elements.'|trans|capitalize }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-sm card-body border-soft mb-0">
+                            <a href="#panel-clients" data-target="#panel-clients" class="accordion-panel-header"
+                               data-toggle="collapse" role="button" aria-expanded="false" aria-controls="panel-clients">
+                                <span class="icon-title h6 mb-0 font-weight-bold">{{ 'do I have the right to use the images, fonts and other creatives?'|trans|capitalize }}</span>
+                                <span class="icon"><i class="fas fa-plus"></i></span>
+                            </a>
+                            <div class="collapse" id="panel-clients">
+                                <div class="pt-3">
+                                    <p>{{ 'Everything that you see in the preview is included in the downloaded product and can be used in your products based on our licensing terms.'|trans|capitalize }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-sm card-body border-soft mb-0">
+                            <a href="#panel-demo" data-target="#panel-demo" class="accordion-panel-header"
+                               data-toggle="collapse" role="button" aria-expanded="false" aria-controls="panel-demo">
+                                <span class="icon-title h6 mb-0 font-weight-bold">{{ 'is there a money back guarantee?'|trans|capitalize }}</span>
+                                <span class="icon"><i class="fas fa-plus"></i></span>
+                            </a>
+                            <div class="collapse" id="panel-demo">
+                                <div class="pt-3">
+                                    <p>{{ 'We offer a 30-day money back guarantee for clients that are not satisfied with the product.'|trans|capitalize }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-sm card-body border-soft mb-0">
+                            <a href="#panel-money-back" data-target="#panel-money-back" class="accordion-panel-header"
+                               data-toggle="collapse" role="button" aria-expanded="false"
+                               aria-controls="panel-money-back">
+                                    <span class="icon-title h6 mb-0 font-weight-bold">{{ 'do I get free updates?'|trans|capitalize }}</span>
+                                <span class="icon"><i class="fas fa-plus"></i></span>
+                            </a>
+                            <div class="collapse" id="panel-money-back">
+                                <div class="pt-3">
+                                    <p>{{ 'By default we offer at least 6 months of updates for every product that we launch.'|trans|capitalize }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-sm card-body border-soft mb-0">
+                            <a href="#panel-updates" data-target="#panel-updates" class="accordion-panel-header"
+                               data-toggle="collapse" role="button" aria-expanded="false" aria-controls="panel-updates">
+                                <span class="icon-title h6 mb-0 font-weight-bold">{{ 'where can I get support?'|trans|capitalize }}</span>
+                                <span class="icon"><i class="fas fa-plus"></i></span>
+                            </a>
+                            <div class="collapse" id="panel-updates">
+                                <div class="pt-3">
+                                    <p>{{ 'Even for the smallest pricing plan we offer at least 6 months of premium support. Please check the pricing plan below for further details.'|trans|capitalize }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End of Accordion-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="section section-lg pb-5 bg-soft">
+        <div class="container">
+            <div class="row mt-lg-5 mt-5">
+                <div class="col text-center">
+                    <p class="text-italic">Didn't find what you were looking for? No biggie!</p>
+                    <a href="https://themesberg.com/contact" class="btn btn-sm btn-outline-primary" target="_blank">Contact
+                        us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

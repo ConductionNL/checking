@@ -4,3 +4,5 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - 'TbbcMoneyBundle:Form:fields.html.twig'
+    globals:
+        app_name: '%env(APP_NAME)%'

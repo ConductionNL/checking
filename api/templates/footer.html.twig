@@ -1,94 +1,76 @@
-<footer class="footer col-xs">
+{% include 'modals/suggestion.html.twig' %}
+{% include 'modals/contact.html.twig' %}
+<footer class="footer py-6 bg-primary text-white">
     <div class="container">
         <div class="row">
-            {% if application is defined
-                and application.defaultConfiguration.configuration is defined
-                and application.defaultConfiguration.configuration.footer1 is defined
-                and application.defaultConfiguration.configuration.footer1 is not empty %}
-            {% set footer1 = commonground_resource(application.defaultConfiguration.configuration.footer1) %}
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 footer1">
-                    {# lets deal with menu's #}
-                    {% if footer1['@type'] == 'Menu' %}
-                        <span class="footer__header">{{ footer1.name }}</span>
-                        <ul class="list list--links footer__nav">
-                            {% for item in footer1.menuItems %}
-                                <li><a href="{{ item.href }}">{{ item.name }}</a></li>
-                            {% endfor %}
+            <div class="col-6 col-xl-3 mb-5 mb-xl-0">
+                <span class="h5">Partners</span>
+                <ul class="footer-links mt-2">
+                    <li><a target="_blank" href="https://www.conduction.nl/">Conduction</a></li>
+                    <li><a target="_blank" href="https://www.rabobank.nl/">Rabobank</a></li>
+                    <li><a target="_blank" href="https://www.khn.nl/">Koninklijke Horeca Nederland</a></li>
+                    <li><a target="_blank" href="https://www.commonground.nl/">Commonground</a></li>
+                    <li class="mt-5">
+                        <a id="footerMenu" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">
+                            {% set query = app.request.attributes.get('_route_params') %}
+                            {% if app.request.locale == 'en'  %}
+                                <img src="/bundles/rocket/assets/img/flags/united-kingdom.svg" style="width: 16px; opacity: 1 !important;" alt="USA Flag" class="mr-2">{{ 'english'|trans|capitalize }}
+                            {% elseif app.request.locale == 'nl'  %}
+                                <img src="/bundles/rocket/assets/img/flags/netherlands.svg" style="width: 16px; opacity: 1 !important;" alt="NL Flag" class="mr-2">{{ 'dutch'|trans|capitalize }}
+                            {% else %}
+                                {{ 'no curent language could be established'|trans|capitalize }}
+                            {% endif %}
+                            <i class="fas fa-chevron-down ml-1"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="footerMenu">
+                            <li>
+                                {% set query = query|merge({'_locale': 'en'}) %}
+                                <a style="color: black !important; width: 40px;" href="{{ absolute_url(path(app.request.attributes.get('_route'), query)) }}" class="hover-bg-black-30 ml-2 dropdown-item"><img style="width: 16px; opacity: 1 !important;" src="/bundles/rocket/assets/img/flags/united-kingdom.svg" alt="UK Flag" class="mr-2">{{ 'english'|trans|capitalize }}</a>
+                            </li>
+                            <li>
+                                {% set query = query|merge({'_locale': 'nl'}) %}
+                                <a style="color: black !important; width: 40px;" href="{{ absolute_url(path(app.request.attributes.get('_route'), query)) }}" class="hover-bg-black-30 ml-2 dropdown-item"><img style="width: 16px; opacity: 1 !important;" src="/bundles/rocket/assets/img/flags/netherlands.svg" alt="NL Flag" class="mr-2">{{ 'dutch'|trans|capitalize }}</a>
+                            </li>
                         </ul>
-                    {% endif %}
-                    {# lets deal with templates #}
-                    {% if footer1['@type'] == 'Template' %}
-                        {{ include(template_from_string(footer1.content|raw)) }}
-                    {% endif %}
-                </div>
-                {% endif %}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-6 col-xl-3 mb-5 mb-xl-0">
+                <span class="h5">{{ 'other'|trans|capitalize }}</span>
+                <ul class="footer-links mt-2">
+                    <li><a target="_blank" href="{{ path('app_default_about') }}">{{ 'how does it work'|trans|capitalize }}</a></li>
+                    <li><a target="_blank" href="{{ path('app_default_privacy') }}">{{ 'privacy'|trans|capitalize }}</a></li>
+                    <li><a target="_blank" href="{{ path('app_default_terms') }}">{{ 'terms and conditions'|trans|capitalize }}</a></li>
+                    <li><a target="_blank" href="{{ path('app_default_tech') }}">{{ 'technique'|trans|capitalize }}</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-xl-3 mb-5 mb-xl-0">
+                <span class="h5">{{ 'newsletter'|trans|capitalize }}</span>
+                <form action="https://conduction.us3.list-manage.com/subscribe/post?u=92dbff3b134c8b2356ddc7ed4&amp;id=265fa0c5eb" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
 
-                {% if application is defined
-                    and application.defaultConfiguration.configuration is defined
-                    and application.defaultConfiguration.configuration.footer2 is defined
-                    and application.defaultConfiguration.configuration.footer2 is not empty %}
-                {% set footer2 = commonground_resource(application.defaultConfiguration.configuration.footer2) %}
-                <div class="col-sm-6 col-md-4 col-lg-3 footer2">
-                    {# lets deal with menu's #}
-                    {% if footer2['@type'] == 'Menu' %}
-                        <span class="footer__header">{{ footer2.name }}</span>
-                        <ul class="list list--links footer__nav">
-                            {% for item in footer2.menuItems %}
-                                <li><a href="{{ item.href }}">{{ item.name }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                    {# lets deal with templates #}
-                    {% if footer2['@type'] == 'Template' %}
-                        {{ include(template_from_string(footer2.content|raw)) }}
-                    {% endif %}
+                    <div class="form-group">
+                        <label style="color: white" for="email">{{ 'e-mail'|trans|capitalize }}</label>
+                        <input required type="email" value="" name="EMAIL" class="form-control" id="mce-EMAIL">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">{{ 'subscribe'|trans|capitalize }}</button>
+                    </div>
+                    <input type="hidden" value="1024" name="group[25353][1024]">
+                </form>
+            </div>
+        </div>
+        <hr class="my-3 my-lg-5">
+        <div class="row">
+            <div class="col mb-md-0">
+                <a href="https://conduction.nl" target="_blank" class="d-flex justify-content-center">
+                    <img src="data:image/png;base64,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" height="25" class="mb-3">
+                </a>
+                <div class="d-flex text-center justify-content-center align-items-center" role="contentinfo">
+                    <p class="font-weight-normal font-small mb-0"> {{ 'copyright'|trans|capitalize }} © Conduction
+                        <span class="current-year">{{ "now"|date("Y") }}</span>. {{ 'all rights reserved'|trans|capitalize }}.</p>
                 </div>
-            {% endif %}
-
-            {% if application is defined
-                and application.defaultConfiguration.configuration is defined
-                and application.defaultConfiguration.configuration.footer3 is defined
-                and application.defaultConfiguration.configuration.footer3 is not empty %}
-            {% set footer3 = commonground_resource(application.defaultConfiguration.configuration.footer3) %}
-                <div class=" col-sm-6 col-md-4 col-lg-3 footer3">
-                    {# lets deal with menu's #}
-                    {% if footer3['@type'] == 'Menu' %}
-                        <span class="footer__header">{{ footer3.name }}</span>
-                        <ul class="list list--links footer__nav">
-                            {% for item in footer3.menuItems %}
-                                <li><a href="{{ item.href }}">{{ item.name }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                    {# lets deal with templates #}
-                    {% if footer3['@type'] == 'Template' %}
-                        {{ include(template_from_string(footer3.content|raw)) }}
-                    {% endif %}
-                </div>
-                {% endif %}
-
-                {% if application is defined
-                    and application.defaultConfiguration.configuration is defined
-                    and application.defaultConfiguration.configuration.footer4 is defined
-                    and application.defaultConfiguration.configuration.footer4 is not empty %}
-                {% set footer4 = commonground_resource(application.defaultConfiguration.configuration.footer4) %}
-                <div class="col-sm-6 col-md-4 col-lg-3 footer4">
-                    {# lets deal with menu's #}
-                    {% if footer4['@type'] == 'Menu' %}
-                        <span class="footer__header">{{ footer4.name }}</span>
-                        <ul class="list list--links footer__nav">
-                            {% for item in footer4.menuItems %}
-                                <li><a href="{{ item.href }}">{{ item.name }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                    {# lets deal with templates #}
-                    {% if footer4['@type'] == 'Template' %}
-                        {{ include(template_from_string(footer4.content|raw)) }}
-                    {% endif %}
-                </div>
-            {% endif %}
-
+            </div>
         </div>
     </div>
 </footer>
+

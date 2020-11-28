@@ -18,8 +18,8 @@ security:
             anonymous: ~
             pattern: ^/
             form_login:
-                login_path: app_user_login
-                check_path: app_user_login
+                login_path: app_user_idvault
+                check_path: app_user_idvault
             logout:
                 path: app_user_logout
                 target: app_default_index
@@ -32,8 +32,10 @@ security:
                     - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundDigispoofAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundIdinAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundIdinLoginAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundFacebookAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundGmailAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundIdvaultAuthenticator
                 entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
 
             # activate different ways to authenticate

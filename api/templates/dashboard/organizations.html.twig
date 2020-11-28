@@ -1,0 +1,57 @@
+{% extends '/dashboard/dashboard.html.twig' %}
+
+{% block dashboard %}
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-6 col-lg-12">
+            <a data-toggle="modal" data-target="#organizationModal" class="btn btn-outline-secondary btn-block mb-4 py-4"><span class="mr-2"><span class="fas fa-plus"></span></span>{{ 'new'|trans|capitalize }}</a>
+            {% if organizations is defined and organizations is not empty %}
+                {% for organization in organizations %}
+                    {% set organizationUrl = commonground_cleanurl({'component': 'wrc', 'type':'organizations', 'id': organization.id}) %}
+                    <div class="card border-light mb-4">
+                        <div class="row no-gutters align-items-center">
+                            {% if organization.style.favicon.base64 is defined %}
+                                <div class="col-12 col-lg-6 col-xl-4 text-center">
+                                    <a href="{{ path('app_dashboard_organization', {'id': organization.id}) }}">
+                                        <img style="width: 100px; height: 100px" src="{{ organization.style.favicon.base64 }}" alt="private office" class="card-img p-2 rounded-xl">
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <div class="col-12 col-lg-6 col-xl-8 p-lg-3">
+                                <div class="card-body py-lg-0 p-4">
+                                    <div class="d-flex no-gutters align-items-center mb-3">
+                                        <div class="col text-right">
+                                            <div class="btn-group">
+                                                <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <span class="icon icon-sm">
+                                                        <span class="fas fa-ellipsis-h icon-secondary"></span>
+                                                    </span>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <form action="{{ path('app_dashboard_organizations') }}" method="post">
+                                                        <input type="hidden" name="organization" value="{{ organization.id }}">
+                                                        <button name="active" value="true" class="dropdown-item">{{ 'set active'|trans|capitalize }}</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="{{ path('app_dashboard_organization', {'id': organization.id}) }}">
+                                        <h2 class="h5">{{ organization.name }}</h2>
+                                    </a>
+                                    <div class="col d-flex pl-0">
+                                        {% if organizationUrl == app.user.organization %}
+                                            <span class="text-success font-small mr-3"><span class="fas fa-check-circle mr-2"></span>{{ 'active'|trans|capitalize }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    {% include '/dashboard/modals/add_organization_modal.html.twig' %}
+{% endblock %}

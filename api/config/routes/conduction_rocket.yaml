@@ -1,0 +1,3 @@
+conduction_rocket:
+  resource: "@RocketBundle/Resources/config/routes.yaml"
+  prefix: /
