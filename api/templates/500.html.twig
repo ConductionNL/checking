@@ -2,22 +2,20 @@
 
 {% block container %}
 
-    <article>
-        <div class="row">
-        <div class="col-xl-8 col-xl-offset-2 col-lg-10 col-lg-offset-1">
-            <div class="content-background">
-                <div class="content">
-                    <h1>Error <span style="color: red">500</span>: er ging iets mis</h1>
-                    <p style="">
-                        Het lijkt erop dat er wat mis gegaan is.
-                        Laat ons dit weten en dan zullen wij dit zo snel mogelijk voor u oplossen.
-                        Onze excuses voor het ongemak.
-                    </p>
+    <section class="min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center text-dark d-flex align-items-center justify-content-center">
+                    <div>
+                        <a href="{{ path('app_default_index') }}"><img class="img-fluid w-50" src="../public/images/500.svg" alt="girl illustration"></a>
+                        <h1 class="mt-4">500 Server <span class="font-weight-bolder text-primary">error</span></h1>
+                        <p class="lead my-4 px-lg-9 px-xl-11">{{'Something has went seriously wrong. We should be back by the time you finish your coffee.'|trans|capitalize}}</p>
+                        <a class="btn btn-secondary animate-hover" href="{{ path('app_default_index') }}"><span class="fas fa-chevron-left mr-3 pl-2 animate-left-3"></span>Go back home</a>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
-    </article>
+    </section>
 
 
 {% endblock %}
