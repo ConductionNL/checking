@@ -53,7 +53,7 @@ class CheckinService
 
         $results = $this->processCheckin($checkin);
         // Do something with the $results?
-        var_dump($results);die();
+        //var_dump($results);die(); // for example: var dump for testing purposes
 
         return $checkin;
     }
@@ -105,6 +105,8 @@ class CheckinService
             } else {
                 array_push($results, 'Email has already been sent');
             }
+        } else {
+            array_push($results, 'No need to send a checkinCount email warning');
         }
 
         return $results;
@@ -131,16 +133,10 @@ class CheckinService
             $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
         }
         $message['status'] = 'queued';
-        $message['subject'] = $subject;
-        $html = $this->commonGroundService->getResource($content)['content'];
-
-        $template = $this->twig->createTemplate($html);
-        $data = array_merge(['checkin' => $checkin], $data);
-        $message['content'] = $template->render($data);
 
         // determining the receiver (organization of the node)
         if ($organization = $this->commonGroundService->isResource($checkin['node']['organization'])) {
-            if (isset($organization['contact']) and $organizationContact = $this->commonGroundService->isResource($organization['contact'])) {
+            if (isset($organization['administrationContact']) and $organizationContact = $this->commonGroundService->isResource($organization['administrationContact'])) {
                 if (isset($organizationContact['emails']) and (count($organizationContact['emails']) > 0)) {
                     $receiver = $organizationContact['@id'];
                 } else {
@@ -152,8 +148,15 @@ class CheckinService
         } else {
             return 'No email receiver found [organization of the node is no resource]';
         }
-        $message['reciever'] = $receiver; //$this->security->getUser()->getUsername();
+        $message['reciever'] = $receiver;
         $message['sender'] = 'no-reply@conduction.nl';
+        $sender['name'] = 'Checking';
+
+        $message['subject'] = $subject;
+        $html = $this->commonGroundService->getResource($content)['content'];
+        $template = $this->twig->createTemplate($html);
+        $data = array_merge(['checkin' => $checkin, 'sender'=>$sender, 'receiver'=>$this->commonGroundService->getResource($message['reciever'])], $data);
+        $message['content'] = $template->render($data);
 
         return $this->commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
     }

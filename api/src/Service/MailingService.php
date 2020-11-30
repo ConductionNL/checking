@@ -40,9 +40,9 @@ class MailingService
         $message['status'] = 'queued';
         $message['subject'] = $subject;
         $message['content'] = $this->twig->render($template, $data);
-        $message['reciever'] = 'gino@conduction.nl';
+        $message['reciever'] = $receiver;
         $message['sender'] = $sender;
 
-        $this->commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
+        return $this->commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
     }
 }
