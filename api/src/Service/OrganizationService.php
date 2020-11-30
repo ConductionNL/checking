@@ -8,7 +8,6 @@ use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
-use App\Service\MailingService;
 
 class OrganizationService
 {
@@ -65,6 +64,5 @@ class OrganizationService
         $data['node'] = $node;
 
         $this->mailingService->sendMail('mails/welcome_organization.html.twig', 'no-reply@conduction.nl', $this->security->getUser()->getUsername(), $data, 'Welcome');
-
     }
 }
