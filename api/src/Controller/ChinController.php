@@ -418,7 +418,7 @@ class ChinController extends AbstractController
      * @Route("/authorization/{code}")
      * @Template
      */
-    public function authorizationAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function authorizationAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, CheckinService $checkinService, ParameterBagInterface $params)
     {
         // Fallback options of establishing
         if (!$code) {
@@ -496,10 +496,7 @@ class ChinController extends AbstractController
 
             $user = $commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
 
-            $checkIn['node'] = $node;
-            $checkIn['person'] = $person['@id'];
-
-            $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
+            $checkinService->createCheckin($node, $person);
 
             $node = $commonGroundService->getResource($node);
 

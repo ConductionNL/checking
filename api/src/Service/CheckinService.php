@@ -28,25 +28,24 @@ class CheckinService
         $this->twig = $twig;
     }
 
-    public function createCheckin($node)
+    public function createCheckin($node, $person = null)
     {
         // TODO: Only create a checkin if the current amount of checkins on the node isn't higher than the node.maximumAttendeeCapacity?!
 
-        if (!$this->security->getUser()) {
-            // User not logged in, do something?
-            return 'Not logged in';
-        }
-
-        $person = $this->commonGroundService->getResource($this->security->getUser()->getPerson());
-        $personUrl = $this->commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
-
-        $user = $this->commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->security->getUser()->getUsername()])['hydra:member'][0];
-        $userUrl = $this->commonGroundService->cleanUrl(['component' => 'uc', 'type' => 'users', 'id' => $user['id']]);
-
         $checkin = [];
         $checkin['node'] = 'nodes/'.$node['id'];
-        $checkin['person'] = $personUrl;
-        $checkin['userUrl'] = $userUrl;
+        if ($this->security->getUser()) {
+            $user = $this->commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->security->getUser()->getUsername()])['hydra:member'][0];
+            $userUrl = $this->commonGroundService->cleanUrl(['component' => 'uc', 'type' => 'users', 'id' => $user['id']]);
+            $checkin['userUrl'] = $userUrl;
+
+            if(!isset($person)) {
+                $person = $this->commonGroundService->getResource($this->security->getUser()->getPerson());
+            }
+        } elseif(!isset($person)) {
+            return 'Login or provide a person';
+        }
+        $checkin['person'] = $this->commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
 
         $checkin = $this->commonGroundService->createResource($checkin, ['component' => 'chin', 'type' => 'checkins']);
 
