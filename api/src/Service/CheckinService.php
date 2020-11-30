@@ -38,13 +38,13 @@ class CheckinService
         $checkin = [];
         $checkin['node'] = 'nodes/'.$node['id'];
         if ($this->security->getUser()) {
-            if(!isset($user)) {
+            if (!isset($user)) {
                 $user = $this->commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->security->getUser()->getUsername()])['hydra:member'][0];
             }
-            if(!isset($person)) {
+            if (!isset($person)) {
                 $person = $this->commonGroundService->getResource($this->security->getUser()->getPerson());
             }
-        } elseif(!isset($person)) {
+        } elseif (!isset($person)) {
             return 'Login or provide a person';
         }
         if (isset($user)) {
