@@ -1,0 +1,50 @@
+<table align="center"  style="background-color: #F5F5F5; width: 100%; padding: 5px; max-width: 1200px;">
+    <tr>
+        <td align="center" style="text-align: -webkit-center">
+            <table style="width: 80%; background-color: white;">
+                <tr>
+                    <td style="width: 100%; height: fit-content; background-color: #01689B">
+                        <h1 style=" margin: 15px 0 15px 30px; color: white; font-family: Verdana,serif; ">Checking</h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p style="margin: 15px 30px 0 30px"><strong>Welkom bij Checking!</strong></p>
+                        <p style="margin: 15px 30px 0 30px">Je aanmelding is compleet! Je kunt nu zonder zorgen bezoekers ontvangen in de weet dat hun gegevens veilig zijn en dat je aan de gestelde verplichtingen door de overheid voldoet :) </p>
+
+                        <p style="margin: 15px 30px 0 30px"><strong>Jouw QR Code</strong></p>
+
+                        <p style="margin: 15px 30px 0 30px">
+                            hier ook meteen je QR-code die je kunt gebruiken voor bezoekers, <br>
+                            mocht je meer QR-codes nodig hebben (bijvoorbeeld omdat je meerdere locaties hebt)
+                            dan kan je ze zelf gemakkelijk via de website aanmaken. <br>
+                            {% if app.environment == 'prod' %}
+                                {% if node.id is defined  %}<a style="width: 200px" href="https://checking.nu/chin/download/{{ node.id }}.png">QR-code</a><br>{% endif %}
+                            {% else %}
+                                {% if node.id is defined  %}<a style="width: 200px" href="https://dev.checking.nu/chin/download/{{ node.id }}.png">QR-code</a><br>{% endif %}
+                            {% endif %}
+                            {% if app.environment == 'prod' %}
+                                {% if node.id is defined  %}<img style="width: 200px" src="https://checking.nu/chin/render/{{ node.id }}" />{% endif %}
+                            {% else %}
+                                {% if node.id is defined  %}<img style="width: 200px" src="https://dev.checking.nu/chin/render/{{ node.id }}" />{% endif %}
+                            {% endif %}
+                        </p>
+
+                        <br>
+
+                        <p style="margin: 15px 30px 0 30px">We hopen dat we het zo een stukje makkelijker en aangenamer kunnen maken!</p>
+
+                        <p style="margin: 15px 30px 0 30px">Vriendelijke groet van het Conduction team</p>
+
+                        <p style="margin: 15px 30px 0 30px">p.s Uiteraard nog de links naar al onze officiële documenten: <br>
+                            <a href="https://checking.nu/terms-nl">Algemene voorwaarden</a><br>
+                            <a href="https://checking.nu/privacy-nl">Privacyverklaring</a><br>
+                            <a href="https://checking.nu/gdrp-nl">Verwerkersovereenkomst</a>
+                        </p>
+                        <p></p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
