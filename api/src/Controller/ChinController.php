@@ -496,7 +496,7 @@ class ChinController extends AbstractController
 
             $user = $commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
 
-            $checkinService->createCheckin($node, $person);
+            $checkinService->createCheckin($node, $person, $user);
 
             $node = $commonGroundService->getResource($node);
 

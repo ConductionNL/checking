@@ -28,22 +28,24 @@ class CheckinService
         $this->twig = $twig;
     }
 
-    public function createCheckin($node, $person = null)
+    public function createCheckin($node, $person = null, $user = null)
     {
         // TODO: Only create a checkin if the current amount of checkins on the node isn't higher than the node.maximumAttendeeCapacity?!
 
         $checkin = [];
         $checkin['node'] = 'nodes/'.$node['id'];
         if ($this->security->getUser()) {
-            $user = $this->commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->security->getUser()->getUsername()])['hydra:member'][0];
-            $userUrl = $this->commonGroundService->cleanUrl(['component' => 'uc', 'type' => 'users', 'id' => $user['id']]);
-            $checkin['userUrl'] = $userUrl;
-
+            if(!isset($user)) {
+                $user = $this->commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->security->getUser()->getUsername()])['hydra:member'][0];
+            }
             if(!isset($person)) {
                 $person = $this->commonGroundService->getResource($this->security->getUser()->getPerson());
             }
         } elseif(!isset($person)) {
             return 'Login or provide a person';
+        }
+        if (isset($user)) {
+            $checkin['userUrl'] = $this->commonGroundService->cleanUrl(['component' => 'uc', 'type' => 'users', 'id' => $user['id']]);
         }
         $checkin['person'] = $this->commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
 
@@ -51,6 +53,7 @@ class CheckinService
 
         $results = $this->processCheckin($checkin);
         // Do something with the $results?
+        var_dump($results);die();
 
         return $checkin;
     }
