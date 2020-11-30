@@ -109,6 +109,9 @@ class ChinController extends AbstractController
             $configuration['margin'] = $request->query->get('margin', 10);
         }
 
+        $configuration['logo_width'] = 150;
+        $configuration['logo_height'] = 150;
+
         $qrCode = $qrCodeFactory->create($url, $configuration);
 
         // Set advanced options
@@ -150,6 +153,9 @@ class ChinController extends AbstractController
         if ($request->query->get('margin')) {
             $configuration['margin'] = $request->query->get('margin', 10);
         }
+
+        $configuration['logo_width'] = 150;
+        $configuration['logo_height'] = 150;
 
         $qrCode = $qrCodeFactory->create($url, $configuration);
 

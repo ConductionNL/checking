@@ -71,8 +71,13 @@ class DashboardController extends AbstractController
                     $colors = $node['qrConfig']['background_color'];
                     $node['backgroundColor'] = sprintf('#%02x%02x%02x', $colors['r'], $colors['g'], $colors['b']);
                 }
+
+                if (isset($node['qrConfig']['logo_path'])) {
+                    $node['logo'] = $node['qrConfig']['logo_path'];
+                }
             }
         }
+
 
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
@@ -134,6 +139,13 @@ class DashboardController extends AbstractController
                 $resource['qrConfig']['foreground_color'] = ['r'=>$r, 'g'=>$g, 'b'=>$b];
                 list($r, $g, $b) = sscanf($resource['qrConfig']['background_color'], '#%02x%02x%02x');
                 $resource['qrConfig']['background_color'] = ['r'=>$r, 'g'=>$g, 'b'=>$b];
+            }
+
+            if (isset($_FILES['logo']) && $_FILES['logo']['error'] !== 4) {
+                $path = $_FILES['logo']['tmp_name'];
+                $type = filetype($_FILES['logo']['tmp_name']);
+                $data = file_get_contents($path);
+                $resource['qrConfig']['logo_path'] = 'data:image/'.$type.';base64,'.base64_encode($data);
             }
 
             // Save the (new or already existing) node
@@ -201,6 +213,14 @@ class DashboardController extends AbstractController
                 $wrc['style']['favicon']['base64'] = 'data:image/'.$type.';base64,'.base64_encode($data);
             }
 
+            $users = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->getUser()->getUsername()])['hydra:member'];
+            if (count($users) > 0){
+                $userUrl = $commonGroundService->cleanUrl(['component' => 'uc', 'type' => 'users', 'id' => $users[0]['id']]);
+                $wrc['privacyContact'] = $userUrl;
+                $wrc['technicalContact'] = $userUrl;
+                $wrc['administrationContact'] = $userUrl;
+            }
+
             $wrc = $commonGroundService->createResource($wrc, ['component' => 'wrc', 'type' => 'organizations']);
 
             $userGroup = [];
@@ -257,7 +277,17 @@ class DashboardController extends AbstractController
     {
         $variables = [];
 
+
+
         $variables['organization'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'organizations', 'id' => $id]);
+
+        $organizationUrl = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $id]);
+
+        $groups = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'groups'], ['organization' => $organizationUrl])['hydra:member'];
+        if (count($groups) > 0) {
+            $group = $groups[0];
+            $variables['users'] = $group['users'];
+        }
         if (key_exists('contact', $variables['organization']) and !empty($variables['organization']['contact'])) {
             $variables['cc'] = $commonGroundService->getResource($variables['organization']['contact']);
         }
@@ -286,6 +316,9 @@ class DashboardController extends AbstractController
             $organization = $variables['organization'];
             $organization['name'] = $name;
             $organization['description'] = $request->get('description');
+            $organization['privacyContact'] = $request->get('privacyContact');
+            $organization['administrationContact'] = $request->get('administrationContact');
+            $organization['technicalContact'] = $request->get('technicalContact');
             if (key_exists('style', $organization) and !empty($organization['style'])) {
                 $organization['style'] = '/styles/'.$organization['style']['id'];
             }
