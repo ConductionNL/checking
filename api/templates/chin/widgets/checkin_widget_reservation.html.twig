@@ -1,0 +1,30 @@
+<div class="form-group">
+    {# hier kan door nodes worden geloopt als list waarbij de node van deze code als geselecteerd word weergegeven #}
+    <select class="form-control" name="calendar" id="">
+        {% for node in nodes %}
+            <option value="{{ node['@id'] }}" {% if node.id == resource.id %} selected {% endif %}>{{ node.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <input style="height: 35px" type="date" id="additionalName" name="date"
+           class="form-control" required>
+</div>
+<div class="form-group">
+    <input style="height: 35px" type="time" id="additionalName" name="time"
+           class="form-control" required>
+</div>
+<div class="form-group">
+    <input style="height: 35px" type="number" id="additionalName" name="amount" placeholder="{{ 'number of people'|trans|capitalize }}"
+           class="form-control" required>
+</div>
+<div class="form-group">
+    <textarea style="height: 35px" type="text" id="additionalName" name="comment" rows="3" cols="3" placeholder="{{ 'comment'|trans|capitalize }}"
+              class="form-control"></textarea>
+</div>
+{% if error is defined %}
+    <div>
+        <p>{{ error }}</p>
+    </div>
+{% endif %}
+

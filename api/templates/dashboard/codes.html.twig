@@ -1,0 +1,62 @@
+{% extends '/dashboard/dashboard.html.twig' %}
+
+{% block dashboard %}
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-6 col-lg-12">
+            <a data-toggle="modal" data-target="#node" class="btn btn-outline-secondary btn-block mb-4 py-4"><span class="mr-2"><span class="fas fa-plus"></span></span>{{ 'new'|trans|capitalize }}</a>
+            {% if nodes is defined and nodes is not empty %}
+                {% for code in nodes %}
+                    <div class="card border-light mb-4">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-12 col-lg-6 col-xl-4 text-center">
+                                <a data-toggle="modal" data-target="#node-{{ code.id }}">
+                                    <img style="width: 150px; height: 150px" src="{{ absolute_url(path('app_chin_render',{"id":code.id})) }}" alt="private office" class="card-img p-2">
+                                </a>
+                            </div>
+                            <div class="col-12 col-lg-6 col-xl-8">
+                                <div class="card-body py-lg-0">
+                                    <div class="d-flex no-gutters align-items-center mb-3">
+                                        <div class="col text-left">
+                                            <a data-toggle="modal" data-target="#node-{{ code.id }}">
+                                                <h2 class="h5">{{ code.reference }}</h2>
+                                            </a>
+                                        </div>
+                                        <div class="col text-right">
+                                            <div class="btn-group">
+                                                <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <span class="icon icon-sm">
+                                                        <span class="fas fa-ellipsis-h icon-secondary"></span>
+                                                    </span>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" data-toggle="modal" data-target="#node-{{ code.id }}"><span class="fas fa-edit mr-2"></span>
+                                                        {{ 'edit'|trans|capitalize }}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col d-flex pl-0">
+                                        <a class="mr-2" href="https://dev.checking.nu/chin/download/{{ code.id }}.png"><i class="fas fa-download mr-2"></i>PNG</a>
+                                        <a href="https://dev.checking.nu/chin/download/{{ code.id }}.svg"><i class="fas fa-download mr-2"></i>SVG</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    {% include '/dashboard/modals/node_modal.html.twig' %}
+
+    {% if nodes is defined and nodes is not empty %}
+        {% for node in nodes %}
+            {% include '/dashboard/modals/node_modal.html.twig' with { 'item':node } %}
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

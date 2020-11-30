@@ -1,57 +1,100 @@
-
-<section class="section bg-soft">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-10 text-center">
-                <h2 class="h1">{{ 'Got questions?'|trans|capitalize }}</h2>
-            </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 text-center">
+            <h2 class="h1">{{ 'Got questions'|trans|capitalize }}?</h2>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-8">
-
-                <div class="accordion mt-5 shadow-soft">
-                    <div class="card card-sm card-body border-soft mb-0">
-                        <a href="#panel-what-is-pixel" data-target="#panel-what-is-pixel" class="accordion-panel-header" data-toggle="collapse" aria-expanded="false" aria-controls="panel-what-is-pixel">
-                            <span class="icon-title h6 mb-0 font-weight-bold">{{ 'Who is behind the internship platform'|trans|capitalize }}</span>
-                            <span class="icon"><i class="fas fa-plus"></i></span>
-                        </a>
-                        <div class="collapse" id="panel-what-is-pixel">
-                            <div class="pt-3">
-                                <p>{{ 'the internship platform has been developed by Conduction in the context of the “Call against Corona” issued by the SIDNfonds and the Ministry of Internal Affairs.'|trans|capitalize }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card card-sm card-body border-soft mb-0">
-                        <a href="#panel-demo" data-target="#panel-demo" class="accordion-panel-header" data-toggle="collapse" aria-expanded="false" aria-controls="panel-demo">
-                            <span class="icon-title h6 mb-0 font-weight-bold">{{ 'Is the internship platform free?'|trans|capitalize }}</span>
-                            <span class="icon"><i class="fas fa-plus"></i></span>
-                        </a>
-                        <div class="collapse" id="panel-demo">
-                            <div class="pt-3">
-                                {{ 'In the Beta phase (now), the platform is free to use for everyone. This will always be free for students.'|trans|capitalize }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card card-sm card-body border-soft mb-0">
-                        <a href="#panel-money-back" data-target="#panel-money-back" class="accordion-panel-header" data-toggle="collapse" aria-expanded="false" aria-controls="panel-money-back">
-                            <span class="icon-title h6 mb-0 font-weight-bold">{{ 'What makes the internship platform different from other matching sites?'|trans|capitalize }}</span>
-                            <span class="icon"><i class="fas fa-plus"></i></span>
-                        </a>
-                        <div class="collapse" id="panel-money-back">
-                            <div class="pt-3">
-                                <p>{{ 'The internship platform enables students and companies to use challenges, tutorials and much more in addition to matching.'|trans|capitalize }}</p>
-                            </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="accordion mt-5">
+                <div class="card card-sm card-body border-light mb-0">
+                    <a href="#why" data-target="#why" class="accordion-panel-header" data-toggle="collapse" aria-expanded="false" aria-controls="panel-what-is-spaces">
+                        <span class="icon-title h6 mb-0 font-weight-bold">{{ 'why do I need to checkin?'|trans|capitalize }}</span>
+                        <span class="icon"><span class="fas fa-plus"></span></span>
+                    </a>
+                    <div class="collapse" id="why">
+                        <div class="pt-3">
+                            <p>{{ 'the simple answer is contact tracing, that means then when a person is tested positively for covid-19 local health officials want to trace who that person has been in contact with so that they can contact those people and advise them to be alert for any symptoms or go into quarantine. For this reason some governments (like the Netherlands) have mandated that shops,  bars, restaurants and other small businesses and organisations keep lists of visitors.'|trans|capitalize }}</p>
+                            <p>{{ 'checking.nu provides a safer way of doing this, instead of visitors leaving their contact details everywhere they store them in an online data wallet (ID-Vault) and grant access to that data for local health officials in case of need. This means that small businesses and organisation no longer have access to a visitors personal details and information (with the exception of reservations). '|trans|capitalize }}</p>
                         </div>
                     </div>
                 </div>
-
+                <div class="card card-sm card-body border-light mb-0">
+                    <a href="#how" data-target="#how" class="accordion-panel-header" data-toggle="collapse" aria-expanded="false" aria-controls="panel-what-is-spaces">
+                        <span class="icon-title h6 mb-0 font-weight-bold">{{ 'how does it work?'|trans|capitalize }}</span>
+                        <span class="icon"><span class="fas fa-plus"></span></span>
+                    </a>
+                    <div class="collapse" id="how">
+                        <div class="pt-3">
+                            <p>{{ 'when a visitor checks in to checking.nu we request access to that visitors contact details on ID-Vault and link this acces (not the actual data) to that checkin. If at a certain point in time another visitor tests positive for covid-19 health care officials can request the checkins of that person for the past 14 days. These are then compared to other checking that match date, time and place. On request of said healthcare officials the contact details of these visitors are then retrieved from ID-Vault and presented to the healthcare officials so that they can contact the visitors and alert them of a possible contamination.'|trans|capitalize }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-sm card-body border-light mb-0">
+                    <a href="#why-does" data-target="#why-does" class="accordion-panel-header" data-toggle="collapse" aria-expanded="false" aria-controls="panel-what-is-spaces">
+                        <span class="icon-title h6 mb-0 font-weight-bold">{{ 'why does checking use ID-Vault?'|trans|capitalize }}</span>
+                        <span class="icon"><span class="fas fa-plus"></span></span>
+                    </a>
+                    <div class="collapse" id="why-does">
+                        <div class="pt-3">
+                            <p>{{ 'iD-Vault is a safe and user focused online storage for personal information, but more importantly it gives us the ability to request access to data without actually getting the data.'|trans|capitalize }}</p>
+                            <p>{{ 'or in other words users grant us the ability to get their data in case of an possible contamination, but we won’t actually get the data out of the users vault (and to the local healthcare services) until there is a binding reason to do so (with the exception of reservations). And even then we only forward the data and don’t store it on our system. ID-Vault on its end logs any access to the data by checking, providing users the means to check our use of their data.'|trans|capitalize }}</p>
+                            <p>{{ 'that means that we are able to run the entire application without checking.nu actually storing any personal data, and to be frank we can’t lose or mishandle that which we don’t have. It also prevents us from analysing or selling any data and so on. Providing a very clean and privacy friendly solution in these already troubling times.'|trans|capitalize }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-sm card-body border-light mb-0">
+                    <a href="#how-is" data-target="#how-is" class="accordion-panel-header" data-toggle="collapse" aria-expanded="false" aria-controls="panel-what-is-spaces">
+                        <span class="icon-title h6 mb-0 font-weight-bold">{{ 'how is my data secured?'|trans|capitalize }}</span>
+                        <span class="icon"><span class="fas fa-plus"></span></span>
+                    </a>
+                    <div class="collapse" id="how-is">
+                        <div class="pt-3">
+                            <p>{{ "Well to put it simply, we at checking don’t have your data. That's all stored in ID-Vault. And as we like to say you can’t lose, mishandle or sell that which you don’t have. For a bit more of information on how the  ID-Vault integration works read “Why do we use ID-Vault?”"|trans|capitalize }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-sm card-body border-light mb-0">
+                    <a href="#how-do" data-target="#how-do" class="accordion-panel-header" data-toggle="collapse" aria-expanded="false" aria-controls="panel-what-is-spaces">
+                        <span class="icon-title h6 mb-0 font-weight-bold">{{ 'how do I provide a check in qr code to my visitors?'|trans|capitalize }}</span>
+                        <span class="icon"><span class="fas fa-plus"></span></span>
+                    </a>
+                    <div class="collapse" id="how-do">
+                        <div class="pt-3">
+                            <p>{{ 'simple, to be able to create QR codes you need to become an organizer. Simply login to your account (or register) go to the organization item in your dashboard menu and press “Add organization”. Keep in mind that you will have to add payment details before you can actually process check ins, and that you won’t be able to see any personal information regarding check ins.'|trans|capitalize }}</p>
+                            <p>{{ 'you can however view some nifty statistics and heathmaps of visitor counts to your location'|trans|capitalize }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-sm card-body border-light mb-0">
+                    <a href="#what-does" data-target="#what-does" class="accordion-panel-header" data-toggle="collapse" aria-expanded="false" aria-controls="panel-what-is-spaces">
+                        <span class="icon-title h6 mb-0 font-weight-bold">{{ 'what does it cost?'|trans|capitalize }}</span>
+                        <span class="icon"><span class="fas fa-plus"></span></span>
+                    </a>
+                    <div class="collapse" id="what-does">
+                        <div class="pt-3">
+                            <p>{{ 'for a visitor checking is free, for organization we ask a fee of €0,05 per checking to keep our servers running and the use of ID-Vault (wishc of course isn’t free).'|trans|capitalize }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-sm card-body border-light mb-0">
+                    <a href="#but-what" data-target="#but-what" class="accordion-panel-header" data-toggle="collapse" aria-expanded="false" aria-controls="panel-what-is-spaces">
+                        <span class="icon-title h6 mb-0 font-weight-bold">{{ 'but what about reservations?'|trans|capitalize }}</span>
+                        <span class="icon"><span class="fas fa-plus"></span></span>
+                    </a>
+                    <div class="collapse" id="but-what">
+                        <div class="pt-3">
+                            <p>{{ 'fair point, like stated in the above texts, reservations are the exception to the data rule. In the case of a reservation visitor contact details (name, email and phone number) will be read from there ID-Vault and sent to the organization they are reserving for (but not stored by checking.nu). But visitors will be specifically promoted to confirm/accept this to prevent the unintentional sharing of contact details.'|trans|capitalize }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row mt-lg-5 mt-5">
             <div class="col text-center">
-                <p class="text-italic">{{ 'Didn/t find what you were looking for? No biggie!'|trans|capitalize }}</p>
-                <a href="https://www.conduction.nl/contact" class="btn btn-sm btn-outline-primary" target="_blank">{{ 'Contact us'|trans|capitalize }}</a>
+                <p class="text-italic">Didn't find what you were looking for? No biggie!</p>
+                <a href="{{ path('app_default_contact') }}" class="btn btn-sm btn-outline-primary" target="_blank">Contact us</a>
             </div>
         </div>
     </div>
-</section>
+</div>

@@ -1,0 +1,68 @@
+<div class="col-12 col-md-4 d-none d-lg-block">
+    <div class="card border-light p-2">
+        <div class="card-body p-2">
+            <h2 class="h5 font-weight-normal text-center mt-3 mb-0">{{ app.user.name }}</h2>
+            <div class="text-center">
+                {% if app.user.organization is defined and app.user.organization is not empty %}
+                    <a href="{{ path('app_dashboard_organizations') }}" ><span class="text-muted">{{ commonground_resource(app.user.organization).name }}</span></a>
+                {% endif %}
+            </div>
+            <div class="list-group dashboard-menu list-group-sm mt-4">
+                <a href="{{ path('app_dashboard_index') }}" class="d-flex list-group-item list-group-item-action {% if app.request.get('_route') == 'app_dashboard_index' %}active {% endif %}">{{ 'overview'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
+                <a href="{{ path('app_dashboard_checkins') }}" class="d-flex list-group-item list-group-item-action {% if app.request.get('_route') == 'app_dashboard_checkins' %}}active {% endif %}">{{ 'checkins'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
+                <a href="#panel-1" onclick="rotate()" data-target="#panel-1" class="d-flex list-group-item list-group-item-action {% if app.request.get('_route') == 'app_dashboard_codes' or app.request.get('_route') == 'app_dashboard_organizations' %} active {% endif %}" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="panel-1">{{ 'manage'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span id="rotate" style="transition: transform .2s ease" class="fas fa-chevron-right"></span></span></a>
+                <div class="collapse" id="panel-1">
+                    <div class="">
+                        <a href="{{ path('app_dashboard_organizations') }}" class="d-flex list-group-item list-group-item-action {% if app.request.get('_route') == 'app_dashboard_organizations' %}active {% endif %}">{{ 'organizations'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
+                        {%  if app.user.organization is defined and app.user.organization is not empty %}
+                            <a href="{{ path('app_dashboard_codes') }}" class="d-flex list-group-item list-group-item-action {% if app.request.get('_route') == 'app_dashboard_codes' %}active {% endif %}">{{ 'codes'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
+                        {% endif %}
+                    </div>
+                </div>
+                <a href="{{ path('app_dashboard_reservations') }}" class="d-flex list-group-item list-group-item-action {% if app.request.get('_route') == 'app_dashboard_reservations' %}active {% endif %}">{{ 'reservations'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
+                <a href="{{ path('app_user_logout') }}" class="btn btn-block btn-danger mt-2">{{ 'logout'|trans|capitalize }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12 d-lg-none">
+    <div class="card bg-white border-light mb-4 mb-lg-5">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-10 d-flex">
+                    <a href="{{ path('app_dashboard_index') }}" class="list-group-item list-group-item-action border-0 {% if app.request.get('_route') == 'app_dashboard_index' %}active {% endif %}">{{ 'overview'|trans|capitalize }}</a>
+                    <a href="{{ path('app_dashboard_checkins') }}" class="list-group-item list-group-item-action border-0 {% if app.request.get('_route') == 'app_dashboard_checkins' %}active {% endif %}">{{ 'Checkins'|trans|capitalize }}</a>
+                </div>
+                <div class="col-2 d-flex justify-content-center">
+                    <div class="btn-group dropleft">
+                        <button class="btn btn-link dropdown-toggle dropdown-toggle-split mr-2 m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon icon-sm"><span class="fas fa-ellipsis-h icon-secondary fa-lg"></span> </span><span class="sr-only">Toggle Dropdown</span></button>
+                        <div class="dropdown-menu">
+                            {%  if app.user.organization is defined and app.user.organization is not empty %}
+                                <a href="{{ path('app_dashboard_codes') }}" class="list-group-item list-group-item-action border-0 {% if app.request.get('_route') == 'app_dashboard_codes' %}active {% endif %}">{{ 'codes'|trans|capitalize }}</a>
+                            {% endif %}
+                            <a href="{{ path('app_dashboard_reservations') }}" class="list-group-item list-group-item-action border-0 {% if app.request.get('_route') == 'app_dashboard_reservations' %}active {% endif %}">{{ 'reservations'|trans|capitalize }}</a>
+                            <a href="{{ path('app_dashboard_organizations') }}" class="list-group-item list-group-item-action border-0 {% if app.request.get('_route') == 'app_dashboard_organizations' %}active {% endif %}">{{ 'organizations'|trans|capitalize }}</a>
+                            <a href="{{ path('app_user_logout') }}" class="btn btn-block btn-danger ml-auto mr-auto mt-2" style="width: 90%;">{{ 'logout'|trans|capitalize }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let rotated = false;
+    function rotate() {
+        let rotate = document.getElementById('rotate');
+
+        if (rotated) {
+            rotate.style.transform = 'rotate(0deg)';
+            rotated = false;
+        } else {
+            rotate.style.transform = 'rotate(90deg)';
+            rotated = true;
+        }
+    }
+
+</script>

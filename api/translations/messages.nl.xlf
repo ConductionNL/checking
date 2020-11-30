@@ -1079,7 +1079,7 @@
       </trans-unit>
       <trans-unit id="GBIpQki" resname="manage">
         <source>manage</source>
-        <target>beheren</target>
+        <target>beheer</target>
       </trans-unit>
       <trans-unit id="YXITO8h" resname="think about problems instead of positions">
         <source>think about problems instead of positions</source>
@@ -2336,6 +2336,10 @@
         <source>this student follows these programs</source>
         <target>deze student volgt deze programma's</target>
       </trans-unit>
+      <trans-unit id="u1h2Baw" resname="this student is in these teams">
+        <source>this student is in these teams</source>
+        <target>deze student zit in deze teams</target>
+      </trans-unit>
       <trans-unit id="COvPX6e" resname="closing date:">
         <source>closing date:</source>
         <target>sluitingsdatum:</target>
@@ -3226,7 +3230,7 @@
       </trans-unit>
       <trans-unit id="g_FMsAQ" resname="view portfolio">
         <source>view portfolio</source>
-        <target>bekijk portfilio</target>
+        <target>bekijk portfolio</target>
       </trans-unit>
       <trans-unit id="XpyLMgd" resname="you need to login before you can submit">
         <source>you need to login before you can submit</source>

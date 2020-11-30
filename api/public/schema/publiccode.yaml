@@ -1,13 +1,13 @@
 publiccodeYmlVersion: "0.2"
 
-name: stage-platform
+name: checking
 applicationSuite: commonground
-url: "https://github.com/ConductionNL/stage-platform"
-landingURL: "dev.stage-platform.com" 
+url: "https://github.com/ConductionNL/checking"
+landingURL: "dev.checking.nu" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V1.0"
-releaseDate: "2020-20-11"
-logo: www.stage-platform.com 
+releaseDate: "2020-28-11"
+logo: www.checking.nu 
 monochromeLogo: img/logo-mono.svg
 
 inputTypes:
@@ -37,7 +37,7 @@ usedBy:
   - Gemeente Hoorn
   
 
-roadmap: "https://github.com/ConductionNL/stage-platform/blob/master/ROADMAP.md"
+roadmap: "https://github.com/ConductionNL/checking/blob/master/ROADMAP.md"
 
 developmentStatus: development
 
@@ -66,8 +66,8 @@ description:
 #          on multiple rows. You should note what the software
 #          is and why one should need it.
 
-    documentation: "https://github.com/ConductionNL/stage-platform/blob/master/README.md"
-    apiDocumentation: "dev.stage-platform.com"
+    documentation: "https://github.com/ConductionNL/checking/blob/master/README.md"
+    apiDocumentation: "dev.checking.nu"
 #
 #    features:
 #       - Very important feature

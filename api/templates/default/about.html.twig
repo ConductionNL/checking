@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="pb-3 pb-lg-3 bg-white text-primary">
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-12 mx-auto">
+                    <div class="timeline timeline-one">
+                        <!-- Timeline Item 1 -->
+                        <div class="timeline-item">
+                            <span class="icon icon-info icon-lg"></span></span>
+                            <h2 class="h5 my-3">{{ 'what is checking?'|trans|capitalize }}</h2>
+                            <p>Checking is een makkelijke en veilige manier van het beschikbaar stellen van persoonlijke gegeven voor een eventueel contactonderzoek door de GGD zonder dat deze inzichtelijk zijn voor anderen.
+                            Wat Checking anders maakt is dat als bezoeker of klant van zijn gegevens niet overdraagt, maar in plaats daarvan ze tijdelijk ter beschikking stelt in een datakluis. De gegevens worden daar slechts uitgehaald op verzoek van de GGD en dan ook alleen aan de GGD verstrekt.
+                            Op die manier voorkomen we met zijn allen dat contactgegevens overal rondslingeren met alle gevolgen van dien.</p>
+                        </div>
+                        <!-- Timeline Item 2 -->
+                        <div class="timeline-item">
+                            <span class="icon icon-success"></span>
+                            <h2 class="h5 my-3">{{ 'how does checking work?' }}</h2>
+                            <p>
+                                Bij aankomst wordt de bezoeker gevraagd een QR-code of NFC sticker te scannen met zijn of haar smartphone. Deze opent de Checking website waar de bezoeker kan inloggen met een inlog methode naar keuze.
+                                Als ondernemer kan je kiezen welke inblog methodes je beschikbaar wilt stellen,
+                                je kan op dit moment kiezen uit: google, facebook, iDIN en email. Als de bezoeker ingelogd is worden de contactgegevens beschikbaar gesteld die tijdelijk worden opgeslagen in een datakluis. De ondernemer heeft geen toegang tot deze gegevens.
+                                Wanneer de GGD constateert dat iemand positief is getest op COVID-19, starten zij een contactonderzoek.
+                                Als uit het contactonderzoek blijkt dat iemand recent in een onderneming is geweest, dan kan de GGD daar de contactgegevens opvragen van iedereen die op dezelfde dag en tijd in de onderneming was.
+                                De ondernemer zal Checking vervolgens vragen om de contactgegevens over te dragen aan de GGD. Checkin draagt vervolgens die contactgegevens veilig over aan de GGD. Hier zit niemand anders tussen.
+                            </p>
+                        </div>
+                        <!-- Timeline Item 3 -->
+                        <div class="timeline-item">
+                            <span class="icon icon-danger"></span>
+                            <h2 class="h5 my-3">{{ 'technique'|trans|capitalize }}</h2>
+                            <p>
+                                Checking is een open source project gebaseerd op een set aan standaard componenten die ontwikkeld zijn voor de Nederlandse overheid en in het bijzonder de Nederlandse gemeenten vanuit de Common Ground beweging.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section bg-white">
+        {% include 'widgets/faq.html.twig' %}
+    </section>
+
+
+{% endblock %}
