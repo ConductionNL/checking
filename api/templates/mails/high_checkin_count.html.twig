@@ -1,0 +1,28 @@
+<table align="center"  style="background-color: #F5F5F5; width: 100%; padding: 5px; max-width: 1200px;">
+    <tr>
+        <td align="center" style="text-align: -webkit-center">
+            <table style="width: 80%; background-color: white;">
+                <tr>
+                    <td style="width: 100%; height: fit-content; background-color: #01689B">
+                        <h1 style=" margin: 15px 0 15px 30px; color: white; font-family: Verdana,serif; ">Checking</h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p style="margin: 15px 30px 0 30px">Beste {% if receiver.givenName is defined  %}{{ receiver.givenName }}{% endif %},</p>
+
+                        <p style="margin: 15px 30px 0 30px">Het maximum aantal checkins voor accommodatie {% if accommodation.name is defined  %}{{ accommodation.name }}{% endif %} van {% if accommodation.place.name is defined  %}{{ accommodation.place.name }}{% endif %} is bijna bereikt.</p>
+                        <p style="margin: 15px 30px 0 30px">Checkin gegevens:
+                            Totaal aantal checkins voor deze accommodatie: {% if numberOfCheckins is defined  %}{{ numberOfCheckins }}{% endif %}<br>
+                            Maximum aantal deelnemers voor deze accommodatie: {% if accommodation.maximumAttendeeCapacity is defined  %}{{ accommodation.maximumAttendeeCapacity }}{% endif %}<br>
+                        </p>
+
+                        <p style="margin: 15px 30px 0 30px">Met vriendelijke groet,</p>
+                        <p style="margin: 15px 30px 0 30px">{% if sender.name is defined  %}{{ sender.name }}{% endif %}</p>
+                        <p></p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
