@@ -20,12 +20,15 @@ class OrganizationService
 
     private $twig;
 
-    public function __construct(CommonGroundService $commonGroundService, ParameterBagInterface $params, Security $security, Environment $twig)
+    private $mailingService;
+
+    public function __construct(CommonGroundService $commonGroundService, ParameterBagInterface $params, Security $security, Environment $twig, MailingService $mailingService)
     {
         $this->commonGroundService = $commonGroundService;
         $this->params = $params;
         $this->security = $security;
         $this->twig = $twig;
+        $this->mailingService = $mailingService;
     }
 
     public function welcomeMail($resource)
@@ -57,22 +60,9 @@ class OrganizationService
         $node['organization'] = $this->commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
         $node = $this->commonGroundService->saveResource($node, ['component' => 'chin', 'type' => 'nodes']);
 
-        $message = [];
+        $data = [];
+        $data['node'] = $node;
 
-        if ($this->params->get('app_env') == 'prod') {
-            $message['service'] = '/services/eb7ffa01-4803-44ce-91dc-d4e3da7917da';
-        } else {
-            $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
-        }
-        $message['status'] = 'queued';
-        $message['subject'] = 'Welcome';
-        $html = $this->commonGroundService->getResource(['component'=>'wrc', 'type'=>'templates', 'id'=>'2ca5b662-e941-46c9-ae87-ae0c68d0aa5d'])['content'];
-
-        $template = $this->twig->createTemplate($html);
-        $message['content'] = $template->render(['node' => $node]);
-        $message['reciever'] = $this->security->getUser()->getUsername();
-        $message['sender'] = 'no-reply@conduction.nl';
-
-        $this->commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
+        $this->mailingService->sendMail('mails/welcome_organization.html.twig', 'no-reply@conduction.nl', $this->security->getUser()->getUsername(), $data, 'Welcome');
     }
 }
