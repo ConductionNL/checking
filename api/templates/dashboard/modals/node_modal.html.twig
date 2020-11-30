@@ -111,6 +111,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="custom-file">
+                        <input onchange="showLogo{% if item is defined %}{{ item.reference|replace({'-': ''}) }}{% endif %}()" type="file" name="logo" class="custom-file-input" id="logo{% if item is defined %}-{{ item.reference|replace({'-': ''}) }}{% endif %}">
+                        <label class="custom-file-label" for="customFile">{{ 'choose logo'|trans|capitalize }}</label>
+                    </div>
+
+                    <div id="logoHolder{% if item is defined %}-{{ item.reference|replace({'-': ''}) }}{% endif %}" style="text-align: center" class="align-items-center mt-3 bg-gray-200" >
+
+                    </div>
                     <div class="form-group">
                         <div class="d-flex">
                             <label class="input__label" for="passthroughUrl">{{ 'passthrough Url'|trans|capitalize }}</label>
@@ -157,7 +165,6 @@
 </div>
 
 <script>
-
     function showLogo(){
         const toBase64 = file => new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -176,9 +183,29 @@
             logo.setAttribute('src', base64);
             logoHolder.appendChild(logo);
         }
-
         Main();
-
     }
 
+    {% if item is defined %}
+    function showLogo{{ item.reference|replace({'-': ''}) }}(){
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+        async function Main() {
+            let file = document.querySelector('#logo{% if item is defined %}-{{ item.reference|replace({'-': ''}) }}{% endif %}').files[0];
+            let logoHolder = document.querySelector('#logoHolder{% if item is defined %}-{{ item.reference|replace({'-': ''}) }}{% endif %}');
+            logoHolder.innerHTML = '';
+            let logo = document.createElement('img');
+            let base64 = await toBase64(file);
+            logo.setAttribute('style', 'height: 100px;');
+            logo.setAttribute('src', base64);
+            logoHolder.appendChild(logo);
+        }
+        Main();
+    }
+    {% endif %}
 </script>

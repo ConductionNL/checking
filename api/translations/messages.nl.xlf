@@ -603,7 +603,7 @@
       </trans-unit>
       <trans-unit id="JiEhxTc" resname="edit">
         <source>edit</source>
-        <target>wijzig</target>
+        <target>bewerk</target>
       </trans-unit>
       <trans-unit id="AT9UQAy" resname="age">
         <source>age</source>
@@ -1141,7 +1141,7 @@
         <source>aquire practical knowledge about your career</source>
         <target>kennis opdoen</target>
       </trans-unit>
-      <trans-unit id="SgHb4ui" resname="In the old world we used to do onboaring and on the job trainging, that is now no longer possible. we need to find a new way for interns and new employees to onboard themselfs into the workspace">
+      <trans-unit id="CRR1Bau" resname="In the old world we used to do onboaring and on the job trainging, that is now no longer possible. we need to find a new way for interns and new employees to onboard themselfs into the workspace">
         <source>In the old world we used to do onboaring and on the job trainging, that is now no longer possible. we need to find a new way for interns and new employees to onboard themselfs into the workspace</source>
         <target>In de oude wereld deden we aan onboaring en on the job training, dat is nu niet meer mogelijk. We moeten een nieuwe manier vinden voor het onboarden van stagiaires en medewerkers.</target>
       </trans-unit>
@@ -1980,155 +1980,132 @@
       <trans-unit id="idUPqG8" resname="new password">
         <source>new password</source>
         <target>nieuw wachtwoord</target>
-      </trans-unit><trans-unit id="i456YG8" resname="all competencies you have created and where you can create new ones">
+      </trans-unit>
+      <trans-unit id="zGuy2vc" resname="all competencies you have created and where you can create new ones">
         <source>all competencies you have created and where you can create new ones</source>
         <target>alle competenties die u heeft gecreëerd en waar u nieuwe kunt aanmaken</target>
       </trans-unit>
-      <trans-unit id="FvbC7mt" resname="competencies">
-        <source>competencies</source>
-        <target>competenties</target>
-      </trans-unit>
-      <trans-unit id="Rpiumt0" resname="new position">
+      <trans-unit id="Z6GN8yi" resname="new position">
         <source>new position</source>
         <target>nieuwe positie</target>
       </trans-unit>
-      <trans-unit id="KKTumt0" resname="search tasks here">
+      <trans-unit id="TIJ0dRS" resname="search tasks here">
         <source>search tasks here</source>
         <target>zoek taken hier</target>
       </trans-unit>
-      <trans-unit id="hrtxy7Q" resname="edit">
-        <source>edit</source>
-        <target>bewerk</target>
-      </trans-unit>
-      <trans-unit id="ibcnxG8" resname="view online">
+      <trans-unit id="M3hrWBV" resname="view online">
         <source>view online</source>
         <target>bekijk online</target>
       </trans-unit>
-      <trans-unit id="txlaks0" resname="delete">
+      <trans-unit id="YZdZVQP" resname="delete">
         <source>delete</source>
         <target>verwijderen</target>
       </trans-unit>
-      <trans-unit id="UKhfy7Q" resname="interns are of big value, they bring new and fresh energy to your organization!">
+      <trans-unit id="vgFGN1L" resname="interns are of big value, they bring new and fresh energy to your organization!">
         <source>interns are of big value, they bring new and fresh energy to your organization!</source>
         <target>stagiaires zijn van grote waarde, ze brengen nieuwe en frisse energie in uw organisatie!</target>
       </trans-unit>
-      <trans-unit id="iwncqG8" resname="To adjust">
+      <trans-unit id="VCW.P1i" resname="To adjust">
         <source>To adjust</source>
         <target>aanpassen</target>
       </trans-unit>
-      <trans-unit id="txaqet0" resname="change your vacancy here">
+      <trans-unit id="BqQO.M5" resname="change your vacancy here">
         <source>change your vacancy here</source>
         <target>wijzig hier uw vacature</target>
       </trans-unit>
-      <trans-unit id="EFpapFt" resname="post vacancy">
+      <trans-unit id="wmc5ZGd" resname="post vacancy">
         <source>post vacancy</source>
         <target>vacature plaatsen</target>
       </trans-unit>
-      <trans-unit id="4838UM_" resname="post a new vacancy via our form">
+      <trans-unit id="Q3HfN8e" resname="post a new vacancy via our form">
         <source>post a new vacancy via our form</source>
         <target>plaats een nieuwe vacature via ons formulier</target>
       </trans-unit>
-      <trans-unit id="9M291Ne" resname="you are currently still checked in">
+      <trans-unit id="9MoRXNe" resname="you are currently still checked in">
         <source>you are currently still checked in</source>
         <target>u bent momenteel nog ingechecked</target>
       </trans-unit>
-      <trans-unit id="tkuiot0" resname="name of the internship">
+      <trans-unit id="eN1GlND" resname="name of the internship">
         <source>name of the internship</source>
         <target>naam van de stage</target>
       </trans-unit>
-      <trans-unit id="6789pFt" resname="title of the internship">
+      <trans-unit id="uCkdoYm" resname="title of the internship">
         <source>title of the internship</source>
         <target>titel van de stage</target>
       </trans-unit>
-      <trans-unit id="4htfUM_" resname="type of work">
+      <trans-unit id="qhDHdBB" resname="type of work">
         <source>type of work</source>
         <target>type werk</target>
       </trans-unit>
-      <trans-unit id="9bnh1Ne" resname="full-time">
-        <source>full-time</source>
-        <target>full time</target>
-      </trans-unit>
-      <trans-unit id="9frg1Ne" resname="part-time">
-        <source>part-time</source>
-        <target>deeltijd</target>
-      </trans-unit>
-      <trans-unit id="9fwqaNe" resname="weekly">
+      <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
         <target>wekelijks</target>
       </trans-unit>
-      <trans-unit id="890qaNe" resname="hours a week for the position">
-       <source>hours a week for the position</source>
-       <target>Uren per week voor de positie</target>
+      <trans-unit id="CYeIRqt" resname="hours a week for the position">
+        <source>hours a week for the position</source>
+        <target>Uren per week voor de positie</target>
       </trans-unit>
-      <trans-unit id="891qaNe" resname="currency in which the employee is paid (EUR, USD etc)">
+      <trans-unit id="YX4fLVE" resname="currency in which the employee is paid (EUR, USD etc)">
         <source>currency in which the employee is paid (EUR, USD etc)</source>
         <target>valuta waarin de werknemer wordt betaald (EUR, USD enz.)</target>
       </trans-unit>
-      <trans-unit id="8945aNe" resname="salary for the employee">
+      <trans-unit id="Vj0Cfap" resname="salary for the employee">
         <source>salary for the employee</source>
         <target>salaris voor de medewerker</target>
       </trans-unit>
-      <trans-unit id="8945aNF" resname="monthly salary">
+      <trans-unit id="wOYxUTX" resname="monthly salary">
         <source>monthly salary</source>
         <target>maandelijks salaris</target>
       </trans-unit>
-      <trans-unit id="8op5aNF" resname="a brief description of the vacancy">
+      <trans-unit id="1f.S4Fl" resname="a brief description of the vacancy">
         <source>a brief description of the vacancy</source>
         <target>een korte omschrijving van de vacature</target>
       </trans-unit>
-      <trans-unit id="yt65aNF" resname="internship conditions (everything that the applicant must meet)">
+      <trans-unit id="Ja5c01I" resname="internship conditions (everything that the applicant must meet)">
         <source>internship conditions (everything that the applicant must meet)</source>
         <target>voorwaarden stage (alles waar de solicitant aan moet voldoen)</target>
       </trans-unit>
-      <trans-unit id="rrr5aNF" resname="press the blue button to add more conditions">
+      <trans-unit id="Rfrq.Db" resname="press the blue button to add more conditions">
         <source>press the blue button to add more conditions</source>
         <target>druk op de blauwe knop om meer voorwaarden toe te voegen</target>
       </trans-unit>
-      <trans-unit id="rdd5aNF" resname="education:">
+      <trans-unit id="P5_sMne" resname="education:">
         <source>education:</source>
         <target>opleiding:</target>
       </trans-unit>
-      <trans-unit id="rgt5aNF" resname="start date of the internship">
+      <trans-unit id="sH28ESe" resname="start date of the internship">
         <source>start date of the internship</source>
         <target>startdatum van de stage</target>
       </trans-unit>
-      <trans-unit id="rbhhaNF" resname="end date of the internship">
+      <trans-unit id="9UH.LQD" resname="end date of the internship">
         <source>end date of the internship</source>
         <target>einddatum van de stage</target>
       </trans-unit>
-      <trans-unit id="dhlhaNF" resname="location of the internship">
+      <trans-unit id="Cu55oiC" resname="location of the internship">
         <source>location of the internship</source>
         <target>locatie van de stage</target>
       </trans-unit>
-      <trans-unit id="qqqXkve" resname="blog">
+      <trans-unit id="3vU_lfH" resname="blog">
         <source>blog</source>
         <target>blog</target>
       </trans-unit>
-      <trans-unit id="m9cxVtk" resname="contact">
-        <source>contact</source>
-        <target>contact</target>
-      </trans-unit>
-      <trans-unit id="czmasxb" resname="themes">
+      <trans-unit id=".1glWcO" resname="themes">
         <source>themes</source>
         <target>thema's</target>
       </trans-unit>
-      <trans-unit id="CvqaztY" resname="about">
+      <trans-unit id="pCYuHJv" resname="about">
         <source>about</source>
         <target>over</target>
       </trans-unit>
-      <trans-unit id="LtyyxTU" resname="share">
+      <trans-unit id="w7xFrDU" resname="share">
         <source>share</source>
         <target>delen</target>
       </trans-unit>
-      <trans-unit id="L34txTU" resname="export">
+      <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>exporteren</target>
       </trans-unit>
-      <trans-unit id="4756xTU" resname="new task">
-        <source>new task</source>
-        <target>nieuwe taak</target>
-      </trans-unit>
-      <trans-unit id="LkkktTU" resname="new task">
+      <trans-unit id="kPp..0c" resname="new task">
         <source>new task</source>
         <target>nieuwe taak</target>
       </trans-unit>
@@ -2147,10 +2124,6 @@
       <trans-unit id="KBy8UM_" resname="postalCode">
         <source>postalCode</source>
         <target>postcode</target>
-      </trans-unit>
-      <trans-unit id="9MoRXNe" resname="you are currently still checked in">
-        <source>you are currently still checked in</source>
-        <target>u bent momenteel nog ingechecked</target>
       </trans-unit>
       <trans-unit id="nd0rGIv" resname="do you wish to checkout">
         <source>do you wish to checkout</source>
@@ -2336,7 +2309,7 @@
         <source>this student follows these programs</source>
         <target>deze student volgt deze programma's</target>
       </trans-unit>
-      <trans-unit id="u1h2Baw" resname="this student is in these teams">
+      <trans-unit id="ZuCLhSL" resname="this student is in these teams">
         <source>this student is in these teams</source>
         <target>deze student zit in deze teams</target>
       </trans-unit>
@@ -2584,7 +2557,7 @@
         <source>Reset Pass</source>
         <target>Pas opnieuw instellen</target>
       </trans-unit>
-      <trans-unit id="VY0Sm8C" resname="View Details">
+      <trans-unit id="kHicEtB" resname="View Details">
         <source>View Details</source>
         <target>__View Details</target>
       </trans-unit>
@@ -2724,15 +2697,15 @@
         <source>It helps students to blend in easily :)</source>
         <target>het helpt studenten om gemakkelijk op te gaan :)</target>
       </trans-unit>
-      <trans-unit id="RmslPaa" resname="a challenge is a (social) problem or question a organization is struggling with and needs a new solution or perspective.">
+      <trans-unit id="9tCuSuM" resname="a challenge is a (social) problem or question a organization is struggling with and needs a new solution or perspective.">
         <source>a challenge is a (social) problem or question a organization is struggling with and needs a new solution or perspective.</source>
         <target>een challenge is een (maatschappelijke) probleem of vraag waar een organisatie mee worstelt en een nieuwe oplossing of perspectief nodig heeft.</target>
       </trans-unit>
       <trans-unit id="uNVTHJi" resname="challanges">
-        <source>challenges</source>
+        <source>challanges</source>
         <target>challenges</target>
       </trans-unit>
-      <trans-unit id="1wFi37f" resname="you and your fresh brain can come with a solution and pitch it.">
+      <trans-unit id="1mp4ozU" resname="you and your fresh brain can come with a solution and pitch it.">
         <source>you and your fresh brain can come with a solution and pitch it.</source>
         <target>Jij en je frisse brein kunnen met een oplossing komen en deze pitchen.</target>
       </trans-unit>
@@ -2863,10 +2836,6 @@
       <trans-unit id="GLGTpd." resname="motivate your application">
         <source>motivate your application</source>
         <target>motiveer je solicitatie</target>
-      </trans-unit>
-      <trans-unit id="pCYuHJv" resname="about">
-        <source>about</source>
-        <target>over</target>
       </trans-unit>
       <trans-unit id="cfZMht." resname="open positions">
         <source>open positions</source>
@@ -3235,6 +3204,234 @@
       <trans-unit id="XpyLMgd" resname="you need to login before you can submit">
         <source>you need to login before you can submit</source>
         <target>je moet eerst inloggen voor je kan indienen</target>
+      </trans-unit>
+      <trans-unit id="loeWEWU" resname="active">
+        <source>active</source>
+        <target>actief</target>
+      </trans-unit>
+      <trans-unit id="lFniS0w" resname="checkins">
+        <source>checkins</source>
+        <target>check-ins</target>
+      </trans-unit>
+      <trans-unit id="TzPPGsZ" resname="scan with camera">
+        <source>scan with camera</source>
+        <target>scan met camera</target>
+      </trans-unit>
+      <trans-unit id="hSKk8HF" resname="input manually">
+        <source>input manually</source>
+        <target>handmatig invoeren</target>
+      </trans-unit>
+      <trans-unit id="XqxoTbP" resname="fill in code">
+        <source>fill in code</source>
+        <target>vul de code in</target>
+      </trans-unit>
+      <trans-unit id="TNDiGpo" resname="go">
+        <source>go</source>
+        <target>go</target>
+      </trans-unit>
+      <trans-unit id="rcWpHO2" resname="you must be logged in to view the dashboard">
+        <source>you must be logged in to view the dashboard</source>
+        <target>u moet ingelogd zijn om het dashboard te zien</target>
+      </trans-unit>
+      <trans-unit id="Afpzh5U" resname="to login">
+        <source>to login</source>
+        <target>inloggen</target>
+      </trans-unit>
+      <trans-unit id="ESOYctF" resname="total">
+        <source>total</source>
+        <target>totaal</target>
+      </trans-unit>
+      <trans-unit id="_Q7ud4u" resname="choose logo">
+        <source>choose logo</source>
+        <target>kies logo</target>
+      </trans-unit>
+      <trans-unit id="zXn19Gz" resname="i agree to the">
+        <source>i agree to the</source>
+        <target>ik ben het eens met de</target>
+      </trans-unit>
+      <trans-unit id="Tt5IBaB" resname="terms and services">
+        <source>terms and services</source>
+        <target>voorwaarden</target>
+      </trans-unit>
+      <trans-unit id="Rt_JKGd" resname="add organization">
+        <source>add organization</source>
+        <target>organizatie toevoegen</target>
+      </trans-unit>
+      <trans-unit id="NAnvSYE" resname="full name">
+        <source>full name</source>
+        <target>volledige naam</target>
+      </trans-unit>
+      <trans-unit id="yFzOCGk" resname="save changes">
+        <source>save changes</source>
+        <target>wijzigingen opslaan</target>
+      </trans-unit>
+      <trans-unit id="g2Z2pH8" resname="set active">
+        <source>set active</source>
+        <target>zet actief</target>
+      </trans-unit>
+      <trans-unit id="nSzf43M" resname="Checkins">
+        <source>Checkins</source>
+        <target>Check-ins</target>
+      </trans-unit>
+      <trans-unit id="R55UgfL" resname="what is checking?">
+        <source>what is checking?</source>
+        <target>wat is checking?</target>
+      </trans-unit>
+      <trans-unit id="bL38_DZ" resname="technique">
+        <source>technique</source>
+        <target>techniek</target>
+      </trans-unit>
+      <trans-unit id="U1IXFNU" resname="get in touch today">
+        <source>get in touch today</source>
+        <target>neem vandaag nog contact op</target>
+      </trans-unit>
+      <trans-unit id="Qo8NeR0" resname="we are happy to help you with any question you might have">
+        <source>we are happy to help you with any question you might have</source>
+        <target>we helpen u graag met al uw vragen</target>
+      </trans-unit>
+      <trans-unit id="fts2Dwa" resname="call">
+        <source>call</source>
+        <target>bellen</target>
+      </trans-unit>
+      <trans-unit id="YCsfHqL" resname="got a question or suggestion?">
+        <source>got a question or suggestion?</source>
+        <target>heeft u een vraag of suggestie?</target>
+      </trans-unit>
+      <trans-unit id="dpRq6x1" resname="use this form to get in touch with us">
+        <source>use this form to get in touch with us</source>
+        <target>gebruik dit formulier om met ons in contact te komen</target>
+      </trans-unit>
+      <trans-unit id="rjL4Wkk" resname="example@company.com">
+        <source>example@company.com</source>
+        <target>example@company.com</target>
+      </trans-unit>
+      <trans-unit id="IeRf0ck" resname="your message">
+        <source>your message</source>
+        <target>uw bericht</target>
+      </trans-unit>
+      <trans-unit id="za88KR0" resname="enter your message...">
+        <source>enter your message...</source>
+        <target>voer uw bericht in...</target>
+      </trans-unit>
+      <trans-unit id="hVitEle" resname="send message">
+        <source>send message</source>
+        <target>verstuur bericht</target>
+      </trans-unit>
+      <trans-unit id="GQL6Ny8" resname="why checking?">
+        <source>why checking?</source>
+        <target>waarom checking?</target>
+      </trans-unit>
+      <trans-unit id="dVIoksv" resname="how does checking work?">
+        <source>how does checking work?</source>
+        <target>hoe werkt checking?</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs">
+        <source>costs</source>
+        <target>kosten</target>
+      </trans-unit>
+      <trans-unit id=".6jHEuT" resname="Updated at November 26th, 2020">
+        <source>Updated at November 26th, 2020</source>
+        <target>Bijgewerkt op 26 november 2020</target>
+      </trans-unit>
+      <trans-unit id=".pu9QAu" resname="tech">
+        <source>tech</source>
+        <target>tech</target>
+      </trans-unit>
+      <trans-unit id="pMxrwBq" resname="privacy">
+        <source>privacy</source>
+        <target>privacy</target>
+      </trans-unit>
+      <trans-unit id="3W9GX2g" resname="newsletter">
+        <source>newsletter</source>
+        <target>nieuwsbrief</target>
+      </trans-unit>
+      <trans-unit id="wvyiqjq" resname="copyright">
+        <source>copyright</source>
+        <target>auteursrecht</target>
+      </trans-unit>
+      <trans-unit id="Lb_WQKQ" resname="all rights reserved">
+        <source>all rights reserved</source>
+        <target>alle rechten voorbehouden</target>
+      </trans-unit>
+      <trans-unit id="r997aGp" resname="use this to contact us!">
+        <source>use this to contact us!</source>
+        <target>gebruik dit om met ons in contact te komen!</target>
+      </trans-unit>
+      <trans-unit id="H_rus9e" resname="Got questions">
+        <source>Got questions</source>
+        <target>Heeft u vragen</target>
+      </trans-unit>
+      <trans-unit id="61ElgKq" resname="why do I need to checkin?">
+        <source>why do I need to checkin?</source>
+        <target>waarom heb ik checkin nodig?</target>
+      </trans-unit>
+      <trans-unit id="_0Q9d3z" resname="the simple answer is contact tracing, that means then when a person is tested positively for covid-19 local health officials want to trace who that person has been in contact with so that they can contact those people and advise them to be alert for any symptoms or go into quarantine. For this reason some governments (like the Netherlands) have mandated that shops,  bars, restaurants and other small businesses and organisations keep lists of visitors.">
+        <source>the simple answer is contact tracing, that means then when a person is tested positively for covid-19 local health officials want to trace who that person has been in contact with so that they can contact those people and advise them to be alert for any symptoms or go into quarantine. For this reason some governments (like the Netherlands) have mandated that shops,  bars, restaurants and other small businesses and organisations keep lists of visitors.</source>
+        <target>het simpele antwoord is contact opsporen, dat betekend dat wanneer iemand positief is getest voor covid-19 locale gezondheidsautoriteiten willen weten met wie die persoon in contact is geweest zodat ze met deze mensen in contact kunnen komen en ze waarschuwen voor mogelijke symptomen of om in quarantaine te gaan. Hiervoor hebben verschillende regeringen (waaronder Nederland) het verplicht dat wienkels, cafés, restaurants en andere kleine bedrijven lijsten bijhouden van bezoekers.</target>
+      </trans-unit>
+      <trans-unit id="oH5fqF." resname="checking.nu provides a safer way of doing this, instead of visitors leaving their contact details everywhere they store them in an online data wallet (ID-Vault) and grant access to that data for local health officials in case of need. This means that small businesses and organisation no longer have access to a visitors personal details and information (with the exception of reservations).">
+        <source>checking.nu provides a safer way of doing this, instead of visitors leaving their contact details everywhere they store them in an online data wallet (ID-Vault) and grant access to that data for local health officials in case of need. This means that small businesses and organisation no longer have access to a visitors personal details and information (with the exception of reservations).</source>
+        <target>checking.nu biedt een veilige manier om dit te doen, in plaats van bezoekers die hun contactinformatie overal achter laten worden deze opgeslagen in een online datakluis (ID-Vault) en geven toegang tot deze data aan locale gezondheidsautoriteiten wanneer dit nodig is. Dit betekend dat kleine bedrijven en organisaties geen toegang hebben tot de persoonlijke data van de bezoeker (met uitzondering op reserveringen).</target>
+      </trans-unit>
+      <trans-unit id="ehE_r82" resname="how does it work?">
+        <source>how does it work?</source>
+        <target>hoe werkt het?</target>
+      </trans-unit>
+      <trans-unit id="alocWSw" resname="when a visitor checks in to checking.nu we request access to that visitors contact details on ID-Vault and link this acces (not the actual data) to that checkin. If at a certain point in time another visitor tests positive for covid-19 health care officials can request the checkins of that person for the past 14 days. These are then compared to other checking that match date, time and place. On request of said healthcare officials the contact details of these visitors are then retrieved from ID-Vault and presented to the healthcare officials so that they can contact the visitors and alert them of a possible contamination.">
+        <source>when a visitor checks in to checking.nu we request access to that visitors contact details on ID-Vault and link this acces (not the actual data) to that checkin. If at a certain point in time another visitor tests positive for covid-19 health care officials can request the checkins of that person for the past 14 days. These are then compared to other checking that match date, time and place. On request of said healthcare officials the contact details of these visitors are then retrieved from ID-Vault and presented to the healthcare officials so that they can contact the visitors and alert them of a possible contamination.</source>
+        <target>wanneer een bezoeker incheckt op checking.nu vragen we toegang naar de contactgegevens van de bezoeker op ID-Vault en koppelen we deze toegang (niet de feitelijke gegevens) naar die checkin. Als op een ander moment een andere bezoeker positief test voor covid-19 kunnen gezondheidsautoriteiten de checkins van die bezoeker opvragen voor de laatse 14 dagen. Deze worden dan vergeleken met andere checkins van die datum, tijd en plek. Op verzoek van genoemde gezondheidsautoriteiten worden de contactgegevens van deze bezoekers vervolgens opgehaald uit ID-Vault en gepresenteerd aan de gezondheidsautoriteiten zodat zij contact kunnen opnemen met de bezoekers en hen kunnen waarschuwen voor een mogelijke besmetting.</target>
+      </trans-unit>
+      <trans-unit id="6rp8r8J" resname="why does checking use ID-Vault?">
+        <source>why does checking use ID-Vault?</source>
+        <target>waarom gebruikt checking ID-Vault?</target>
+      </trans-unit>
+      <trans-unit id="gtM8pw9" resname="iD-Vault is a safe and user focused online storage for personal information, but more importantly it gives us the ability to request access to data without actually getting the data.">
+        <source>iD-Vault is a safe and user focused online storage for personal information, but more importantly it gives us the ability to request access to data without actually getting the data.</source>
+        <target>iD-Vault is een veilige en gebruikersgerichte online opslag voor persoonlijke informatie, maar wat nog belangrijker is, het geeft ons de mogelijkheid om toegang tot gegevens aan te vragen zonder de gegevens daadwerkelijk te krijgen.</target>
+      </trans-unit>
+      <trans-unit id="MBzyfsM" resname="or in other words users grant us the ability to get their data in case of an possible contamination, but we won’t actually get the data out of the users vault (and to the local healthcare services) until there is a binding reason to do so (with the exception of reservations). And even then we only forward the data and don’t store it on our system. ID-Vault on its end logs any access to the data by checking, providing users the means to check our use of their data.">
+        <source>or in other words users grant us the ability to get their data in case of an possible contamination, but we won’t actually get the data out of the users vault (and to the local healthcare services) until there is a binding reason to do so (with the exception of reservations). And even then we only forward the data and don’t store it on our system. ID-Vault on its end logs any access to the data by checking, providing users the means to check our use of their data.</source>
+        <target>of met andere woorden: gebruikers geven ons de mogelijkheid om hun gegevens te verkrijgen in geval van een mogelijke besmetting, maar we zullen de gegevens pas daadwerkelijk uit de gebruikerskluis (en naar de lokale gezondheidszorg) halen als er een bindende reden is om dit te doen (met uitzondering van reserveringen). En zelfs dan sturen we alleen de gegevens door en slaan deze niet op ons systeem op. ID-Vault registreert elke toegang tot de gegevens door middel van checking, waardoor gebruikers de middelen krijgen om ons gebruik van hun gegevens te controleren.</target>
+      </trans-unit>
+      <trans-unit id="vE_MAmZ" resname="that means that we are able to run the entire application without checking.nu actually storing any personal data, and to be frank we can’t lose or mishandle that which we don’t have. It also prevents us from analysing or selling any data and so on. Providing a very clean and privacy friendly solution in these already troubling times.">
+        <source>that means that we are able to run the entire application without checking.nu actually storing any personal data, and to be frank we can’t lose or mishandle that which we don’t have. It also prevents us from analysing or selling any data and so on. Providing a very clean and privacy friendly solution in these already troubling times.</source>
+        <target>dat betekent dat we de hele applicatie kunnen gebruiken zonder dat checking.nu  daadwerkelijk persoonlijke gegevens opslaat, en om eerlijk te zijn kunnen we datgene wat we niet hebben niet verliezen of verkeerd behandelen. Dit voorkomt ook dat we gegevens analyseren of verkopen, enzovoort. Een zeer schone en privacyvriendelijke oplossing in deze toch al moeilijke tijden.</target>
+      </trans-unit>
+      <trans-unit id="8leoyPj" resname="how is my data secured?">
+        <source>how is my data secured?</source>
+        <target>hoe is mijn data beveiligd?</target>
+      </trans-unit>
+      <trans-unit id="POidNVL" resname="Well to put it simply, we at checking don’t have your data. That's all stored in ID-Vault. And as we like to say you can’t lose, mishandle or sell that which you don’t have. For a bit more of information on how the  ID-Vault integration works read “Why do we use ID-Vault?”">
+        <source>Well to put it simply, we at checking don’t have your data. That's all stored in ID-Vault. And as we like to say you can’t lose, mishandle or sell that which you don’t have. For a bit more of information on how the  ID-Vault integration works read “Why do we use ID-Vault?”</source>
+        <target>simpel gezegd, wij van checking hebben uw data niet. Dat wordt allemaal opgeslagen in ID-Vault. En zoals we graag zeggen iets wat je niet hebt kan je niet verliezen, slecht behandelen of verkopen. Voor meer informatie over hoe ID-Vault integratie werkt lees “Waarom gebruikt checking ID-Vault?”</target>
+      </trans-unit>
+      <trans-unit id="4ufjEhc" resname="how do I provide a check in qr code to my visitors?">
+        <source>how do I provide a check in qr code to my visitors?</source>
+        <target>hoe geef ik een checking qr-code aan mijn bezoekers?</target>
+      </trans-unit>
+      <trans-unit id="d2BSreQ" resname="simple, to be able to create QR codes you need to become an organizer. Simply login to your account (or register) go to the organization item in your dashboard menu and press “Add organization”. Keep in mind that you will have to add payment details before you can actually process check ins, and that you won’t be able to see any personal information regarding check ins.">
+        <source>simple, to be able to create QR codes you need to become an organizer. Simply login to your account (or register) go to the organization item in your dashboard menu and press “Add organization”. Keep in mind that you will have to add payment details before you can actually process check ins, and that you won’t be able to see any personal information regarding check ins.</source>
+        <target>simpel, om QR codes te maken moet u een organisator zijn. Login op uw account (of registreer) ga naar de organisatie optie in uw dashboard en druk op “organisatie toevoegen”. Houd er rekening mee dat u betaalgegevens moet invoeren voordat u checkins kan verwerken, en dat u geen persoonlijke informatie over de checkins kan zien.</target>
+      </trans-unit>
+      <trans-unit id="drGfL6R" resname="you can however view some nifty statistics and heathmaps of visitor counts to your location">
+        <source>you can however view some nifty statistics and heathmaps of visitor counts to your location</source>
+        <target>u kan echter wel wat handige statistieken en heathmaps van bezoekersaantallen naar uw locatie zien</target>
+      </trans-unit>
+      <trans-unit id="7VEaHoh" resname="what does it cost?">
+        <source>what does it cost?</source>
+        <target>hoeveel kost het?</target>
+      </trans-unit>
+      <trans-unit id="AyQ7qsP" resname="for a visitor checking is free, for organization we ask a fee of €0,05 per checking to keep our servers running and the use of ID-Vault (wishc of course isn’t free).">
+        <source>for a visitor checking is free, for organization we ask a fee of €0,05 per checking to keep our servers running and the use of ID-Vault (wishc of course isn’t free).</source>
+        <target>voor een bezoeker is checking gratis, voor organisaties vragen we een vergoeding van €0,05 per checking om onze servers draaiend te houden en het gebruik van ID-Vault (wat natuurlijk niet gratis is).</target>
+      </trans-unit>
+      <trans-unit id="E29X_ty" resname="but what about reservations?">
+        <source>but what about reservations?</source>
+        <target>maar hoe zit het met reserveringen?</target>
+      </trans-unit>
+      <trans-unit id=".mbmYDp" resname="fair point, like stated in the above texts, reservations are the exception to the data rule. In the case of a reservation visitor contact details (name, email and phone number) will be read from there ID-Vault and sent to the organization they are reserving for (but not stored by checking.nu). But visitors will be specifically promoted to confirm/accept this to prevent the unintentional sharing of contact details.">
+        <source>fair point, like stated in the above texts, reservations are the exception to the data rule. In the case of a reservation visitor contact details (name, email and phone number) will be read from there ID-Vault and sent to the organization they are reserving for (but not stored by checking.nu). But visitors will be specifically promoted to confirm/accept this to prevent the unintentional sharing of contact details.</source>
+        <target>goed punt, zoals eerder gezegd, reserveringen zijn de uitzondering op de data regels. in het geval van een reservering worden de contactgegevens (naam, email en telefoonnummer) gelezen uit de ID-Vault en gestuurd naar de organisatie waar voor gereserveerd wordt (maar niet opgeslagen door checking.nu). maar bezoekers zullen specifiek worden gevraagd om dit te bevestigen/accepteren om het onbedoeld delen van contactinformatie te voorkomen.</target>
       </trans-unit>
     </body>
   </file>
