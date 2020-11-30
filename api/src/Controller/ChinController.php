@@ -33,7 +33,6 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  */
 class ChinController extends AbstractController
 {
-
     /**
      * @Route("/checkin/reservations")
      * @Template
