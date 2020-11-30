@@ -255,6 +255,15 @@ class ChinController extends AbstractController
 
             $person['emails'][0] = [];
             $person['emails'][0]['email'] = $request->get('email');
+            foreach ($person['telephones'] as &$telephone) {
+                $telephone =  '/telephones/'.$telephone['id'];
+            }
+            foreach ($person['adresses'] as &$address) {
+                $address = '/addresses/'.$address['id'];
+            }
+            foreach ($person['socials'] as &$social) {
+                $social = '/socials/'.$social['id'];
+            }
 
             $commonGroundService->updateResource($person);
 
