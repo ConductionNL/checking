@@ -78,7 +78,6 @@ class DashboardController extends AbstractController
             }
         }
 
-
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
 
@@ -214,7 +213,7 @@ class DashboardController extends AbstractController
             }
 
             $users = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->getUser()->getUsername()])['hydra:member'];
-            if (count($users) > 0){
+            if (count($users) > 0) {
                 $userUrl = $commonGroundService->cleanUrl(['component' => 'uc', 'type' => 'users', 'id' => $users[0]['id']]);
                 $wrc['privacyContact'] = $userUrl;
                 $wrc['technicalContact'] = $userUrl;
@@ -276,8 +275,6 @@ class DashboardController extends AbstractController
     public function organizationAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params, $id)
     {
         $variables = [];
-
-
 
         $variables['organization'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'organizations', 'id' => $id]);
 
