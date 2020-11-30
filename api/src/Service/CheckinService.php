@@ -18,11 +18,14 @@ class CheckinService
 
     private $commonGroundService;
 
+    private $mailingService;
+
     private $twig;
 
-    public function __construct(CommonGroundService $commonGroundService, ParameterBagInterface $params, Security $security, Environment $twig)
+    public function __construct(CommonGroundService $commonGroundService, MailingService $mailingService, ParameterBagInterface $params, Security $security, Environment $twig)
     {
         $this->commonGroundService = $commonGroundService;
+        $this->mailingService = $mailingService;
         $this->params = $params;
         $this->security = $security;
         $this->twig = $twig;
@@ -93,7 +96,7 @@ class CheckinService
             array_push($results, '100% or more');
             $messages = $this->commonGroundService->getResourceList(['component'=>'bs', 'type'=>'messages'], ['resource'=>$nodeUrl, 'type'=>'maxCheckinCount'])['hydra:member'];
             if (count($messages) < 1) {
-                array_push($results, $this->sendEmail($checkin, $accommodationData, 'maxCheckinCount'));
+                array_push($results, $this->checkinCountMail($checkin, $accommodationData, 'maxCheckinCount'));
             } else {
                 array_push($results, 'Email has already been sent');
             }
@@ -101,7 +104,7 @@ class CheckinService
             array_push($results, '90% or more');
             $messages = $this->commonGroundService->getResourceList(['component'=>'bs', 'type'=>'messages'], ['resource'=>$nodeUrl, 'type'=>'highCheckinCount'])['hydra:member'];
             if (count($messages) < 1) {
-                array_push($results, $this->sendEmail($checkin, $accommodationData, 'highCheckinCount'));
+                array_push($results, $this->checkinCountMail($checkin, $accommodationData, 'highCheckinCount'));
             } else {
                 array_push($results, 'Email has already been sent');
             }
@@ -112,27 +115,20 @@ class CheckinService
         return $results;
     }
 
-    public function sendEmail($checkin, $data, $emailType)
+    public function checkinCountMail($checkin, $data, $emailType)
     {
-        $content = [];
+        $template = [];
         $subject = '';
         switch ($emailType) {
             case 'highCheckinCount':
-                $content = $this->commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'templates', 'id' => 'cdad2591-c288-4f54-8fe5-727f67e65949']);
+                $template = 'mails/high_checkin_count.html.twig';
                 $subject = 'High checkin count';
                 break;
             case 'maxCheckinCount':
-                $content = $this->commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'templates', 'id' => 'f073f5b5-2853-4cca-8de4-9889f21aa6a2']);
+                $template = 'mails/max_checkin_count.html.twig';
                 $subject = 'Max checkin count';
                 break;
         }
-
-        if ($this->params->get('app_env') == 'prod') {
-            $message['service'] = '/services/eb7ffa01-4803-44ce-91dc-d4e3da7917da';
-        } else {
-            $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
-        }
-        $message['status'] = 'queued';
 
         // determining the receiver (organization of the node)
         if ($organization = $this->commonGroundService->isResource($checkin['node']['organization'])) {
@@ -140,24 +136,18 @@ class CheckinService
                 if (isset($organizationContact['emails']) and (count($organizationContact['emails']) > 0)) {
                     $receiver = $organizationContact['@id'];
                 } else {
-                    return 'No email receiver found [organization contact of the node does not have an email]';
+                    return 'No email receiver found [organization administrationContact of the node does not have an email]';
                 }
             } else {
-                return 'No email receiver found [organization contact of the node is no resource]';
+                return 'No email receiver found [organization administrationContact of the node is no resource]';
             }
         } else {
             return 'No email receiver found [organization of the node is no resource]';
         }
-        $message['reciever'] = $receiver;
-        $message['sender'] = 'no-reply@conduction.nl';
+
         $sender['name'] = 'Checking';
+        $data = array_merge(['checkin' => $checkin, 'sender'=>$sender, 'receiver'=>$this->commonGroundService->getResource($receiver)], $data);
 
-        $message['subject'] = $subject;
-        $html = $this->commonGroundService->getResource($content)['content'];
-        $template = $this->twig->createTemplate($html);
-        $data = array_merge(['checkin' => $checkin, 'sender'=>$sender, 'receiver'=>$this->commonGroundService->getResource($message['reciever'])], $data);
-        $message['content'] = $template->render($data);
-
-        return $this->commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
+        return $this->mailingService->sendMail($template, 'no-reply@conduction.nl', $receiver, $data, $subject);
     }
 }
