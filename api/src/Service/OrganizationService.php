@@ -4,7 +4,10 @@
 
 namespace App\Service;
 
+use Conduction\BalanceBundle\Service\BalanceService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use Money\Currency;
+use Money\Money;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
@@ -22,13 +25,16 @@ class OrganizationService
 
     private $mailingService;
 
-    public function __construct(CommonGroundService $commonGroundService, ParameterBagInterface $params, Security $security, Environment $twig, MailingService $mailingService)
+    private $balanceService;
+
+    public function __construct(CommonGroundService $commonGroundService, ParameterBagInterface $params, Security $security, Environment $twig, MailingService $mailingService, BalanceService $balanceService)
     {
         $this->commonGroundService = $commonGroundService;
         $this->params = $params;
         $this->security = $security;
         $this->twig = $twig;
         $this->mailingService = $mailingService;
+        $this->balanceService = $balanceService;
     }
 
     public function welcomeMail($resource)
@@ -52,6 +58,7 @@ class OrganizationService
         // Create a (example) Place Accommodation
         $accommodation['name'] = $organizationContact['name'];
         $accommodation['place'] = '/places/'.$place['id'];
+        $accommodation['maximumAttendeeCapacity'] = 10;
         $accommodation = $this->commonGroundService->saveResource($accommodation, ['component' => 'lc', 'type' => 'accommodations']);
 
         // Create a Node
@@ -63,6 +70,23 @@ class OrganizationService
         $data = [];
         $data['node'] = $node;
 
+        $this->createAccount($organization);
+
         $this->mailingService->sendMail('mails/welcome_organization.html.twig', 'no-reply@conduction.nl', $this->security->getUser()->getUsername(), $data, 'Welcome');
+    }
+
+    public function createAccount($organization) {
+        $organizationUrl = $this->commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
+
+        $validChars = '0123456789';
+        $reference = substr(str_shuffle(str_repeat($validChars, ceil(3 / strlen($validChars)))), 1, 10);
+
+        $account = [];
+        $account['resource'] = $organizationUrl;
+        $account['reference'] = $reference;
+        $account['name'] = $organization['name'];
+
+        $account = $this->commonGroundService->createResource($account, ['component' => 'bare', 'type' => 'acounts']);
+        $this->balanceService->addCredit(Money::EUR(1000), $organizationUrl, $organization['name']);
     }
 }

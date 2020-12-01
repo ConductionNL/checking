@@ -4,7 +4,9 @@
 
 namespace App\Controller;
 
+use Conduction\BalanceBundle\Service\BalanceService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use Money\Money;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -272,13 +274,24 @@ class DashboardController extends AbstractController
      * @Route("/organizations/{id}")
      * @Template
      */
-    public function organizationAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params, $id)
+    public function organizationAction(CommonGroundService $commonGroundService, BalanceService $balanceService, Request $request, ParameterBagInterface $params, $id)
     {
         $variables = [];
 
         $variables['organization'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'organizations', 'id' => $id]);
 
         $organizationUrl = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $id]);
+
+        $account = $balanceService->getAcount($organizationUrl);
+
+        if ($account !== false) {
+            $account['balance'] = $balanceService->getBalance($organizationUrl);
+            $variables['account'] = $account;
+
+
+
+            $variables['payments'] = $commonGroundService->getResourceList(['component' => 'bare', 'type' => 'payments'],['acount.id' => $account['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+        }
 
         $groups = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'groups'], ['organization' => $organizationUrl])['hydra:member'];
         if (count($groups) > 0) {

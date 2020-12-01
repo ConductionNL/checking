@@ -35,7 +35,7 @@ class MailingService
         if ($this->params->get('app_env') == 'prod') {
             $message['service'] = '/services/eb7ffa01-4803-44ce-91dc-d4e3da7917da';
         } else {
-            $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
+            $message['service'] = '/services/eb7ffa01-4803-44ce-91dc-d4e3da7917da';
         }
         $message['status'] = 'queued';
         $message['subject'] = $subject;

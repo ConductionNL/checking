@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68a3f66b176f5bcdb7e21f70ca8386fe",
+    "content-hash": "61d192dee8cd09076ec5aee37155a4e9",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -662,6 +662,57 @@
                 }
             ],
             "time": "2020-10-24T12:39:10+00:00"
+        },
+        {
+            "name": "conduction/balancebundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ConductionNL/BalanceBundle.git",
+                "reference": "99880784e790cebfc8da6a31edf96fe9e9a9309b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ConductionNL/BalanceBundle/zipball/99880784e790cebfc8da6a31edf96fe9e9a9309b",
+                "reference": "99880784e790cebfc8da6a31edf96fe9e9a9309b",
+                "shasum": ""
+            },
+            "require": {
+                "conduction/commongroundbundle": "dev-master || dev-symfony51",
+                "moneyphp/money": "^3.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Conduction\\BalanceBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ruben van der Linde",
+                    "email": "ruben@conduction.nl"
+                },
+                {
+                    "name": "Conduction",
+                    "homepage": "https://conduction.nl"
+                }
+            ],
+            "description": "Symfony Bundle for commonground balance functionality",
+            "homepage": "https://conduction.nl",
+            "keywords": [
+                "balance",
+                "common ground",
+                "commonground",
+                "conduction"
+            ],
+            "time": "2020-12-01T15:09:34+00:00"
         },
         {
             "name": "conduction/commongroundbundle",
@@ -11127,6 +11178,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "conduction/balancebundle": 20,
         "conduction/commongroundbundle": 20,
         "conduction/listybundle": 20,
         "conduction/rocketbundle": 20,
