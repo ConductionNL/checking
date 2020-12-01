@@ -75,18 +75,39 @@
                     </div>
                     <br>
 
-                    <div class="form-group">
-                        <label class="input__label" for="maximumAttendeeCapacity">{{ 'maximum number of simultaneous visitors'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
-                        <input
-                            required=""
-                            id="maximumAttendeeCapacity"
-                            type="number"
-                            name="maximumAttendeeCapacity"
-                            aria-describedby="hint_name"
-                            class="form-control"
-                            {% if itemAccommodation is defined and itemAccommodation is not empty and itemAccommodation['maximumAttendeeCapacity'] is defined %}
-                                value="{{ itemAccommodation['maximumAttendeeCapacity'] }}"
-                            {% endif %}>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="input__label" for="maximumAttendeeCapacity">{{ 'maximum number of simultaneous visitors'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                            <input
+                                required=""
+                                id="maximumAttendeeCapacity"
+                                type="number"
+                                name="maximumAttendeeCapacity"
+                                aria-describedby="hint_name"
+                                class="form-control"
+                                {% if itemAccommodation is defined and itemAccommodation is not empty and itemAccommodation['maximumAttendeeCapacity'] is defined %}
+                                    value="{{ itemAccommodation['maximumAttendeeCapacity'] }}"
+                                {% endif %}>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="jobStartDate">{{ 'start date of the position'|trans|capitalize }} <span class="text-danger">*</span></label>
+                            <input
+                                class="form-control"
+                                id="jobStartDate"
+                                type="datetime-local"
+                                min="{{ "now"|date("Y-m-d\\TH:i") }}"
+                                {% if internship.jobStartDate is defined and internship.jobStartDate is not empty %}
+                                    value="{{ internship.jobStartDate|date("Y-m-d\\TH:i") }}"
+                                {% else %}
+                                    placeholder="format jaar-maand-dag"
+                                {% endif %}
+                                name="jobStartDate"
+                                required
+                            >
+                        </div>
                     </div>
 
                     {# Show the qr-code, is going to need some javascript to update when qrConfig inputs changes? #}
