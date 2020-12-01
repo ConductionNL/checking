@@ -97,7 +97,7 @@ $(document).ready(function () {
 
         var icon = L.icon({
             iconUrl: '../assets/img/marker.svg',
-        
+
             iconSize:     [38, 95], // size of the icon
             shadowSize:   [50, 64], // size of the shadow
             iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
@@ -172,7 +172,7 @@ $(document).ready(function () {
 
         var icon = L.icon({
             iconUrl: '../assets/img/marker.svg',
-        
+
             iconSize:     [38, 95], // size of the icon
             shadowSize:   [50, 64], // size of the shadow
             iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
@@ -276,11 +276,11 @@ $(document).ready(function () {
         }
         var $subMenu = $(this).next(".dropdown-menu");
         $subMenu.toggleClass('show');
-      
+
         $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
           $('.dropdown-submenu .show').removeClass("show");
         });
-      
+
         return false;
     });
 
@@ -293,18 +293,18 @@ $(document).ready(function () {
             $(this).find('.dropdown-menu').removeClass('show');
             $(this).find('> .dropdown-toggle').attr('aria-expanded', 'false');
         });
-    
+
         $('.dropdown-menu a.dropdown-toggle').hover(function() {
             if (!$(this).next().hasClass('show')) {
                 $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
               }
               var $subMenu = $(this).next(".dropdown-menu");
               $subMenu.toggleClass('show');
-            
+
               $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
                 $('.dropdown-submenu .show').removeClass("show");
               });
-            
+
               return false;
         },
         function () {
@@ -378,7 +378,7 @@ $(document).ready(function () {
     $('[data-fancybox="images"]').fancybox({
         afterLoad : function(instance, current) {
           var pixelRatio = window.devicePixelRatio || 1;
-      
+
           if ( pixelRatio > 1.5 ) {
             current.width  = current.width  / pixelRatio;
             current.height = current.height / pixelRatio;
@@ -536,20 +536,20 @@ $(document).ready(function () {
         var data = {
             series: [30, 40, 10, 20]
           };
-          
+
           var sum = function(a, b) { return a + b };
-          
+
           new Chartist.Pie('.ct-chart-7', data, {
             labelInterpolationFnc: function(value) {
               return Math.round(value / data.series.reduce(sum) * 100) + '%';
-            },            
+            },
             low: 0,
             high: 8,
             fullWidth: false,
             plugins: [
               Chartist.plugins.tooltip()
             ],
-        });         
+        });
     }
 
     $('#modal-notification').on('shown.bs.modal', function (event) {
@@ -818,7 +818,7 @@ $(document).ready(function () {
             $rotating_card_container.addClass('hover');
         }
     });
-    
+
     //Smooth scroll
     var scroll = new SmoothScroll('a[href*="#"]', {
         speed: 500,
@@ -947,7 +947,7 @@ $(document).ready(function () {
                     $('#filters-sidebar').addClass('d-none');
                     $(this).text('Show filters');
                 }
-                
+
             });
         }
     }
@@ -966,16 +966,11 @@ $(document).ready(function () {
         $('.full-search').addClass('open');
         $('.full-search > form > input[type="search"]').focus();
     });
-    
+
     $('.full-search, .full-search button.close').on('click keyup', function(event) {
         if (event.target == this || event.target.className == 'close' || event.keyCode == 27) {
             $(this).removeClass('open');
         }
     });
-    
-    $('form').submit(function(event) {
-        event.preventDefault();
-        return false;
-    })    
 
-});   
+});
