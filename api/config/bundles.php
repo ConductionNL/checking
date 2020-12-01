@@ -20,4 +20,5 @@ return [
     Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class     => ['all' => true],
     Conduction\RocketBundle\RocketBundle::class                          => ['all' => true],
     Conduction\SpacesBundle\SpacesBundle::class                          => ['all' => true],
+    Conduction\ListyBundle\ListyBundle::class                            => ['all' => true],
 ];
