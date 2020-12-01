@@ -7,7 +7,6 @@ namespace App\Service;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Constraints\Date;
 use Twig\Environment;
 
 class CheckinService
@@ -40,7 +39,7 @@ class CheckinService
         // Return if trying to checkin outside opening hours of the place
         if ($accommodation = $this->commonGroundService->isResource($node['accommodation'])) {
             if (isset($accommodation['place']['openingTime']) and isset($accommodation['place']['closingTime'])) {
-                $now = new \DateTime("now");
+                $now = new \DateTime('now');
                 $now = $now->format('H:i');
 
                 $openingTime = new \DateTime($accommodation['place']['openingTime']);

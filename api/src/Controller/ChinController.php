@@ -769,7 +769,7 @@ class ChinController extends AbstractController
             switch ($message) {
                 case 'Not within opening hours!':
                     $accommodation = $commonGroundService->getResource($variables['resource']['accommodation']);
-                    $variables['subMessage'] = date_format(new \DateTime($accommodation['place']['openingTime']),'H:i').' - '.date_format(new \DateTime($accommodation['place']['closingTime']), 'H:i');
+                    $variables['subMessage'] = date_format(new \DateTime($accommodation['place']['openingTime']), 'H:i').' - '.date_format(new \DateTime($accommodation['place']['closingTime']), 'H:i');
                     break;
             }
         }
