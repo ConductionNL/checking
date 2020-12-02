@@ -405,11 +405,11 @@ class DashboardController extends AbstractController
     {
         $variables = [];
 
-
         return $variables;
     }
 
     /*@todo make this refer to a actual invoice instead of mock template*/
+
     /**
      * @Route("/invoice")
      * @Template
@@ -417,7 +417,6 @@ class DashboardController extends AbstractController
     public function InvoiceAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
     {
         $variables = [];
-
 
         return $variables;
     }
