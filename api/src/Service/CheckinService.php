@@ -54,6 +54,13 @@ class CheckinService
 
         $checkin = $this->commonGroundService->createResource($checkin, ['component' => 'chin', 'type' => 'checkins']);
 
+        $data = [];
+        $data['person'] = $person;
+        $data['node'] = $node;
+        $data['checkin'] = $checkin;
+
+        $this->mailingService->sendMail('mails/new_checkin.html.twig', 'no-reply@conduction.nl', $this->security->getUser()->getUsername(), $data, 'New Checkin');
+
         $results = $this->processCheckin($checkin);
         // Do something with the $results?
         //var_dump($results);die(); // for example: var dump for testing purposes
