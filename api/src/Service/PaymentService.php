@@ -13,7 +13,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class PaymentService
 {
-
     private $params;
     private $commonGroundService;
     private $balanceService;
@@ -27,11 +26,10 @@ class PaymentService
 
     public function createPaymentLink($amount, $redirectUrl)
     {
-
         $body = [
             'amount'      => [
                 'currency' => 'EUR',
-                'value'    => $amount
+                'value'    => $amount,
             ],
             'description' => 'funds for Checking.nu',
             'redirectUrl' => $redirectUrl,
@@ -66,8 +64,8 @@ class PaymentService
         return $info;
     }
 
-    public function processPayment($id, $organization) {
-
+    public function processPayment($id, $organization)
+    {
         $headers = [
             'Authorization' => 'Bearer test_H8PeFq62HpNFPQmer4GuEUWupMwSqQ',
             'Accept'        => 'application/json',
@@ -89,7 +87,7 @@ class PaymentService
         if ($response['status'] == 'paid') {
             $organizationUrl = $this->commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
 
-            $amount = ($response['amount']['value'] / (1+.21)) * 100;
+            $amount = ($response['amount']['value'] / (1 + .21)) * 100;
             $this->balanceService->addCredit(Money::EUR($amount), $organizationUrl, $organization['name']);
 
             $item = [];
@@ -110,12 +108,11 @@ class PaymentService
 
             $invoice = $this->commonGroundService->createResource($invoice, ['component' => 'bc', 'type' => 'invoices']);
 
-            $templateAmount = $amount/ 100;
+            $templateAmount = $amount / 100;
 
             return 'Payment processed successfully! <br> €'.$templateAmount.'.00 was added to your balance. <br>  Invoice with reference: '.$invoice['reference'].' is created.';
         } else {
             return 'Something went wrong, the status of the payment is: '.$response['status'].' please try again.';
         }
-
     }
 }
