@@ -1,0 +1,45 @@
+<div class="modal fade" id="fundsModal" tabindex="-1" role="dialog" aria-labelledby="fundsModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{ 'funds'|trans|capitalize }}</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ path('app_dashboard_transactions', {organization: organization.id}) }}" method="post">
+                    <div class="form-group">
+                        <label for="amount">{{ 'select amount you wish to add to account'|trans|capitalize }}</label>
+                        <select class="form-control" onchange="calculatePrice()" name="amount" id="amount">
+                            <option value="25.00">€25</option>
+                            <option value="50.00">€50</option>
+                            <option value="75.00">€75</option>
+                            <option value="100.00">€100</option>
+                            <option value="125.00">€125</option>
+                            <option value="150.00">€150</option>
+                            <option value="175.00">€175</option>
+                            <option value="200.00">€200</option>
+                        </select>
+                    </div>
+
+                    <p class="text-muted">{{ 'amount with taxes:'|trans|capitalize }} <span id="amountWithTax">€30.25</span></p>
+
+                    <input type="hidden" name="redirectUrl" value="{{ path('app_dashboard_transactions', {organization: organization.id}) }}">
+                    <button class="btn btn-success btn-block">{{ 'add funds'|trans|capitalize }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function calculatePrice() {
+        let amount = document.getElementById('amount').value;
+        let taxedAmount = amount * 1.21;
+        let taxedAmountContainer = document.getElementById('amountWithTax');
+        taxedAmountContainer.innerHTML = '€' + taxedAmount;
+    }
+
+</script>
