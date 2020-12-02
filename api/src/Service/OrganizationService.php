@@ -72,7 +72,7 @@ class OrganizationService
 
         $this->createAccount($organization);
 
-        $this->mailingService->sendMail('mails/welcome_organization.html.twig', 'no-reply@conduction.nl', $this->security->getUser()->getUsername(), $data, 'Welcome');
+        $this->mailingService->sendMail('mails/welcome_organization.html.twig', 'no-reply@conduction.nl', 'mbout@roc-dev.com', $data, 'Welcome');
     }
 
     public function createAccount($organization) {
