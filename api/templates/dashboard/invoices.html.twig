@@ -1,0 +1,51 @@
+{% extends '/dashboard/dashboard.html.twig' %}
+
+{% block dashboard %}
+    <h3 class="h3">{{ 'your invoices'|trans|capitalize }}</h3>
+    {# {% for invoice in invoices %} #}
+    <div class="card border-light mb-4">
+        <div class="row no-gutters align-items-center">
+            <div class="col-12 col-lg-6 col-xl-4">
+                <a href="{{ path('app_dashboard_invoice') }}">
+                    <img src="https://picsum.photos/100/50" alt="private office" class="card-img p-2 rounded-xl">
+                </a>
+            </div>
+            <div class="col-12 col-lg-6 col-xl-8">
+                <div class="card-body py-lg-0">
+                    <div class="d-flex no-gutters align-items-center mb-3">
+                        <div class="col text-left">
+                            <ul class="list-group mb-0">
+                                <li class="list-group-item small p-0"><span class="fas fa-medal text-tertiary mr-2"></span>Promoted until: 12 June</li>
+                            </ul>
+                        </div>
+                        <div class="col text-right">
+                            <div class="btn-group">
+                                <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="icon icon-sm">
+                                <span class="fas fa-ellipsis-h icon-secondary"></span>
+                            </span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ path('app_dashboard_invoice') }}"><span class="fas fa-edit mr-2"></span>{{ 'view invoice'|trans|capitalize }}</a>
+                                    <a class="dropdown-item text-danger" href="#"><span class="fa fa-trash mr-2" aria-hidden="true"></span>Disable</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#modal-notification"><span class="fas fa-chart-line mr-2"></span>Statistics</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <h2 class="h5">Collaborative Workspace</h2>
+                    </a>
+                    <div class="col d-flex pl-0">
+                        <span class="text-success font-small mr-3"><span class="fas fa-check-circle mr-2"></span>invoice status</span>
+                        <span class="text-muted font-small mr-3"><span class="fas fa-eye mr-2"></span>680</span>
+                        <span class="text-muted font-small mr-3"><span class="far fa-heart mr-2"></span>10</span>
+                        <a class="font-small text-dark" href="#"><span class="fas fa-envelope mr-2"></span>8</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {# {% endfor %} #}
+{% endblock %}

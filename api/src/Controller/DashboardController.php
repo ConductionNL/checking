@@ -448,4 +448,28 @@ class DashboardController extends AbstractController
 
         return $variables;
     }
+
+    /**
+     * @Route("/invoices")
+     * @Template
+     */
+    public function InvoicesAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
+    {
+        $variables = [];
+
+        return $variables;
+    }
+
+    /*@todo make this refer to a actual invoice instead of mock template*/
+
+    /**
+     * @Route("/invoice")
+     * @Template
+     */
+    public function InvoiceAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
+    {
+        $variables = [];
+
+        return $variables;
+    }
 }
