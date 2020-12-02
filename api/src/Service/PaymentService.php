@@ -24,6 +24,15 @@ class PaymentService
         $this->balanceService = $balanceService;
     }
 
+    /**
+     * This function generates an payment url and mollie id and returns it.
+     *
+     * @param string $amount amount of money that needs to be paid.
+     * @param string $redirectUrl url where mollie needs to send user after payment.
+
+     *
+     * @return array|false array containing redirectUrl (where we send the user to) and id (which we use in processPayment function).
+     */
     public function createPaymentLink($amount, $redirectUrl)
     {
         $body = [
@@ -64,6 +73,15 @@ class PaymentService
         return $info;
     }
 
+    /**
+     * This function gets information of the payment and if paid adds funds to account & creates an invoice.
+     *
+     * @param string $id id provided by mollie.
+     * @param string $organization id of the organization used for the account.
+
+     *
+     * @return string|false string containing info about payment.
+     */
     public function processPayment($id, $organization)
     {
         $headers = [

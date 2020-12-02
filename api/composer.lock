@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "61d192dee8cd09076ec5aee37155a4e9",
+    "content-hash": "a4a5a82786474e284843973d490fb9c4",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -804,6 +804,56 @@
                 "rsin"
             ],
             "time": "2020-11-13T20:25:19+00:00"
+        },
+        {
+            "name": "conduction/idvaultbundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ConductionNL/IdVaultBundle.git",
+                "reference": "be3877af8c9a3cb9967b8e9cd3e7c91594fabffa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ConductionNL/IdVaultBundle/zipball/be3877af8c9a3cb9967b8e9cd3e7c91594fabffa",
+                "reference": "be3877af8c9a3cb9967b8e9cd3e7c91594fabffa",
+                "shasum": ""
+            },
+            "require": {
+                "conduction/commongroundbundle": "dev-master || dev-symfony51"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Conduction\\IdVaultBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ruben van der Linde",
+                    "email": "ruben@conduction.nl"
+                },
+                {
+                    "name": "Conduction",
+                    "homepage": "https://conduction.nl"
+                }
+            ],
+            "description": "Symfony Bundle for ID-Vault functionality",
+            "homepage": "https://conduction.nl",
+            "keywords": [
+                "ID-Vault",
+                "common ground",
+                "commonground",
+                "conduction"
+            ],
+            "time": "2020-12-02T10:40:54+00:00"
         },
         {
             "name": "conduction/listybundle",
@@ -11180,6 +11230,7 @@
     "stability-flags": {
         "conduction/balancebundle": 20,
         "conduction/commongroundbundle": 20,
+        "conduction/idvaultbundle": 20,
         "conduction/listybundle": 20,
         "conduction/rocketbundle": 20,
         "conduction/spacesbundle": 20

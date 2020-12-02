@@ -28,6 +28,17 @@ class MailingService
         $this->twig = $twig;
     }
 
+    /**
+     * This function sends a mail
+     *
+     * @param string $template path to email template.
+     * @param string $sender email of the sender.
+     * @param string $receiver email of the receiver.
+     * @param array $data array used to render the template with twig.
+     * @param array $subject subject of the email.
+     *
+     * @return array|false created message object.
+     */
     public function sendMail($template, $sender, $receiver, $data, $subject)
     {
         $message = [];
