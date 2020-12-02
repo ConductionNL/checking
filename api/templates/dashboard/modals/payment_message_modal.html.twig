@@ -11,6 +11,7 @@
                 {% if message is defined %}
                     <p>{{ message|raw }}</p>
                 {% endif %}
+                <a href="{{ path('app_dashboard_invoices') }}" class="btn btn-primary btn-block btn-sm">{{  'invoices'|trans|capitalize }}</a>
             </div>
         </div>
     </div>
