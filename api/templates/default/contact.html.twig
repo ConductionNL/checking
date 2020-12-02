@@ -68,10 +68,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="files">{{ 'add files'|trans|capitalize }}</label>
-                                                    <div class="input-group mb-4">
-                                                        <div class="input-group-prepend"><span class="input-group-text"><span class="far fa-file"></span></span></div>
-                                                        <input class="form-control" id="files" name="attachments[]" type="file" multiple>
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="attachments" name="attachments[]" multiple>
+                                                        <label class="custom-file-label" for="attachments">{{ 'add files'|trans|capitalize }}</label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
