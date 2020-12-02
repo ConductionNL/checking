@@ -6,7 +6,6 @@ namespace App\Service;
 
 use Conduction\BalanceBundle\Service\BalanceService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
-use Money\Currency;
 use Money\Money;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Security;
@@ -75,7 +74,8 @@ class OrganizationService
         $this->mailingService->sendMail('mails/welcome_organization.html.twig', 'no-reply@conduction.nl', 'mbout@roc-dev.com', $data, 'Welcome');
     }
 
-    public function createAccount($organization) {
+    public function createAccount($organization)
+    {
         $organizationUrl = $this->commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
 
         $validChars = '0123456789';

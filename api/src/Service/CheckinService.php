@@ -76,8 +76,8 @@ class CheckinService
         }
     }
 
-    public function removeBalance($node) {
-
+    public function removeBalance($node)
+    {
         $organization = $this->commonGroundService->getResource($node['organization']);
         $organizationUrl = $this->commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
 
@@ -161,7 +161,7 @@ class CheckinService
         return $this->mailingService->sendMail($template, 'no-reply@conduction.nl', $receiver, $data, $subject);
     }
 
-    public function checkBalance($organization) {
-
+    public function checkBalance($organization)
+    {
     }
 }
