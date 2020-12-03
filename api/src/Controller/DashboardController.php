@@ -114,8 +114,16 @@ class DashboardController extends AbstractController
             $place['description'] = $resource['description'];
             $place['publicAccess'] = true;
             $place['smokingAllowed'] = false;
-            $place['openingTime'] = '09:00';
-            $place['closingTime'] = '22:00';
+            if (key_exists('openingTime', $resource) and !empty($resource['openingTime'])) {
+                $place['openingTime'] = $resource['openingTime'];
+                // Check if openingTime is set and if so, unset it in the resource used for creating a node
+                unset($resource['openingTime']);
+            }
+            if (key_exists('closingTime', $resource) and !empty($resource['closingTime'])) {
+                $place['closingTime'] = $resource['closingTime'];
+                // Check if closingTime is set and if so, unset it in the resource used for creating a node
+                unset($resource['closingTime']);
+            }
             if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
                 $place['accommodations'] = ['/accommodations/'.$accommodation['id']];
             }
