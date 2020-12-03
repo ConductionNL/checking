@@ -43,6 +43,9 @@
     "conduction/commongroundbundle": {
         "version": "dev-symfony51"
     },
+    "conduction/idvaultbundle": {
+        "version": "dev-master"
+    },
     "conduction/listybundle": {
         "version": "dev-master"
     },
