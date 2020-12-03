@@ -6,7 +6,6 @@ namespace App\Service;
 
 use Conduction\BalanceBundle\Service\BalanceService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
-use Money\Money;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
@@ -75,5 +74,4 @@ class OrganizationService
 
         $this->mailingService->sendMail('mails/welcome_organization.html.twig', 'no-reply@conduction.nl', 'mbout@roc-dev.com', $data, 'Welcome');
     }
-
 }
