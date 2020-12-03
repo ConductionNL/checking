@@ -69,24 +69,11 @@ class OrganizationService
         $data = [];
         $data['node'] = $node;
 
-        $this->createAccount($organization);
+        $organizationUrl = $this->commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
+
+        $this->balanceService->createAccount($organizationUrl, 1000);
 
         $this->mailingService->sendMail('mails/welcome_organization.html.twig', 'no-reply@conduction.nl', 'mbout@roc-dev.com', $data, 'Welcome');
     }
 
-    public function createAccount($organization)
-    {
-        $organizationUrl = $this->commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
-
-        $validChars = '0123456789';
-        $reference = substr(str_shuffle(str_repeat($validChars, ceil(3 / strlen($validChars)))), 1, 10);
-
-        $account = [];
-        $account['resource'] = $organizationUrl;
-        $account['reference'] = $reference;
-        $account['name'] = $organization['name'];
-
-        $account = $this->commonGroundService->createResource($account, ['component' => 'bare', 'type' => 'acounts']);
-        $this->balanceService->addCredit(Money::EUR(1000), $organizationUrl, $organization['name']);
-    }
 }

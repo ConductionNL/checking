@@ -406,7 +406,13 @@ class DashboardController extends AbstractController
         if ($session->get('mollieCode')) {
             $mollieCode = $session->get('mollieCode');
             $session->remove('mollieCode');
-            $variables['message'] = $paymentService->processPayment($mollieCode, $organization);
+            $result = $balanceService->processMolliePayment($mollieCode, $organizationUrl);
+
+            if ($result['status'] == 'paid') {
+                $variables['message'] = 'Payment processed successfully! <br> €'.$result['amount'].'.00 was added to your balance. <br>  Invoice with reference: '.$result['reference'].' is created.';
+            } else {
+                $variables['message'] = 'Something went wrong, the status of the payment is: '.$result['status'].' please try again.';
+            }
         }
 
         $account = $balanceService->getAcount($organizationUrl);
@@ -421,7 +427,7 @@ class DashboardController extends AbstractController
             $amount = $request->get('amount') * 1.21;
             $amount = (number_format($amount, 2));
 
-            $payment = $paymentService->createPaymentLink($amount, $request->get('redirectUrl'));
+            $payment = $balanceService->createMolliePayment($amount, $request->get('redirectUrl'));
             $session->set('mollieCode', $payment['id']);
 
             return $this->redirect($payment['redirectUrl']);
