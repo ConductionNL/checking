@@ -4,12 +4,15 @@
 
 namespace App\Controller;
 
+use App\Service\PaymentService;
+use Conduction\BalanceBundle\Service\BalanceService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -280,13 +283,21 @@ class DashboardController extends AbstractController
      * @Route("/organizations/{id}")
      * @Template
      */
-    public function organizationAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params, $id)
+    public function organizationAction(CommonGroundService $commonGroundService, BalanceService $balanceService, Request $request, ParameterBagInterface $params, $id)
     {
         $variables = [];
 
         $variables['organization'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'organizations', 'id' => $id]);
 
         $organizationUrl = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $id]);
+
+        $account = $balanceService->getAcount($organizationUrl);
+
+        if ($account !== false) {
+            $account['balance'] = $balanceService->getBalance($organizationUrl);
+            $variables['account'] = $account;
+            $variables['payments'] = $commonGroundService->getResourceList(['component' => 'bare', 'type' => 'payments'], ['acount.id' => $account['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+        }
 
         $groups = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'groups'], ['organization' => $organizationUrl])['hydra:member'];
         if (count($groups) > 0) {
@@ -388,6 +399,46 @@ class DashboardController extends AbstractController
     }
 
     /**
+     * @Route("/transactions/{organization}")
+     * @Template
+     */
+    public function TransactionsAction(Session $session, CommonGroundService $commonGroundService, BalanceService $balanceService, PaymentService $paymentService, Request $request, ParameterBagInterface $params, $organization)
+    {
+        // On an index route we might want to filter based on user input
+        $variables = [];
+
+        $organization = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization]);
+        $organizationUrl = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
+        $variables['organization'] = $organization;
+
+        if ($session->get('mollieCode')) {
+            $mollieCode = $session->get('mollieCode');
+            $session->remove('mollieCode');
+            $variables['message'] = $paymentService->processPayment($mollieCode, $organization);
+        }
+
+        $account = $balanceService->getAcount($organizationUrl);
+
+        if ($account !== false) {
+            $account['balance'] = $balanceService->getBalance($organizationUrl);
+            $variables['account'] = $account;
+            $variables['payments'] = $commonGroundService->getResourceList(['component' => 'bare', 'type' => 'payments'], ['acount.id' => $account['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+        }
+
+        if ($request->isMethod('POST')) {
+            $amount = $request->get('amount') * 1.21;
+            $amount = (number_format($amount, 2));
+
+            $payment = $paymentService->createPaymentLink($amount, $request->get('redirectUrl'));
+            $session->set('mollieCode', $payment['id']);
+
+            return $this->redirect($payment['redirectUrl']);
+        }
+
+        return $variables;
+    }
+
+    /**
      * @Route("/checkins")
      * @Template
      */
@@ -401,6 +452,30 @@ class DashboardController extends AbstractController
         $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
 
         $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/invoices")
+     * @Template
+     */
+    public function InvoicesAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
+    {
+        $variables = [];
+
+        return $variables;
+    }
+
+    /*@todo make this refer to a actual invoice instead of mock template*/
+
+    /**
+     * @Route("/invoice")
+     * @Template
+     */
+    public function InvoiceAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
+    {
+        $variables = [];
 
         return $variables;
     }

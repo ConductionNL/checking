@@ -4,7 +4,9 @@
 
 namespace App\Service;
 
+use Conduction\BalanceBundle\Service\BalanceService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use Money\Money;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
@@ -15,20 +17,19 @@ class CheckinService
      * @var Security
      */
     private $security;
-
     private $commonGroundService;
-
     private $mailingService;
-
     private $twig;
+    private $balanceService;
 
-    public function __construct(CommonGroundService $commonGroundService, MailingService $mailingService, ParameterBagInterface $params, Security $security, Environment $twig)
+    public function __construct(CommonGroundService $commonGroundService, MailingService $mailingService, ParameterBagInterface $params, Security $security, Environment $twig, BalanceService $balanceService)
     {
         $this->commonGroundService = $commonGroundService;
         $this->mailingService = $mailingService;
         $this->params = $params;
         $this->security = $security;
         $this->twig = $twig;
+        $this->balanceService = $balanceService;
     }
 
     public function createCheckin($node, $person = null, $user = null)
@@ -78,6 +79,15 @@ class CheckinService
 
         $checkin = $this->commonGroundService->createResource($checkin, ['component' => 'chin', 'type' => 'checkins']);
 
+        $this->removeBalance($node);
+
+        $data = [];
+        $data['person'] = $person;
+        $data['node'] = $node;
+        $data['checkin'] = $checkin;
+
+        $this->mailingService->sendMail('mails/new_checkin.html.twig', 'no-reply@conduction.nl', $this->security->getUser()->getUsername(), $data, 'New Checkin');
+
         $results = $this->processCheckin($checkin);
         // Do something with the $results?
         // Can be var dumped for testing purposes
@@ -96,6 +106,14 @@ class CheckinService
         } else {
             return 'De accommodation van de node is geen resource';
         }
+    }
+
+    public function removeBalance($node)
+    {
+        $organization = $this->commonGroundService->getResource($node['organization']);
+        $organizationUrl = $this->commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
+
+        $this->balanceService->removeCredit(Money::EUR(5), $organizationUrl, $organization['name']);
     }
 
     public function checkMaxAttendees($checkin, $accommodation)
@@ -173,5 +191,9 @@ class CheckinService
         $data = array_merge(['checkin' => $checkin, 'sender'=>$sender, 'receiver'=>$this->commonGroundService->getResource($receiver)], $data);
 
         return $this->mailingService->sendMail($template, 'no-reply@conduction.nl', $receiver, $data, $subject);
+    }
+
+    public function checkBalance($organization)
+    {
     }
 }

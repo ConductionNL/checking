@@ -21,4 +21,5 @@ return [
     Conduction\RocketBundle\RocketBundle::class                          => ['all' => true],
     Conduction\SpacesBundle\SpacesBundle::class                          => ['all' => true],
     Conduction\ListyBundle\ListyBundle::class                            => ['all' => true],
+    Conduction\BalanceBundle\BalanceBundle::class                        => ['all' => true],
 ];

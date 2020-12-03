@@ -37,6 +37,9 @@
     "composer/xdebug-handler": {
         "version": "1.4.4"
     },
+    "conduction/balancebundle": {
+        "version": "dev-master"
+    },
     "conduction/commongroundbundle": {
         "version": "dev-symfony51"
     },
