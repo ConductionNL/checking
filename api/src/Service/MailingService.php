@@ -29,13 +29,13 @@ class MailingService
     }
 
     /**
-     * This function sends a mail
+     * This function sends a mail.
      *
      * @param string $template path to email template.
-     * @param string $sender email of the sender.
+     * @param string $sender   email of the sender.
      * @param string $receiver email of the receiver.
-     * @param array $data array used to render the template with twig.
-     * @param string $subject subject of the email.
+     * @param array  $data     array used to render the template with twig.
+     * @param string $subject  subject of the email.
      *
      * @return array|false created message object.
      */

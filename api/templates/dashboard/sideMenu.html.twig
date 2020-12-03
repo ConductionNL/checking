@@ -1,7 +1,7 @@
 <div class="col-12 col-md-4 d-none d-lg-block">
     <div class="card border-light p-2">
         <div class="card-body p-2">
-            <h2 class="h5 font-weight-normal text-center mt-3 mb-0">{{ app.user.name }}</h2>
+            <h2 class="h5 font-weight-normal text-center mt-3 mb-0">{% if app.user.name|default %}{{ app.user.name }}{% else %}{{ 'username'|trans|capitalize }}{% endif %}</h2>
             <div class="text-center">
                 {% if app.user.organization is defined and app.user.organization is not empty %}
                     <a href="{{ path('app_dashboard_organizations') }}" ><span class="text-muted">{{ commonground_resource(app.user.organization).name }}</span></a>

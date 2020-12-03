@@ -85,8 +85,45 @@
                             aria-describedby="hint_name"
                             class="form-control"
                             {% if itemAccommodation is defined and itemAccommodation is not empty and itemAccommodation['maximumAttendeeCapacity'] is defined %}
-                                value="{{ itemAccommodation['maximumAttendeeCapacity'] }}"
+                            value="{{ itemAccommodation['maximumAttendeeCapacity'] }}"
                             {% endif %}>
+                    </div>
+
+                    <div class="row" style="margin-bottom: 5px">
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="openingTime">{{ 'opening time'|trans|capitalize }} </label>
+                                <input
+                                    class="form-control"
+                                    id="openingTime"
+                                    type="time"
+                                    {% if itemAccommodation['place']['openingTime'] is defined and itemAccommodation['place']['openingTime'] is not empty %}
+                                        value="{{ itemAccommodation['place']['openingTime']|date("H:i") }}"
+                                    {% else %}
+                                        placeholder="format jaar-maand-dag"
+                                    {% endif %}
+                                    name="openingTime"
+                                    required
+                                >
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="closingTime">{{ 'closing time'|trans|capitalize }} </label>
+                                <input
+                                    class="form-control"
+                                    id="closingTime"
+                                    type="time"
+                                    {% if itemAccommodation['place']['closingTime'] is defined and itemAccommodation['place']['openingTime'] is not empty %}
+                                        value="{{ itemAccommodation['place']['closingTime']|date("H:i") }}"
+                                    {% else %}
+                                        placeholder="format jaar-maand-dag"
+                                    {% endif %}
+                                    name="closingTime"
+                                    required
+                                >
+                            </div>
+                        </div>
                     </div>
 
                     {# Show the qr-code, is going to need some javascript to update when qrConfig inputs changes? #}

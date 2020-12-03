@@ -282,7 +282,13 @@ spec:
               {{- else }}
               value: https://{{ $.Values.settings.env }}.{{ $.Values.settings.domain }}
               {{- end }}
-
+              {{ if .Values.security.mollieKey }}
+              -   name: APP_MOLLIE_KEY
+                  valueFrom:
+                      secretKeyRef:
+                          name: {{ template "fullname" . }}
+                          key: app_mollie_key
+              {{ end }}
           #Redis
             - name: REDIS_HOST
               valueFrom:

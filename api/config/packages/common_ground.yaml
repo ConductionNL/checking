@@ -40,6 +40,7 @@ parameters:
     env(APP_BUILD_ALL_FIXTURES):
     env(APP_URL): "http://localhost"
     env(APP_SESSION_DURATION): "900"
+    env(APP_MOLLIE_KEY): ""
     
 
     env(APP_CONTAINER): ""
@@ -73,6 +74,7 @@ parameters:
     app_internal: "%env(APP_INTERNAL)%"
     app_build_all_fixtures: "%env(APP_BUILD_ALL_FIXTURES)%"
     app_session_duration: "%env(APP_SESSION_DURATION)%"
+    app_mollie_key: "%env(APP_MOLLIE_KEY)%"
 
     # Organisatie details
     env(GOOGLE_TAG_MANAGER_ID): ""
@@ -320,6 +322,7 @@ twig:
         app_build_all_fixtures: "%env(APP_BUILD_ALL_FIXTURES)%"
         app_url: "%env(APP_URL)%"
         app_session_duration: "%env(APP_SESSION_DURATION)%"
+        app_mollie_key: "%env(APP_MOLLIE_KEY)%"
 
         # Security Details
         app_commonground_id: "%env(APP_COMMONGROUND_ID)%"
