@@ -46,16 +46,15 @@
             </div>
             <div class="col-6 col-xl-3 mb-5 mb-xl-0">
                 <span class="h5">{{ 'newsletter'|trans|capitalize }}</span>
-                <form action="https://conduction.us3.list-manage.com/subscribe/post?u=92dbff3b134c8b2356ddc7ed4&amp;id=265fa0c5eb" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <form action="{{ path('app_default_newsletter') }}">
 
                     <div class="form-group">
                         <label style="color: white" for="email">{{ 'e-mail'|trans|capitalize }}</label>
-                        <input required type="email" value="" name="EMAIL" class="form-control" id="mce-EMAIL">
+                        <input required type="email" value="" name="EMAIL" class="form-control" id="EMAIL">
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success">{{ 'subscribe'|trans|capitalize }}</button>
                     </div>
-                    <input type="hidden" value="1024" name="group[25353][1024]">
                 </form>
             </div>
         </div>
