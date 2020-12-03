@@ -274,6 +274,9 @@ class ChinController extends AbstractController
             $commonGroundService->updateResource($person);
 
             $checkIn = $checkinService->createCheckin($variables['resource']);
+            if (isset($checkIn['errorMessage'])) {
+                return $this->redirect($this->generateUrl('app_chin_error', ['message'=>$checkIn['errorMessage'], 'id'=>$checkIn['node']['id']]));
+            }
 
             return $this->redirect($this->generateUrl('app_chin_confirmation', ['id'=>$checkIn['id']]));
         }
@@ -510,7 +513,10 @@ class ChinController extends AbstractController
 
             $user = $commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
 
-            $checkinService->createCheckin($node, $person, $user);
+            $checkIn = $checkinService->createCheckin($node, $person, $user);
+            if (isset($checkIn['errorMessage'])) {
+                return $this->redirect($this->generateUrl('app_chin_error', ['message'=>$checkIn['errorMessage'], 'id'=>$checkIn['node']['id']]));
+            }
 
             $node = $commonGroundService->getResource($node);
 
@@ -721,9 +727,51 @@ class ChinController extends AbstractController
         $variables['code'] = $code;
 
         if ($request->isMethod('POST')) {
-            $checkinService->createCheckin($variables['resource']);
+            $checkIn = $checkinService->createCheckin($variables['resource']);
+            if (isset($checkIn['errorMessage'])) {
+                return $this->redirect($this->generateUrl('app_chin_error', ['message'=>$checkIn['errorMessage'], 'id'=>$checkIn['node']['id']]));
+            }
 
             $variables['subscribed'] = true;
+        }
+
+        return $variables;
+    }
+
+    /**
+     * This function handles user feedback for errors.
+     *
+     * @Route("/error/{message}/{id}")
+     * @Template
+     */
+    public function errorAction(Session $session, $message, $id = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        // Fallback options of establishing
+        if (!$message) {
+            $message = $request->query->get('message');
+        }
+        if (!$message) {
+            $message = $request->request->get('message');
+        }
+        if (!$message) {
+            $this->addFlash('warning', 'No error message supplied');
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables = [];
+
+        $variables['message'] = $message;
+
+        if (isset($id)) {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'chin', 'type'=>'nodes', 'id'=>$id]);
+
+            switch ($message) {
+                case 'Not within opening hours!':
+                    $accommodation = $commonGroundService->getResource($variables['resource']['accommodation']);
+                    $variables['subMessage'] = date_format(new \DateTime($accommodation['place']['openingTime']), 'H:i').' - '.date_format(new \DateTime($accommodation['place']['closingTime']), 'H:i');
+                    break;
+            }
         }
 
         return $variables;

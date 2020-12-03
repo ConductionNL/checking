@@ -1301,6 +1301,10 @@
         <source>your search did not yield any results, try again</source>
         <target>uw zoek opdracht heet geen resulaten opgeleverd, probeer het nog een keer</target>
       </trans-unit>
+      <trans-unit id="zZxBt_I" resname="something went wrong">
+        <source>something went wrong</source>
+        <target>er is iets fout gegaan</target>
+      </trans-unit>
       <trans-unit id="R_InZ3G" resname="filters">
         <source>filters</source>
         <target>filters</target>
@@ -1448,6 +1452,10 @@
       <trans-unit id="QZbttrP" resname="This is the webpage that customers will be redirected to after a successful check-in.">
         <source>This is the webpage that customers will be redirected to after a successful check-in.</source>
         <target>Dit is de webpagina waar klanten naar doorverwezen worden na een succesvolle checkin.</target>
+      </trans-unit>
+      <trans-unit id="INUrK2B" resname="Not within opening hours!">
+        <source>Not within opening hours!</source>
+        <target>Niet binnen openingstijden!</target>
       </trans-unit>
       <trans-unit id="SuATECt" resname="no address found">
         <source>no address found</source>

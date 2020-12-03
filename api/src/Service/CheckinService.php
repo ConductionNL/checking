@@ -35,6 +35,31 @@ class CheckinService
     public function createCheckin($node, $person = null, $user = null)
     {
         // TODO: Only create a checkin if the current amount of checkins on the node isn't higher than the node.maximumAttendeeCapacity?!
+        // ^unless more checkins than the node.maximumAttendeeCapacity are allowed
+
+        // Return if trying to checkin outside opening hours of the place
+        if ($accommodation = $this->commonGroundService->isResource($node['accommodation'])) {
+            if (isset($accommodation['place']['openingTime']) and isset($accommodation['place']['closingTime'])) {
+                $now = new \DateTime('now');
+                $now = $now->format('H:i');
+
+                $openingTime = new \DateTime($accommodation['place']['openingTime']);
+                $openingTime = $openingTime->format('H:i');
+                $closingTime = new \DateTime($accommodation['place']['closingTime']);
+                $closingTime = $closingTime->format('H:i');
+
+                // If closingTime is on the next day (example: open 22:00, closes 2:00)
+                if ($closingTime < $openingTime) {
+                    if ($now < $openingTime and $now > $closingTime) {
+                        return ['errorMessage'=>'Not within opening hours!', 'node'=>$node];
+                    }
+                } elseif ($now < $openingTime or $now > $closingTime) {
+                    // If openingTime and closingTime are on the same day we can do this^ (example: open 9:00, closes 18:00)
+                    return ['errorMessage'=>'Not within opening hours!', 'node'=>$node];
+                }
+            }
+        }
+
         $checkin = [];
         $checkin['node'] = 'nodes/'.$node['id'];
         if ($this->security->getUser()) {
@@ -65,7 +90,7 @@ class CheckinService
 
         $results = $this->processCheckin($checkin);
         // Do something with the $results?
-        //var_dump($results);die(); // for example: var dump for testing purposes
+        // Can be var dumped for testing purposes
 
         return $checkin;
     }
@@ -73,7 +98,7 @@ class CheckinService
     public function processCheckin($checkin)
     {
         if ($accommodation = $this->commonGroundService->isResource($checkin['node']['accommodation'])) {
-            if (key_exists('maximumAttendeeCapacity', $accommodation)) {
+            if (isset($accommodation['maximumAttendeeCapacity'])) {
                 return $this->checkMaxAttendees($checkin, $accommodation);
             } else {
                 return 'De accommodation van de node heeft geen maximumAttendeeCapacity';
