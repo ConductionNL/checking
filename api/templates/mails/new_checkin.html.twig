@@ -1,0 +1,21 @@
+<table align="center"  style="background-color: #F5F5F5; width: 100%; padding: 5px; max-width: 1200px;">
+    <tr>
+        <td align="center" style="text-align: -webkit-center">
+            <table style="width: 80%; background-color: white;">
+                <tr>
+                    <td style="width: 100%; height: fit-content; background-color: #01689B">
+                        <h1 style=" margin: 15px 0 15px 30px; color: white; font-family: Verdana,serif; ">Checking</h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p style="margin: 15px 30px 0 30px">Beste {% if person.name is defined and person.name is not empty %} {{ person.name }}{% endif %},</p>
+                        <p style="margin: 15px 30px 0 30px">U hebt zojuist ingecheckt bij {% if node is defined and node is not empty %} {{ commonground_resource(node.accommodation).name }}{% endif %} op {% if checkin is defined and checkin is not empty %} {{ checkin.dateCreated|date("H:i:s d-m-Y", "Europe/Paris") }} {% endif %}</p>
+                        <br>
+                        <p style="margin: 15px 30px 0 30px">Met vriendelijke groet,<br>Het checking team</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
