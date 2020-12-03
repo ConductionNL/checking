@@ -35,11 +35,11 @@ class MailingService
      * @param string $sender email of the sender.
      * @param string $receiver email of the receiver.
      * @param array $data array used to render the template with twig.
-     * @param array $subject subject of the email.
+     * @param string $subject subject of the email.
      *
      * @return array|false created message object.
      */
-    public function sendMail($template, $sender, $receiver, $data, $subject)
+    public function sendMail(string $template, string $sender, string $receiver, array $data, string $subject)
     {
         $message = [];
 

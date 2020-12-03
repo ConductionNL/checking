@@ -29,11 +29,10 @@ class PaymentService
      *
      * @param string $amount amount of money that needs to be paid.
      * @param string $redirectUrl url where mollie needs to send user after payment.
-
      *
      * @return array|false array containing redirectUrl (where we send the user to) and id (which we use in processPayment function).
      */
-    public function createPaymentLink($amount, $redirectUrl)
+    public function createPaymentLink(string $amount, string $redirectUrl)
     {
         $body = [
             'amount'      => [
@@ -78,11 +77,10 @@ class PaymentService
      *
      * @param string $id id provided by mollie.
      * @param string $organization id of the organization used for the account.
-
      *
      * @return string|false string containing info about payment.
      */
-    public function processPayment($id, $organization)
+    public function processPayment(string $id, string $organization)
     {
         $headers = [
             'Authorization' => 'Bearer test_H8PeFq62HpNFPQmer4GuEUWupMwSqQ',
