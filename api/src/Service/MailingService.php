@@ -5,7 +5,6 @@
 namespace App\Service;
 
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
-use Conduction\IdVaultBundle\IdVaultBundle;
 use Conduction\IdVaultBundle\Service\IdVaultService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Security;
