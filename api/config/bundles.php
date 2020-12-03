@@ -22,4 +22,5 @@ return [
     Conduction\SpacesBundle\SpacesBundle::class                          => ['all' => true],
     Conduction\ListyBundle\ListyBundle::class                            => ['all' => true],
     Conduction\BalanceBundle\BalanceBundle::class                        => ['all' => true],
+    Conduction\IdVaultBundle\IdVaultBundle::class                        => ['all' => true],
 ];
