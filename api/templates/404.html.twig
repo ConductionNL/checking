@@ -2,22 +2,19 @@
 
 {% block container %}
 
-    <article>
-        <div class="row">
-        <div class="col-xl-8 col-xl-offset-2 col-lg-10 col-lg-offset-1">
-            <div class="content-background">
-                <div class="content">
-                    <h1>Error <span style="color: red">404</span>: Pagina niet gevonden</h1>
-                    <p style="">
-                        Het lijkt erop dat de pagina die u zoekt nog niet bestaat.
-                        Laat ons dit weten en dan zullen wij dit zo snel mogelijk voor u oplossen.
-                        Onze excuses voor het ongemak.
-                    </p>
+    <section class="min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center text-dark d-flex align-items-center justify-content-center">
+                    <div><a href="{{ path('app_default_index') }}"><img class="img-fluid w-50" src="../public/images/404.svg" alt="girl illustration"></a>
+                        <h1 class="mt-4">404 Page <span class="font-weight-bolder text-primary">not found</span></h1>
+                        <p class="lead my-4 px-lg-11">{{'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.'|trans|capitalize}}</p>
+                        <a class="btn btn-secondary animate-hover" href="{{ path('app_default_index') }}"><span class="fas fa-chevron-left mr-3 pl-2 animate-left-3"></span>Go back home</a>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
-    </article>
+    </section>
 
 
 {% endblock %}

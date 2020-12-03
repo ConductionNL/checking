@@ -4,12 +4,15 @@
 
 namespace App\Controller;
 
+use App\Service\PaymentService;
+use Conduction\BalanceBundle\Service\BalanceService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -71,6 +74,10 @@ class DashboardController extends AbstractController
                     $colors = $node['qrConfig']['background_color'];
                     $node['backgroundColor'] = sprintf('#%02x%02x%02x', $colors['r'], $colors['g'], $colors['b']);
                 }
+
+                if (isset($node['qrConfig']['logo_path'])) {
+                    $node['logo'] = $node['qrConfig']['logo_path'];
+                }
             }
         }
 
@@ -107,8 +114,16 @@ class DashboardController extends AbstractController
             $place['description'] = $resource['description'];
             $place['publicAccess'] = true;
             $place['smokingAllowed'] = false;
-            $place['openingTime'] = '09:00';
-            $place['closingTime'] = '22:00';
+            if (key_exists('openingTime', $resource) and !empty($resource['openingTime'])) {
+                $place['openingTime'] = $resource['openingTime'];
+                // Check if openingTime is set and if so, unset it in the resource used for creating a node
+                unset($resource['openingTime']);
+            }
+            if (key_exists('closingTime', $resource) and !empty($resource['closingTime'])) {
+                $place['closingTime'] = $resource['closingTime'];
+                // Check if closingTime is set and if so, unset it in the resource used for creating a node
+                unset($resource['closingTime']);
+            }
             if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
                 $place['accommodations'] = ['/accommodations/'.$accommodation['id']];
             }
@@ -134,6 +149,13 @@ class DashboardController extends AbstractController
                 $resource['qrConfig']['foreground_color'] = ['r'=>$r, 'g'=>$g, 'b'=>$b];
                 list($r, $g, $b) = sscanf($resource['qrConfig']['background_color'], '#%02x%02x%02x');
                 $resource['qrConfig']['background_color'] = ['r'=>$r, 'g'=>$g, 'b'=>$b];
+            }
+
+            if (isset($_FILES['logo']) && $_FILES['logo']['error'] !== 4) {
+                $path = $_FILES['logo']['tmp_name'];
+                $type = filetype($_FILES['logo']['tmp_name']);
+                $data = file_get_contents($path);
+                $resource['qrConfig']['logo_path'] = 'data:image/'.$type.';base64,'.base64_encode($data);
             }
 
             // Save the (new or already existing) node
@@ -201,6 +223,14 @@ class DashboardController extends AbstractController
                 $wrc['style']['favicon']['base64'] = 'data:image/'.$type.';base64,'.base64_encode($data);
             }
 
+            $users = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->getUser()->getUsername()])['hydra:member'];
+            if (count($users) > 0) {
+                $userUrl = $commonGroundService->cleanUrl(['component' => 'uc', 'type' => 'users', 'id' => $users[0]['id']]);
+                $wrc['privacyContact'] = $userUrl;
+                $wrc['technicalContact'] = $userUrl;
+                $wrc['administrationContact'] = $userUrl;
+            }
+
             $wrc = $commonGroundService->createResource($wrc, ['component' => 'wrc', 'type' => 'organizations']);
 
             $userGroup = [];
@@ -253,11 +283,27 @@ class DashboardController extends AbstractController
      * @Route("/organizations/{id}")
      * @Template
      */
-    public function organizationAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params, $id)
+    public function organizationAction(CommonGroundService $commonGroundService, BalanceService $balanceService, Request $request, ParameterBagInterface $params, $id)
     {
         $variables = [];
 
         $variables['organization'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'organizations', 'id' => $id]);
+
+        $organizationUrl = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $id]);
+
+        $account = $balanceService->getAcount($organizationUrl);
+
+        if ($account !== false) {
+            $account['balance'] = $balanceService->getBalance($organizationUrl);
+            $variables['account'] = $account;
+            $variables['payments'] = $commonGroundService->getResourceList(['component' => 'bare', 'type' => 'payments'], ['acount.id' => $account['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+        }
+
+        $groups = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'groups'], ['organization' => $organizationUrl])['hydra:member'];
+        if (count($groups) > 0) {
+            $group = $groups[0];
+            $variables['users'] = $group['users'];
+        }
         if (key_exists('contact', $variables['organization']) and !empty($variables['organization']['contact'])) {
             $variables['cc'] = $commonGroundService->getResource($variables['organization']['contact']);
         }
@@ -286,6 +332,9 @@ class DashboardController extends AbstractController
             $organization = $variables['organization'];
             $organization['name'] = $name;
             $organization['description'] = $request->get('description');
+            $organization['privacyContact'] = $request->get('privacyContact');
+            $organization['administrationContact'] = $request->get('administrationContact');
+            $organization['technicalContact'] = $request->get('technicalContact');
             if (key_exists('style', $organization) and !empty($organization['style'])) {
                 $organization['style'] = '/styles/'.$organization['style']['id'];
             }
@@ -350,6 +399,52 @@ class DashboardController extends AbstractController
     }
 
     /**
+     * @Route("/transactions/{organization}")
+     * @Template
+     */
+    public function TransactionsAction(Session $session, CommonGroundService $commonGroundService, BalanceService $balanceService, PaymentService $paymentService, Request $request, ParameterBagInterface $params, $organization)
+    {
+        // On an index route we might want to filter based on user input
+        $variables = [];
+
+        $organization = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization]);
+        $organizationUrl = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
+        $variables['organization'] = $organization;
+
+        if ($session->get('mollieCode')) {
+            $mollieCode = $session->get('mollieCode');
+            $session->remove('mollieCode');
+            $result = $balanceService->processMolliePayment($mollieCode, $organizationUrl);
+
+            if ($result['status'] == 'paid') {
+                $variables['message'] = 'Payment processed successfully! <br> €'.$result['amount'].'.00 was added to your balance. <br>  Invoice with reference: '.$result['reference'].' is created.';
+            } else {
+                $variables['message'] = 'Something went wrong, the status of the payment is: '.$result['status'].' please try again.';
+            }
+        }
+
+        $account = $balanceService->getAcount($organizationUrl);
+
+        if ($account !== false) {
+            $account['balance'] = $balanceService->getBalance($organizationUrl);
+            $variables['account'] = $account;
+            $variables['payments'] = $commonGroundService->getResourceList(['component' => 'bare', 'type' => 'payments'], ['acount.id' => $account['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+        }
+
+        if ($request->isMethod('POST')) {
+            $amount = $request->get('amount') * 1.21;
+            $amount = (number_format($amount, 2));
+
+            $payment = $balanceService->createMolliePayment($amount, $request->get('redirectUrl'));
+            $session->set('mollieCode', $payment['id']);
+
+            return $this->redirect($payment['redirectUrl']);
+        }
+
+        return $variables;
+    }
+
+    /**
      * @Route("/checkins")
      * @Template
      */
@@ -363,6 +458,30 @@ class DashboardController extends AbstractController
         $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
 
         $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/invoices")
+     * @Template
+     */
+    public function InvoicesAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
+    {
+        $variables = [];
+
+        return $variables;
+    }
+
+    /*@todo make this refer to a actual invoice instead of mock template*/
+
+    /**
+     * @Route("/invoice")
+     * @Template
+     */
+    public function InvoiceAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
+    {
+        $variables = [];
 
         return $variables;
     }
