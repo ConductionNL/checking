@@ -155,7 +155,7 @@ class DefaultController extends AbstractController
         $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'id-vault', 'application' => $params->get('app_id')])['hydra:member'];
         $provider = $providers[0];
 
-        $redirect = $request->getHost();
+        $redirect = $request->getUri();
 
         if (strpos($redirect, '?') == true) {
             $redirect = substr($redirect, 0, strpos($redirect, '?'));
