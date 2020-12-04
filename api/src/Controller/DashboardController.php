@@ -475,7 +475,7 @@ class DashboardController extends AbstractController
         return $variables;
     }
 
-    /*@todo make this refer to a actual invoice instead of mock template*/
+
 
     /**
      * @Route("/invoice/{id}")
@@ -489,6 +489,8 @@ class DashboardController extends AbstractController
         $variables['organization'] = $commonGroundService->getResource($variables['invoice']['targetOrganization']);
         $variables['organization']['contact'] = $commonGroundService->getResource($variables['organization']['contact']);
         $variables['style'] = $variables['organization']['style'];
+
+        /*@todo make payment process*/
 
         return $variables;
     }
