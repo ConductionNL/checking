@@ -166,6 +166,7 @@ class DefaultController extends AbstractController
             if ($params->get('app_env') == 'dev') {
                 $dev = 'dev.';
             }
+
             return $this->redirect('http://'.$dev.'id-vault.com/sendlist/authorize?client_id='.$provider['configuration']['app_id'].'&send_lists=98e72bec-e632-4b61-ba0f-53452ffe5ed9&redirect_uri='.$redirect);
         } else {
             return $this->render('500.html.twig');
