@@ -17,13 +17,23 @@
                     </div>
                     <div class="card border-light p-4 p-md-5 position-relative">
                         <div class="d-flex justify-content-between pb-4 pb-md-5 mb-4 mb-md-5 border-bottom border-light">
-                            <img src="../../assets/img/brand/dark.svg" class="d-none d-lg-block" alt="Spaces Logo" height="30">
-                            <div><h4>Spaces LLC.</h4>
+                            <img src="{{ style.favicon.base64 }}" class="d-none d-lg-block" alt="Spaces Logo" height="200">
+                            <div><h4>{{ invoice.name }}</h4>
                                 <ul class="list-group simple-list">
-                                    <li class="list-group-item font-weight-norma pl-0 py-1">112 Washington Square</li>
-                                    <li class="list-group-item font-weight-normal pl-0 py-1">New York, USA</li>
-                                    <li class="list-group-item font-weight-normal pl-0 py-1"><a
-                                            class="font-weight-bold text-primary" href="#">company@themesberg.com</a>
+                                    <li class="list-group-item font-weight-norma pl-0 py-1">
+                                      {% if organization.contact.adresses[0].houseNumber is defined and organization.contact.adresses[0].houseNumber is not empty %}
+                                        {{ organization.contact.adresses[0].houseNumber }} {{ organization.contact.adresses[0].street }}
+                                        {% else %} {{ 'adres not found'|trans|capitalize }}
+                                        {% endif %}
+                                    </li>
+                                    <li class="list-group-item font-weight-normal pl-0 py-1">{{ organization.contact.adresses[0].region }}, {{ organization.contact.adresses[0].country }}</li>
+                                    <li class="list-group-item font-weight-normal pl-0 py-1">
+                                        <a class="font-weight-bold text-primary" href="#">
+                                            {% if organization.contact.emails[0] is defined and organization.contact.emails[0] is not empty %}
+                                                {{ organization.contact.emails[0].email }}{% else %}
+                                            {{ 'no email found'|trans|capitalize }}
+                                            {% endif %}
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -36,22 +46,32 @@
                             <div class="col-sm"><h5>Client Information:</h5>
                                 <div>
                                     <ul class="list-group simple-list">
-                                        <li class="list-group-item font-weight-norma pl-0 py-1">Henry M. Pike</li>
-                                        <li class="list-group-item font-weight-norma pl-0 py-1">Themesberg LLC</li>
-                                        <li class="list-group-item font-weight-norma pl-0 py-1">311 West Mechanic Lane Middletown, NY 10940</li>
                                         <li class="list-group-item font-weight-norma pl-0 py-1">
-                                            <a class="font-weight-bold text-primary" href="#">name@company.com</a></li>
+                                            {% if organization.contact.adresses[0].houseNumber is defined and organization.contact.adresses[0].houseNumber is not empty %}
+                                                {{ organization.contact.adresses[0].houseNumber }} {{ organization.contact.adresses[0].street }}
+                                            {% else %} {{ 'adres not found'|trans|capitalize }}
+                                            {% endif %}
+                                        </li>
+                                        <li class="list-group-item font-weight-normal pl-0 py-1">{{ organization.contact.adresses[0].region }}, {{ organization.contact.adresses[0].country }}</li>
+                                        <li class="list-group-item font-weight-normal pl-0 py-1">
+                                            <a class="font-weight-bold text-primary" href="#">
+                                                {% if organization.contact.emails[0] is defined and organization.contact.emails[0] is not empty %}
+                                                    {{ organization.contact.emails[0].email }}{% else %}
+                                                    {{ 'no email found'|trans|capitalize }}
+                                                {% endif %}
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-sm col-lg-4">
+                            <div class="col-sm col-lg-7">
                                 <dl class="row text-sm-right">
                                     <dt class="col-6"><strong>Invoice No.</strong></dt>
                                     <dd class="col-6">00123</dd>
                                     <dt class="col-6"><strong>Date Issued:</strong></dt>
-                                    <dd class="col-6">31/03/2020</dd>
+                                    <dd class="col-6">{{ invoice.dateCreated|date("d-m-Y") }}</dd>
                                     <dt class="col-6"><strong>Date Due:</strong></dt>
-                                    <dd class="col-6">30/04/2020</dd>
+                                    <dd class="col-6">dueDate</dd>
                                 </dl>
                             </div>
                         </div>
@@ -69,34 +89,15 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        {% for item in invoice.items %}
                                         <tr>
-                                            <th scope="row" class="text-left font-weight-bold h6">Origin License</th>
-                                            <td>Extended License</td>
-                                            <td>999,00</td>
-                                            <td>1</td>
-                                            <td>999,00</td>
+                                            <th scope="row" class="text-left font-weight-bold h6">{{ item.name }}</th>
+                                            <td>{{item.description}}</td>
+                                            <td>{{ item.price }}</td>
+                                            <td>{{ item.quantity }}</td>
+                                            <td>{{ item.price * item.quantity }}</td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row" class="text-left font-weight-bold h6">Custom Services</th>
-                                            <td>Instalation and Customization</td>
-                                            <td>$150,00</td>
-                                            <td>20</td>
-                                            <td>3000,00</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row" class="text-left font-weight-bold h6">Hosting</th>
-                                            <td>1 year subcription</td>
-                                            <td>$499,00</td>
-                                            <td>1</td>
-                                            <td>$499,00</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row" class="text-left font-weight-bold h6">Gold Support</th>
-                                            <td>1 year subcription 24/7</td>
-                                            <td>$3.999,00</td>
-                                            <td>1</td>
-                                            <td>$3.999,00</td>
-                                        </tr>
+                                        {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
@@ -105,26 +106,26 @@
                                         <table class="table table-clear">
                                             <tbody>
                                             <tr>
-                                                <td class="left"><strong>Subtotal</strong></td>
-                                                <td class="right">$8.497,00</td>
+                                                <td class="left"><strong>{{'Subtotal'|trans|capitalize}}</strong></td>
+                                                <td class="right">{{ invoice.price }}</td>
                                             </tr>
                                             <tr>
-                                                <td class="left"><strong>Discount (20%)</strong></td>
-                                                <td class="right">$1,699,40</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="left"><strong>VAT (10%)</strong></td>
-                                                <td class="right">$679,76</td>
+                                                <td class="left"><strong>{{'VAT'|trans}} (21%)</strong></td>
+                                                {% if invoice.taxes is defined and invoice.taxes is not empty %}
+                                                {% for taxes in invoice.taxes %}
+                                                <td class="right">{{ taxes }}</td>
+                                                {% endfor %}
+                                                {% endif %}
                                             </tr>
                                             <tr>
                                                 <td class="left"><strong>Total</strong></td>
-                                                <td class="right"><strong>$7.477,36</strong></td>
+                                                <td class="right"><strong>$1230</strong></td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                                <h4>Payments to:</h4>
+                                <h4>Payment</h4>
                                 <span>payment@company.com</span>
                             </div>
                         </div>
