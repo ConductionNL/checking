@@ -72,6 +72,6 @@ class OrganizationService
 
         $this->balanceService->createAccount($organizationUrl, 1000);
 
-        $this->mailingService->sendMail('mails/welcome_organization.html.twig', 'no-reply@conduction.nl', $this->security->getUser()->getUsername(), $data, 'Welcome');
+        $this->mailingService->sendMail('mails/welcome_organization.html.twig', 'no-reply@conduction.nl', 'gino@conduction.nl', 'Welcome', $data);
     }
 }
