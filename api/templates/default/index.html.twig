@@ -109,4 +109,14 @@
 
     </script>
 
+    {% include 'default/modals/newsletter_message_modal.html.twig' %}
+
+    <script>
+        {% if query.message is defined %}
+        $(window).on('load', function(){
+            $('#messageModal').modal('show');
+        });
+        {% endif %}
+    </script>
+
 {% endblock %}

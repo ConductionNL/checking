@@ -1,0 +1,20 @@
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{ 'message'|trans|capitalize }}</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                {% if query.errorMessage is defined %}
+                    <p>{{ query.errorMessage|raw|trans|capitalize }}</p>
+                {% elseif query.message is defined %}
+                    <p>{{ query.message|raw|trans|capitalize }}</p>
+                {% endif %}
+                <a href="#" onclick="$('#messageModal').modal('hide')" class="btn btn-primary btn-block btn-sm">{{  'oke'|trans|capitalize }}</a>
+            </div>
+        </div>
+    </div>
+</div>

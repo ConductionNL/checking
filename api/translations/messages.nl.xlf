@@ -1713,6 +1713,10 @@
         <source>data request</source>
         <target>data verzoek</target>
       </trans-unit>
+      <trans-unit id="CXk3nwB" resname="GGD Application">
+        <source>GGD Application</source>
+        <target>GGD Aanvraag</target>
+      </trans-unit>
       <trans-unit id="3qcRGoQ" resname="information">
         <source>information</source>
         <target>informatie</target>
@@ -3356,6 +3360,10 @@
       <trans-unit id="3W9GX2g" resname="newsletter">
         <source>newsletter</source>
         <target>nieuwsbrief</target>
+      </trans-unit>
+      <trans-unit id="C-iAUwQ" resname="you have successfully signed up for the newsletter!">
+        <source>you have successfully signed up for the newsletter!</source>
+        <target>u heeft zich succesvol aangemeld voor de nieuwsbrief!</target>
       </trans-unit>
       <trans-unit id="wvyiqjq" resname="copyright">
         <source>copyright</source>
