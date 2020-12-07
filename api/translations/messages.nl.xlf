@@ -1349,6 +1349,10 @@
         <source>subscribe</source>
         <target>abonneren</target>
       </trans-unit>
+      <trans-unit id="76-ZBCQ" resname="click here to subscribe to our newsletter!">
+        <source>click here to subscribe to our newsletter!</source>
+        <target>klik hier om u aan te melden voor onze nieuwsbrief!</target>
+      </trans-unit>
       <trans-unit id="bCoDPGD" resname="iDin">
         <source>iDin</source>
         <target>iDin</target>
