@@ -414,7 +414,13 @@ class DashboardController extends AbstractController
         if ($session->get('mollieCode')) {
             $mollieCode = $session->get('mollieCode');
             $session->remove('mollieCode');
-            $variables['message'] = $paymentService->processPayment($mollieCode, $organization);
+            $result = $balanceService->processMolliePayment($mollieCode, $organizationUrl);
+
+            if ($result['status'] == 'paid') {
+                $variables['message'] = 'Payment processed successfully! <br> €'.$result['amount'].'.00 was added to your balance. <br>  Invoice with reference: '.$result['reference'].' is created.';
+            } else {
+                $variables['message'] = 'Something went wrong, the status of the payment is: '.$result['status'].' please try again.';
+            }
         }
 
         $account = $balanceService->getAcount($organizationUrl);
@@ -429,7 +435,7 @@ class DashboardController extends AbstractController
             $amount = $request->get('amount') * 1.21;
             $amount = (number_format($amount, 2));
 
-            $payment = $paymentService->createPaymentLink($amount, $request->get('redirectUrl'));
+            $payment = $balanceService->createMolliePayment($amount, $request->get('redirectUrl'));
             $session->set('mollieCode', $payment['id']);
 
             return $this->redirect($payment['redirectUrl']);
@@ -464,18 +470,27 @@ class DashboardController extends AbstractController
     {
         $variables = [];
 
+        $variables['invoices'] = $commonGroundService->getResourceList(['component' => 'bc', 'type' => 'invoices'])['hydra:member'];
+
         return $variables;
     }
 
-    /*@todo make this refer to a actual invoice instead of mock template*/
+
 
     /**
-     * @Route("/invoice")
+     * @Route("/invoice/{id}")
      * @Template
      */
-    public function InvoiceAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
+    public function InvoiceAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params, $id)
     {
         $variables = [];
+
+        $variables['invoice'] = $commonGroundService->getResource(['component' => 'bc', 'type' => 'invoices', 'id' => $id]);
+        $variables['organization'] = $commonGroundService->getResource($variables['invoice']['targetOrganization']);
+        $variables['organization']['contact'] = $commonGroundService->getResource($variables['organization']['contact']);
+        $variables['style'] = $variables['organization']['style'];
+
+        /*@todo make payment process*/
 
         return $variables;
     }

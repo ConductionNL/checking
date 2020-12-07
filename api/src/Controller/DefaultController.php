@@ -8,7 +8,9 @@ use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -138,5 +140,31 @@ class DefaultController extends AbstractController
         $variables = [];
 
         return $variables;
+    }
+
+    /**
+     * @Route("/newsletter")
+     * @Template
+     */
+    public function newsletterAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        // TODO: use email used in form to subscribe to the newsletter?
+
+        $session->set('backUrl', $request->query->get('backUrl'));
+
+        $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'id-vault', 'application' => $params->get('app_id')])['hydra:member'];
+        $provider = $providers[0];
+
+        $redirect = $request->getUri();
+
+        if (strpos($redirect, '?') == true) {
+            $redirect = substr($redirect, 0, strpos($redirect, '?'));
+        }
+
+        if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
+            return $this->redirect('http://id-vault.com/sendlist/authorize?client_id='.$provider['configuration']['app_id'].'&send_lists=98e72bec-e632-4b61-ba0f-53452ffe5ed9&redirect_uri='.$redirect);
+        } else {
+            return $this->render('500.html.twig');
+        }
     }
 }
