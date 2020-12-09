@@ -46,12 +46,8 @@
             </div>
             <div class="col-6 col-xl-3 mb-5 mb-xl-0">
                 <span class="h5">{{ 'newsletter'|trans|capitalize }}</span>
+                <p>{{ 'click here to subscribe to our newsletter!'|trans|capitalize }}</p>
                 <form action="{{ path('app_default_newsletter') }}">
-
-                    <div class="form-group">
-                        <label style="color: white" for="email">{{ 'e-mail'|trans|capitalize }}</label>
-                        <input required type="email" value="" name="EMAIL" class="form-control" id="EMAIL">
-                    </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success">{{ 'subscribe'|trans|capitalize }}</button>
                     </div>

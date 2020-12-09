@@ -12,6 +12,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * The Procces test handles any calls that have not been picked up by another test, and wel try to handle the slug based against the wrc.
@@ -155,14 +156,15 @@ class DefaultController extends AbstractController
         $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'id-vault', 'application' => $params->get('app_id')])['hydra:member'];
         $provider = $providers[0];
 
-        $redirect = $request->getUri();
-
-        if (strpos($redirect, '?') == true) {
-            $redirect = substr($redirect, 0, strpos($redirect, '?'));
-        }
+        $redirect = $this->generateUrl('app_default_index', ['message' => 'you have successfully signed up for the newsletter!'], UrlGeneratorInterface::ABSOLUTE_URL);
 
         if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
-            return $this->redirect('http://id-vault.com/sendlist/authorize?client_id='.$provider['configuration']['app_id'].'&send_lists=98e72bec-e632-4b61-ba0f-53452ffe5ed9&redirect_uri='.$redirect);
+            $dev = '';
+            if ($params->get('app_env') == 'dev') {
+                $dev = 'dev.';
+            }
+
+            return $this->redirect('http://'.$dev.'id-vault.com/sendlist/authorize?client_id='.$provider['configuration']['app_id'].'&send_lists=98e72bec-e632-4b61-ba0f-53452ffe5ed9&redirect_uri='.$redirect);
         } else {
             return $this->render('500.html.twig');
         }

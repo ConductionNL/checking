@@ -470,18 +470,25 @@ class DashboardController extends AbstractController
     {
         $variables = [];
 
+        $variables['invoices'] = $commonGroundService->getResourceList(['component' => 'bc', 'type' => 'invoices'])['hydra:member'];
+
         return $variables;
     }
 
-    /*@todo make this refer to a actual invoice instead of mock template*/
-
     /**
-     * @Route("/invoice")
+     * @Route("/invoice/{id}")
      * @Template
      */
-    public function InvoiceAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
+    public function InvoiceAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params, $id)
     {
         $variables = [];
+
+        $variables['invoice'] = $commonGroundService->getResource(['component' => 'bc', 'type' => 'invoices', 'id' => $id]);
+        $variables['organization'] = $commonGroundService->getResource($variables['invoice']['targetOrganization']);
+        $variables['organization']['contact'] = $commonGroundService->getResource($variables['organization']['contact']);
+        $variables['style'] = $variables['organization']['style'];
+
+        /*@todo make payment process*/
 
         return $variables;
     }
