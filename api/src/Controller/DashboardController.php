@@ -475,8 +475,6 @@ class DashboardController extends AbstractController
         return $variables;
     }
 
-
-
     /**
      * @Route("/invoice/{id}")
      * @Template

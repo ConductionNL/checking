@@ -86,7 +86,7 @@ class CheckinService
         $data['node'] = $node;
         $data['checkin'] = $checkin;
 
-        $this->mailingService->sendMail('mails/new_checkin.html.twig', 'no-reply@conduction.nl', $this->security->getUser()->getUsername(), $data, 'New Checkin');
+        $this->mailingService->sendMail('mails/new_checkin.html.twig', 'no-reply@conduction.nl', $this->security->getUser()->getUsername(), 'New Checkin', $data);
 
         $results = $this->processCheckin($checkin);
         // Do something with the $results?
