@@ -149,8 +149,6 @@ class DefaultController extends AbstractController
      */
     public function newsletterAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        // TODO: use email used in form to subscribe to the newsletter?
-
         $session->set('backUrl', $request->query->get('backUrl'));
 
         $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'id-vault', 'application' => $params->get('app_id')])['hydra:member'];
