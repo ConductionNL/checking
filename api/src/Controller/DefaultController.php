@@ -157,12 +157,7 @@ class DefaultController extends AbstractController
         $redirect = $this->generateUrl('app_default_index', ['message' => 'you have successfully signed up for the newsletter!'], UrlGeneratorInterface::ABSOLUTE_URL);
 
         if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
-            $dev = '';
-            if ($params->get('app_env') == 'dev') {
-                $dev = 'dev.';
-            }
-
-            return $this->redirect('http://'.$dev.'id-vault.com/sendlist/authorize?client_id='.$provider['configuration']['app_id'].'&send_lists=98e72bec-e632-4b61-ba0f-53452ffe5ed9&redirect_uri='.$redirect);
+            return $this->redirect('http://id-vault.com/sendlist/authorize?client_id='.$provider['configuration']['app_id'].'&send_lists=a6f37e4b-bc79-4a0d-96a7-92fbd5e4a46c&redirect_uri='.$redirect);
         } else {
             return $this->render('500.html.twig');
         }
