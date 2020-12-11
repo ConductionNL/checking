@@ -48,6 +48,16 @@ class DashboardController extends AbstractController
 
         $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl])['hydra:member'];
 
+        if ($request->isMethod('POST') && $request->get('ggdApplication')) {
+            $ggdRequest = $request->request->all();
+
+            // Get correct data in this period
+            // use $ggdRequest['startPeriod'] & $ggdRequest['endPeriod']
+
+            // Sent info to ggd contact?
+            // use $ggdRequest['email']
+        }
+
         return $variables;
     }
 

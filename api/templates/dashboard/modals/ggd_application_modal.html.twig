@@ -1,0 +1,73 @@
+<div class="modal fade" id="ggdApplicationModal" tabindex="-1" role="dialog" aria-labelledby="ggdApplicationModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{ 'GGD Application'|trans }}</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ path('app_dashboard_index') }}" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-6">
+
+                            <!-- Start period -->
+                            <div class="form-group">
+                                <label for="startPeriod">{{ 'start period'|trans|capitalize }} <span class="text-danger">*</span></label>
+                                <input
+                                    class="form-control"
+                                    id="startPeriod"
+                                    type="datetime-local"
+                                    max="{{ "now"|date("Y-m-d\\TH:i") }}"
+                                    placeholder="format jaar-maand-dag"
+                                    name="startPeriod"
+                                    required
+                                >
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+
+                            <!-- End period -->
+                            <div class="form-group">
+                                <label for="endPeriod">{{ 'end period'|trans|capitalize }} <span class="text-danger">*</span></label>
+                                <a onclick="setMinEndPeriod()">
+                                    <input
+                                        class="form-control"
+                                        id="endPeriod"
+                                        type="datetime-local"
+                                        max="{{ "now"|date("Y-m-d\\TH:i") }}"
+                                        placeholder="format jaar-maand-dag"
+                                        name="endPeriod"
+                                        required
+                                    >
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- GGD Contact -->
+                    <div class="form-group">
+                        <label for="description">{{ 'GGD Contact'|trans }} <span style="color: red; font-weight: bold">*</span></label>
+                        <input class="form-control" id="email" type="email" placeholder="{{ 'example@company.com'|trans }}" required>
+                    </div>
+
+                    <!-- Submit -->
+                    <button class="btn btn-block btn-primary mt-3 lift">
+                        {{ 'send request'|trans|capitalize }}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function setMinEndPeriod() {
+        var startPeriod = document.getElementById('startPeriod');
+        var endPeriod = document.getElementById('endPeriod');
+        endPeriod.setAttribute("min", startPeriod.value);
+    }
+</script>
