@@ -43,10 +43,68 @@ class DashboardController extends AbstractController
         $variables = [];
 
         $person = $commonGroundService->getResource($this->getUser()->getPerson());
-
         $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
 
         $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl])['hydra:member'];
+
+        $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $organization['id']])['hydra:member'];
+
+        if ($request->isMethod('POST') && $request->get('ggdApplication')) {
+            // Get the correct node
+            $node = $commonGroundService->getResource(['component' => 'chin', 'type' => 'nodes', 'id' => $request->get('nodeId')]);
+
+            // Get all checkins on this node
+            $checkins = $commonGroundService->getResourceList(['component'=>'chin', 'type'=>'checkins'], ['node.accommodation'=>$node['accommodation']])['hydra:member'];
+
+            // Check if there are any checkins on this node
+            if (count($checkins) > 0) {
+                // If so, get all contacts of the checkins in the given period
+                $contacts = [];
+
+                // Get/Set startPeriod
+                if (!empty($request->get('startPeriod'))) {
+                    $startPeriod = new \DateTime($request->get('startPeriod', new \DateTimeZone('Europe/Paris')));
+                } else {
+                    $startPeriod = new \DateTime('now');
+                    $startPeriod->sub(new \DateInterval('P10Y'));
+                }
+
+                // Get/Set endPeriod
+                if (!empty($request->get('endPeriod'))) {
+                    $endPeriod = new \DateTime($request->get('endPeriod'), new \DateTimeZone('Europe/Paris'));
+                } else {
+                    $endPeriod = new \DateTime('now');
+                }
+
+                // Loop through all checkins
+                foreach ($checkins as $checkin) {
+                    $dateCheckedOut = $dateCreated = new \DateTime($checkin['dateCreated']);
+                    if (isset($checkin['$dateCheckedOut'])) {
+                        $dateCheckedOut = new \DateTime($checkin['$dateCheckedOut']);
+                    }
+
+                    // if dateCreated or dateCheckedOut is in the given period add the contact of this checkin
+                    if (($dateCreated > $startPeriod and $dateCreated < $endPeriod) or
+                        ($dateCheckedOut > $startPeriod and $dateCheckedOut < $endPeriod)) {
+                        array_push($contacts, $checkin['person']);
+                    }
+                }
+
+                // TODO: Sent info to ggd contact? do something with these contacts...
+                // use $request->get('email') // for ggd contact info
+
+                if (count($contacts) == 1) {
+                    $this->addFlash('success', 'Found 1 contact');
+                } else {
+                    $this->addFlash('success', 'Found '.count($contacts).' contacts');
+                }
+            } else {
+                $this->addFlash('warning', 'There are no checkins on this node: '.$node['name']);
+            }
+
+            return $this->redirect($this->generateUrl('app_dashboard_index'));
+        }
 
         return $variables;
     }
