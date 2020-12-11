@@ -58,12 +58,12 @@ class DashboardController extends AbstractController
             $checkins = $commonGroundService->getResourceList(['component'=>'chin', 'type'=>'checkins'], ['node.accommodation'=>$node['accommodation']])['hydra:member'];
 
             // Check if there are any checkins on this node
-            if (count($checkins) > 0 ) {
+            if (count($checkins) > 0) {
                 // If so, get all contacts of the checkins in the given period
                 $contacts = [];
 
                 // Get/Set startPeriod
-                if(!empty($request->get('startPeriod'))) {
+                if (!empty($request->get('startPeriod'))) {
                     $startPeriod = new \DateTime($request->get('startPeriod', new \DateTimeZone('Europe/Paris')));
                 } else {
                     $startPeriod = new \DateTime('now');
@@ -71,7 +71,7 @@ class DashboardController extends AbstractController
                 }
 
                 // Get/Set endPeriod
-                if(!empty($request->get('endPeriod'))) {
+                if (!empty($request->get('endPeriod'))) {
                     $endPeriod = new \DateTime($request->get('endPeriod'), new \DateTimeZone('Europe/Paris'));
                 } else {
                     $endPeriod = new \DateTime('now');
