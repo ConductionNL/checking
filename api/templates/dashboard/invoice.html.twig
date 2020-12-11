@@ -1,11 +1,17 @@
 {% extends '/dashboard/dashboard.html.twig' %}
 
-{% block content %}
+{% block dashboard %}
     <section class="section bg-soft section-lg pt-8">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-10">
                     <div class="card shadow-soft border-light p-4 p-md-5 position-relative">
+                        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between mb-4">
+                            <a href="{{ path('app_dashboard_invoices') }}" class="mb-4 mb-lg-0">
+                                <span class="icon icon-xs"><span class="fas fa-chevron-left mr-2"></span></span>
+                                {{'Back to all invoices'|trans|capitalize}}
+                            </a>
+                        </div>
                         <div class="mb-6 d-flex align-items-center justify-content-center">
                             <h2 class="h1 mb-0">{{ 'invoice details'|trans|capitalize }}</h2>
                             <span class="badge badge-xl badge-success ml-2">{{ invoice.name }}</span>
@@ -15,9 +21,9 @@
                                 <dl class="row text-sm-left">
                                     <dt class="col-6"><strong>invoice paid:</strong></dt>
                                     {% if invoice.paid == false %}
-                                        <dd class="col-6 badge badge-warning">{{'pending payment'|trans|capitalize}}</dd>
+                                        <dd class="col-3 badge badge-warning">{{'pending payment'|trans|capitalize}}</dd>
                                     {% else %}
-                                        <dd class="col-6 badge badge-success">{{'paid'|trans|capitalize}}</dd>
+                                        <dd class="col-3 badge badge-success">{{'paid'|trans|capitalize}}</dd>
                                     {% endif %}
                                     <dt class="col-6"><strong>Date Issued:</strong></dt>
                                     <dd class="col-6">{{ invoice.dateCreated|date("d-m-Y") }}</dd>
