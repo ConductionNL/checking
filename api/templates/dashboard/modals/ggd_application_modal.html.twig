@@ -8,57 +8,71 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ path('app_dashboard_index') }}" method="post" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="col-6">
+                {% if nodes is defined and nodes is not empty %}
+                    <form action="{{ path('app_dashboard_index') }}" method="post" enctype="multipart/form-data">
 
-                            <!-- Start period -->
-                            <div class="form-group">
-                                <label for="startPeriod">{{ 'start period'|trans|capitalize }} <span class="text-danger">*</span></label>
-                                <input
-                                    class="form-control"
-                                    id="startPeriod"
-                                    type="datetime-local"
-                                    max="{{ "now"|date("Y-m-d\\TH:i") }}"
-                                    placeholder="format jaar-maand-dag"
-                                    name="startPeriod"
-                                    required
-                                >
-                            </div>
-
+                        <!-- Node -->
+                        <div class="form-group">
+                            <label for="nodeId">{{ 'code'|trans|capitalize }} <span class="text-danger">*</span></label>
+                            <select class="form-control" name="nodeId" id="nodeId" required>
+                                {% for node in nodes %}
+                                    <option value="{{ node['id'] }}">{{ node.name }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
-                        <div class="col-6">
 
-                            <!-- End period -->
-                            <div class="form-group">
-                                <label for="endPeriod">{{ 'end period'|trans|capitalize }} <span class="text-danger">*</span></label>
-                                <a onclick="setMinEndPeriod()">
+                        <div class="row">
+                            <div class="col-6">
+
+                                <!-- Start period -->
+                                <div class="form-group">
+                                    <label for="startPeriod">{{ 'start period'|trans|capitalize }}</label>
                                     <input
                                         class="form-control"
-                                        id="endPeriod"
+                                        id="startPeriod"
                                         type="datetime-local"
-                                        max="{{ "now"|date("Y-m-d\\TH:i") }}"
+                                        max="{{ "now"|date("Y-m-d\\TH:i", "Europe/Paris") }}"
                                         placeholder="format jaar-maand-dag"
-                                        name="endPeriod"
-                                        required
+                                        name="startPeriod"
                                     >
-                                </a>
+                                </div>
+
                             </div>
+                            <div class="col-6">
 
+                                <!-- End period -->
+                                <div class="form-group">
+                                    <label for="endPeriod">{{ 'end period'|trans|capitalize }}</label>
+                                    <a onclick="setMinEndPeriod()">
+                                        <input
+                                            class="form-control"
+                                            id="endPeriod"
+                                            type="datetime-local"
+                                            max="{{ "now"|date("Y-m-d\\TH:i", "Europe/Paris") }}"
+                                            placeholder="format jaar-maand-dag"
+                                            name="endPeriod"
+                                        >
+                                    </a>
+                                </div>
+
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- GGD Contact -->
-                    <div class="form-group">
-                        <label for="description">{{ 'GGD Contact'|trans }} <span style="color: red; font-weight: bold">*</span></label>
-                        <input class="form-control" id="email" type="email" placeholder="{{ 'example@company.com'|trans }}" required>
-                    </div>
+                        <!-- GGD Contact -->
+                        <div class="form-group">
+                            <label for="description">{{ 'GGD Contact'|trans }} <span style="color: red; font-weight: bold">*</span></label>
+                            <input class="form-control" name="email" id="email" type="email" placeholder="{{ 'example@company.com'|trans }}" required>
+                        </div>
 
-                    <!-- Submit -->
-                    <button class="btn btn-block btn-primary mt-3 lift">
-                        {{ 'send request'|trans|capitalize }}
-                    </button>
-                </form>
+                        <!-- Submit -->
+                        <button class="btn btn-block btn-primary mt-3 lift" name="ggdApplication" value="true" type="submit">
+                            {{ 'send request'|trans|capitalize }}
+                        </button>
+                    </form>
+                {% else %}
+                    <p>{{ 'you do not yet have codes to submit a ggd request for'|trans|capitalize }}</p>
+                    <a href="#" onclick="$('#ggdApplicationModal').modal('hide')" class="btn btn-block btn-primary mt-3 lift">{{  'oke'|trans|capitalize }}</a>
+                {% endif %}
             </div>
         </div>
     </div>

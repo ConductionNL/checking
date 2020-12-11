@@ -1717,6 +1717,10 @@
         <source>GGD Application</source>
         <target>GGD Aanvraag</target>
       </trans-unit>
+      <trans-unit id="uOsF1gC" resname="you do not yet have codes to submit a ggd request for">
+        <source>you do not yet have codes to submit a ggd request for</source>
+        <target>je hebt nog geen codes om een ggd-verzoek voor in te dienen</target>
+      </trans-unit>
       <trans-unit id="3qcRGoQ" resname="information">
         <source>information</source>
         <target>informatie</target>
