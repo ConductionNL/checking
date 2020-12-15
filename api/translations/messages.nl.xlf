@@ -1485,13 +1485,37 @@
         <source>telephone</source>
         <target>telefoon</target>
       </trans-unit>
+      <trans-unit id="E8cxoRB" resname="checkin duration">
+        <source>checkin duration</source>
+        <target>checkin duur</target>
+      </trans-unit>
+      <trans-unit id="0jTqvzf" resname="When customers check-in they are automatically checked out after this duration.">
+        <source>When customers check-in they are automatically checked out after this duration.</source>
+        <target>Wanneer klanten inchecken, worden ze na deze periode automatisch uitgecheckt.</target>
+      </trans-unit>
+      <trans-unit id="zlL2Jrd" resname="checkout time">
+        <source>checkout time</source>
+        <target>check-uit tijd</target>
+      </trans-unit>
+      <trans-unit id="DOOi5n8" resname="Every day at this time all checkins are checked out">
+        <source>Every day at this time all checkins are checked out</source>
+        <target>Elke dag worden op dit tijdstip alle check-ins uitgecheckt</target>
+      </trans-unit>
       <trans-unit id="XWdwnUK" resname="opening time">
         <source>opening time</source>
         <target>openingstijd</target>
       </trans-unit>
+      <trans-unit id="tzra9oY" resname="Customers can only check-in after the opening time.">
+        <source>Customers can only check-in after the opening time.</source>
+        <target>Klanten kunnen alleen inchecken na de openingstijd.</target>
+      </trans-unit>
       <trans-unit id="96czj_6" resname="closing time">
         <source>closing time</source>
         <target>sluitingstijd</target>
+      </trans-unit>
+      <trans-unit id="eZXZfz-" resname="Customers can only check-in before the closing time.">
+        <source>Customers can only check in-before the closing time.</source>
+        <target>Klanten kunnen alleen inchecken voor sluitingstijd.</target>
       </trans-unit>
       <trans-unit id="bse4eIC" resname="public access">
         <source>public access</source>
