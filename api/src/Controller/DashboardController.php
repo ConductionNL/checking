@@ -173,12 +173,16 @@ class DashboardController extends AbstractController
             $place['publicAccess'] = true;
             $place['smokingAllowed'] = false;
             if (key_exists('openingTime', $resource) and !empty($resource['openingTime'])) {
-                $place['openingTime'] = $resource['openingTime'];
+                $openingTime = new \DateTime($resource['openingTime'], new \DateTimeZone('Europe/Paris'));
+                $openingTime->setTimezone(new \DateTimeZone('UTC'));
+                $place['openingTime'] = $openingTime->format('H:i');
                 // Check if openingTime is set and if so, unset it in the resource used for creating a node
                 unset($resource['openingTime']);
             }
             if (key_exists('closingTime', $resource) and !empty($resource['closingTime'])) {
-                $place['closingTime'] = $resource['closingTime'];
+                $closingTime = new \DateTime($resource['closingTime'], new \DateTimeZone('Europe/Paris'));
+                $closingTime->setTimezone(new \DateTimeZone('UTC'));
+                $place['closingTime'] = $closingTime->format('H:i');
                 // Check if closingTime is set and if so, unset it in the resource used for creating a node
                 unset($resource['closingTime']);
             }

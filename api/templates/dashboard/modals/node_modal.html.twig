@@ -98,7 +98,7 @@
                                     id="openingTime"
                                     type="time"
                                     {% if itemAccommodation['place']['openingTime'] is defined and itemAccommodation['place']['openingTime'] is not empty %}
-                                        value="{{ itemAccommodation['place']['openingTime']|date("H:i") }}"
+                                        value="{{ itemAccommodation['place']['openingTime']|date("H:i", "Europe/Paris") }}"
                                     {% else %}
                                         placeholder="format jaar-maand-dag"
                                     {% endif %}
@@ -115,7 +115,7 @@
                                     id="closingTime"
                                     type="time"
                                     {% if itemAccommodation['place']['closingTime'] is defined and itemAccommodation['place']['openingTime'] is not empty %}
-                                        value="{{ itemAccommodation['place']['closingTime']|date("H:i") }}"
+                                        value="{{ itemAccommodation['place']['closingTime']|date("H:i", "Europe/Paris") }}"
                                     {% else %}
                                         placeholder="format jaar-maand-dag"
                                     {% endif %}
