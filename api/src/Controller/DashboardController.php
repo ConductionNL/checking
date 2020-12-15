@@ -101,8 +101,16 @@ class DashboardController extends AbstractController
                     }
                 }
 
+                // Create a cc/person contact with the given GGD Contact info
+                // maybe first check if this contact already exists?
+                $person['givenName'] = $request->get('givenName');
+                $person['familyName'] = $request->get('familyName');
+                $person['emails'][0] = [];
+                $person['emails'][0]['email'] = $request->get('email');
+                $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
+
                 // TODO: Sent info to ggd contact? do something with these contacts...
-                // use $request->get('email') // for ggd contact info
+                // var_dump($contacts);
 
                 if (count($contacts) == 1) {
                     $this->addFlash('success', 'Found 1 contact');
