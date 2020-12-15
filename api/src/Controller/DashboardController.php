@@ -130,8 +130,8 @@ class DashboardController extends AbstractController
         $variables['accommodations'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'accommodations'], ['place.organization' => $variables['organization']['id']])['hydra:member'];
         $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $variables['organization']['id']])['hydra:member'];
 
-        //set rgb values to hex and place them in temp property
         foreach ($variables['nodes'] as &$node) {
+            //set rgb values to hex and place them in temp property
             if (isset($node['qrConfig'])) {
                 if (isset($node['qrConfig']['foreground_color'])) {
                     $colors = $node['qrConfig']['foreground_color'];
@@ -146,6 +146,13 @@ class DashboardController extends AbstractController
                 if (isset($node['qrConfig']['logo_path'])) {
                     $node['logo'] = $node['qrConfig']['logo_path'];
                 }
+            }
+
+            //set node checkinDuration to datetime
+            if (isset($node['checkinDuration'])) {
+                $checkinDuration = new \DateInterval($node['checkinDuration']);
+                $now = new \DateTime('now');
+                $node['checkinDuration'] = $now->setTime($checkinDuration->format('%H'), $checkinDuration->format('%I'))->format('H:i');
             }
         }
 
@@ -228,6 +235,19 @@ class DashboardController extends AbstractController
                 $type = filetype($_FILES['logo']['tmp_name']);
                 $data = file_get_contents($path);
                 $resource['qrConfig']['logo_path'] = 'data:image/'.$type.';base64,'.base64_encode($data);
+            }
+
+            // make sure checkoutTime is set to UTC
+            if (isset($resource['checkoutTime'])) {
+                $checkoutTime = new \DateTime($resource['checkoutTime'], new \DateTimeZone('Europe/Paris'));
+                $checkoutTime->setTimeZone(new \DateTimeZone('UTC'));
+                $resource['checkoutTime'] = $checkoutTime->format('H:i');
+            }
+
+            // set node checkinDuration to dateInterval
+            if (isset($resource['checkinDuration'])) {
+                $checkinDuration = new \DateTime($resource['checkinDuration']);
+                $resource['checkinDuration'] = 'P0Y0M0DT'.$checkinDuration->format('H').'H'.$checkinDuration->format('i').'M0S';
             }
 
             // Save the (new or already existing) node

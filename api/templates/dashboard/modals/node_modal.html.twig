@@ -92,6 +92,51 @@
                     <div class="row" style="margin-bottom: 5px">
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
+                                <div class="d-flex">
+                                    <label class="input__label" for="checkinDuration">{{ 'checkin duration'|trans|capitalize }}</label>
+                                    <a type="button" class="ml-2" data-toggle="tooltip" data-placement="bottom" data-background-color="white" title="{{ 'When customers check-in they are automatically checked out after this duration.'|trans|capitalize }}">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                </div>
+                                <input
+                                    class="form-control"
+                                    id="checkinDuration"
+                                    type="time"
+                                    {% if item.checkinDuration is defined and item.checkinDuration is not empty %}
+                                        value="{{ item.checkinDuration }}"
+                                    {% else %}
+                                        placeholder="format jaar-maand-dag"
+                                    {% endif %}
+                                    name="checkinDuration"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <div class="d-flex">
+                                    <label class="input__label" for="checkoutTime">{{ 'checkout time'|trans|capitalize }}</label>
+                                    <a type="button" class="ml-2" data-toggle="tooltip" data-placement="bottom" data-background-color="white" title="{{ 'Every day at this time all checkins are checked out'|trans|capitalize }}">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                </div>
+                                <input
+                                    class="form-control"
+                                    id="checkoutTime"
+                                    type="time"
+                                    {% if item.checkoutTime is defined and item.checkoutTime is not empty %}
+                                        value="{{ item.checkoutTime|date("H:i", "Europe/Paris") }}"
+                                    {% else %}
+                                        placeholder="format jaar-maand-dag"
+                                    {% endif %}
+                                    name="checkoutTime"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-bottom: 5px">
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
                                 <label for="openingTime">{{ 'opening time'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                                 <input
                                     class="form-control"
