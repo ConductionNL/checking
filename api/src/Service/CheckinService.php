@@ -60,59 +60,59 @@ class CheckinService
             }
         }
 
-//        // Set standard checkout (DateTime).
-//        if (isset($node['checkinDuration'])) {
-//            // If the node has a checkinDuration, set checkout to now + this duration.
-//            $now = new \DateTime('now');
-//            $checkOut = $now->add(new \DateInterval($node['checkinDuration']));
-////            var_dump(' [ 1 ] '); //var_dump($checkOut);
-//        }
-//        if (isset($node['checkoutTime'])) {
-//            // If the node has a checkoutTime, set this checkoutTime on that time, but make sure it is set on this day.
-//            $nodeCheckOutTime = new \DateTime($node['checkoutTime']);
-//            $now = new \DateTime('now');
-//            $nodeCheckOutTime = $now->setTime($nodeCheckOutTime->format('H'), $nodeCheckOutTime->format('i'));
-////            var_dump(' [ 2 ] '); //var_dump($nodeCheckOutTime);
-//
-//            // If it is already past that time today, add one day so checkoutTime is set on the correct time, but tomorrow.
-//            // (common example: now = 23:00, checkoutTime = 1:00)
-//            $now = new \DateTime('now');
-//            if ($now > $nodeCheckOutTime) {
-//                $nodeCheckOutTime->add(new \DateInterval('P1D'));
-////                var_dump(' [ 3 ] ');
-//            }
-//
-//            if (!isset($checkOut)) {
-//                // If the node only has a checkoutTime and no checkinDuration, set checkout to the nodeCheckOutTime.
-//                $checkOut = $nodeCheckOutTime;
-////                var_dump(' [ 4 ] ');
-//            } else {
-//                // If the node has a checkoutTime and a checkinDuration, make sure that adding the checkOut is not past the checkoutTime.
-//                //
-//                // ...before we check this^, make sure checkinDuration is not more than just 1 day! (maybe this should just not be possible?)
-//                // ...if this is so, checkout is days ahead of the checkout(Date)Time and more days should also be added to the checkoutTime.
-//                // ...in order to compare checkout and the node checkoutTime correctly.
-//                $nodeCheckOutDay = $nodeCheckOutTime->format('Y-m-d');
-//                $checkOutDay = $checkOut->format('Y-m-d');
-//                while ($checkOutDay > $nodeCheckOutDay) {
-////                    var_dump(' [ 5 ] ');
-//                    $nodeCheckOutTime->add(new \DateInterval('P1D'));
-//                    $nodeCheckOutDay = $nodeCheckOutTime->format('Y-m-d');
-//                }
-//
-//                // The check if the checkOut is not past the checkoutTime:
-//                if ($checkOut > $nodeCheckOutTime) {
-//                    // If checkOut (with added checkinDuration) is past the checkoutTime, set checkout to the checkoutTime.
-//                    $checkOut = $nodeCheckOutTime;
-////                    var_dump(' [ 6 ] ');
-//                }
-//            }
-//        }
-//        if (isset($checkOut)) {
-//            $checkin['dateCheckedOut'] = $checkOut;
-//        }
-////        var_dump(' [ ! 7 ! ] ');
-////        var_dump($checkOut);die();
+        // Set standard checkout (DateTime).
+        if (isset($node['checkinDuration'])) {
+            // If the node has a checkinDuration, set checkout to now + this duration.
+            $now = new \DateTime('now');
+            $checkOut = $now->add(new \DateInterval($node['checkinDuration']));
+            var_dump(' [ 1 ] '); //var_dump($checkOut);
+        }
+        if (isset($node['checkoutTime'])) {
+            // If the node has a checkoutTime, set this checkoutTime on that time, but make sure it is set on this day.
+            $nodeCheckOutTime = new \DateTime($node['checkoutTime']);
+            $now = new \DateTime('now');
+            $nodeCheckOutTime = $now->setTime($nodeCheckOutTime->format('H'), $nodeCheckOutTime->format('i'));
+            var_dump(' [ 2 ] '); //var_dump($nodeCheckOutTime);
+
+            // If it is already past that time today, add one day so checkoutTime is set on the correct time, but tomorrow.
+            // (common example: now = 23:00, checkoutTime = 1:00)
+            $now = new \DateTime('now');
+            if ($now > $nodeCheckOutTime) {
+                $nodeCheckOutTime->add(new \DateInterval('P1D'));
+                var_dump(' [ 3 ] ');
+            }
+
+            if (!isset($checkOut)) {
+                // If the node only has a checkoutTime and no checkinDuration, set checkout to the nodeCheckOutTime.
+                $checkOut = $nodeCheckOutTime;
+                var_dump(' [ 4 ] ');
+            } else {
+                // If the node has a checkoutTime and a checkinDuration, make sure that adding the checkOut is not past the checkoutTime.
+                //
+                // ...before we check this^, make sure checkinDuration is not more than just 1 day! (maybe this should just not be possible?)
+                // ...if this is so, checkout is days ahead of the checkout(Date)Time and more days should also be added to the checkoutTime.
+                // ...in order to compare checkout and the node checkoutTime correctly.
+                $nodeCheckOutDay = $nodeCheckOutTime->format('Y-m-d');
+                $checkOutDay = $checkOut->format('Y-m-d');
+                while ($checkOutDay > $nodeCheckOutDay) {
+                    var_dump(' [ 5 ] ');
+                    $nodeCheckOutTime->add(new \DateInterval('P1D'));
+                    $nodeCheckOutDay = $nodeCheckOutTime->format('Y-m-d');
+                }
+
+                // The check if the checkOut is not past the checkoutTime:
+                if ($checkOut > $nodeCheckOutTime) {
+                    // If checkOut (with added checkinDuration) is past the checkoutTime, set checkout to the checkoutTime.
+                    $checkOut = $nodeCheckOutTime;
+                    var_dump(' [ 6 ] ');
+                }
+            }
+        }
+        if (isset($checkOut)) {
+            $checkin['dateCheckedOut'] = $checkOut;
+        }
+        var_dump(' [ ! 7 ! ] ');
+        var_dump($checkOut);die();
 
         $checkin['node'] = 'nodes/'.$node['id'];
         if ($this->security->getUser()) {
