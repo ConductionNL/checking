@@ -248,12 +248,22 @@ class ChinController extends AbstractController
 
             $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
 
-            if ((count($checkIns) > 1) && $checkIns[0]['dateCheckedOut'] == null) {
-                $hourDiff = round((strtotime('now') - strtotime($checkIns[0]['dateCreated'])) / 3600);
-                // edit this number to determine how many hours before you are not seens as checked in anymore
-                $hoursForCheckout = 4;
-                if ($hourDiff < $hoursForCheckout) {
+            // If the user has any checkins on this node
+            if ((count($checkIns) > 0)) {
+                // And if no dateCheckedOut is set yet (= no auto checkout settings set on the node)
+                if ($checkIns[0]['dateCheckedOut'] == null) {
+                    // Show the you are already checked in message with option to checkout
                     return $this->redirect($this->generateUrl('app_chin_checkout', ['code'=>$code]));
+                }
+                // DateCheckedOut is set (= auto checkout settings are set on the node)
+                else {
+                    $dateCheckedOut = new \DateTime($checkIns[0]['dateCheckedOut']);
+                    $now = new \DateTime('now');
+                    // If it is not yet the auto checkout time yet
+                    if ($dateCheckedOut > $now) {
+                        // Show the you are already checked in message with option to checkout
+                        return $this->redirect($this->generateUrl('app_chin_checkout', ['code' => $code]));
+                    }
                 }
             }
 
@@ -583,7 +593,7 @@ class ChinController extends AbstractController
             $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
 
             $checkIn = $checkIns[0];
-            $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+            $date = new \DateTime('now');
             $checkIn['dateCheckedOut'] = $date->format('Y-m-d H:i:s');
             $checkIn['node'] = 'nodes/'.$checkIn['node']['id'];
             $commonGroundService->updateResource($checkIn);

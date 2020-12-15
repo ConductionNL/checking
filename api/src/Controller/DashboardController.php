@@ -79,15 +79,25 @@ class DashboardController extends AbstractController
 
                 // Loop through all checkins
                 foreach ($checkins as $checkin) {
-                    $dateCheckedOut = $dateCreated = new \DateTime($checkin['dateCreated']);
+                    $dateCreated = new \DateTime($checkin['dateCreated']);
                     if (isset($checkin['$dateCheckedOut'])) {
                         $dateCheckedOut = new \DateTime($checkin['$dateCheckedOut']);
                     }
 
-                    // if dateCreated or dateCheckedOut is in the given period add the contact of this checkin
-                    if (($dateCreated > $startPeriod and $dateCreated < $endPeriod) or
-                        ($dateCheckedOut > $startPeriod and $dateCheckedOut < $endPeriod)) {
+                    // if dateCreated is in the given period add the contact of this checkin
+                    if (($dateCreated > $startPeriod and $dateCreated < $endPeriod)) {
                         array_push($contacts, $checkin['person']);
+                    }
+                    // if dateCheckedOut is defined
+                    elseif (isset($dateCheckedOut)) {
+                        // if dateCheckedOut is in the given period add the contact of this checkin
+                        if ($dateCheckedOut > $startPeriod and $dateCheckedOut < $endPeriod) {
+                            array_push($contacts, $checkin['person']);
+                        }
+                        // if the given period is between the dateCreated and dateCheckedOut add the contact of this checkin
+                        elseif ($dateCreated < $startPeriod and $dateCheckedOut > $endPeriod) {
+                            array_push($contacts, $checkin['person']);
+                        }
                     }
                 }
 
@@ -519,7 +529,7 @@ class DashboardController extends AbstractController
 
         $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
 
-        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl])['hydra:member'];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl, 'order[dateCreated]' => 'desc'])['hydra:member'];
 
         return $variables;
     }

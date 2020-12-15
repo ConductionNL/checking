@@ -34,7 +34,7 @@ class CheckinService
 
     public function createCheckin($node, $person = null, $user = null)
     {
-        // TODO: Only create a checkin if the current amount of checkins on the node isn't higher than the node.maximumAttendeeCapacity?!
+        // TODO: Only create a checkin if the current amount of checkins on the node isn't equal to or higher than the node.maximumAttendeeCapacity?!
         // ^unless more checkins than the node.maximumAttendeeCapacity are allowed
 
         // Return if trying to checkin outside opening hours of the place
@@ -65,27 +65,23 @@ class CheckinService
             // If the node has a checkinDuration, set checkout to now + this duration.
             $now = new \DateTime('now');
             $checkOut = $now->add(new \DateInterval($node['checkinDuration']));
-            var_dump(' [ 1 ] '); //var_dump($checkOut);
         }
         if (isset($node['checkoutTime'])) {
             // If the node has a checkoutTime, set this checkoutTime on that time, but make sure it is set on this day.
             $nodeCheckOutTime = new \DateTime($node['checkoutTime']);
             $now = new \DateTime('now');
             $nodeCheckOutTime = $now->setTime($nodeCheckOutTime->format('H'), $nodeCheckOutTime->format('i'));
-            var_dump(' [ 2 ] '); //var_dump($nodeCheckOutTime);
 
             // If it is already past that time today, add one day so checkoutTime is set on the correct time, but tomorrow.
             // (common example: now = 23:00, checkoutTime = 1:00)
             $now = new \DateTime('now');
             if ($now > $nodeCheckOutTime) {
                 $nodeCheckOutTime->add(new \DateInterval('P1D'));
-                var_dump(' [ 3 ] ');
             }
 
             if (!isset($checkOut)) {
                 // If the node only has a checkoutTime and no checkinDuration, set checkout to the nodeCheckOutTime.
                 $checkOut = $nodeCheckOutTime;
-                var_dump(' [ 4 ] ');
             } else {
                 // If the node has a checkoutTime and a checkinDuration, make sure that adding the checkOut is not past the checkoutTime.
                 //
@@ -95,7 +91,6 @@ class CheckinService
                 $nodeCheckOutDay = $nodeCheckOutTime->format('Y-m-d');
                 $checkOutDay = $checkOut->format('Y-m-d');
                 while ($checkOutDay > $nodeCheckOutDay) {
-                    var_dump(' [ 5 ] ');
                     $nodeCheckOutTime->add(new \DateInterval('P1D'));
                     $nodeCheckOutDay = $nodeCheckOutTime->format('Y-m-d');
                 }
@@ -104,16 +99,15 @@ class CheckinService
                 if ($checkOut > $nodeCheckOutTime) {
                     // If checkOut (with added checkinDuration) is past the checkoutTime, set checkout to the checkoutTime.
                     $checkOut = $nodeCheckOutTime;
-                    var_dump(' [ 6 ] ');
                 }
             }
         }
+        // Set standard checkout (DateTime) for this checkin.
         if (isset($checkOut)) {
-            $checkin['dateCheckedOut'] = $checkOut;
+            $checkin['dateCheckedOut'] = $checkOut->format('Y-m-d H:i:s');
         }
-        var_dump(' [ ! 7 ! ] ');
-        var_dump($checkOut);die();
 
+        // Create the checkin
         $checkin['node'] = 'nodes/'.$node['id'];
         if ($this->security->getUser()) {
             if (!isset($user)) {
@@ -134,6 +128,7 @@ class CheckinService
 
         $this->removeBalance($node);
 
+        // Send new checkin mail
         $data = [];
         $data['person'] = $person;
         $data['node'] = $node;
@@ -141,6 +136,7 @@ class CheckinService
 
         $this->mailingService->sendMail('mails/new_checkin.html.twig', 'no-reply@conduction.nl', $this->security->getUser()->getUsername(), 'New Checkin', $data);
 
+        // Check if a high or maxcheckin count email needs to be send to the organization of the node.
         $results = $this->processCheckin($checkin);
         // Do something with the $results?
         // Can be var dumped for testing purposes
