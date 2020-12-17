@@ -1785,6 +1785,30 @@
         <source>succes</source>
         <target>succes</target>
       </trans-unit>
+      <trans-unit id="jLUoRpd" resname="Will be deleted on:">
+        <source>Will be deleted on:</source>
+        <target>Wordt verwijderd op:</target>
+      </trans-unit>
+      <trans-unit id="6udb7X6" resname="Will be automatically checked out on:">
+        <source>Will be automatically checked out on:</source>
+        <target>Wordt automatisch uitgecheckt op:</target>
+      </trans-unit>
+      <trans-unit id="lkbPHd8" resname="Checked out on:">
+        <source>Checked out on:</source>
+        <target>Uitgechecked op:</target>
+      </trans-unit>
+      <trans-unit id="HxDTbv2" resname="Checked in on:">
+        <source>Checked in on:</source>
+        <target>Ingechecked op:</target>
+      </trans-unit>
+      <trans-unit id="ZG4DhMc" resname="You are checked in!">
+        <source>You are checked in!</source>
+        <target>U bent ingecheckt!</target>
+      </trans-unit>
+      <trans-unit id="Knh4vxj" resname="You will be automatically checked out at:">
+        <source>You will be automatically checked out at:</source>
+        <target>U wordt automatisch uitgecheckt op:</target>
+      </trans-unit>
       <trans-unit id="Sz6Heuz" resname="Your data is safely stored in the data vault and only accessible to the GGD for the next 14 days.">
         <source>Your data is safely stored in the data vault and only accessible to the GGD for the next 14 days.</source>
         <target>Uw data is veilig opgeslagen in de datakluis en is alleen beschikbaar voor de GGD voor de komende 14 dagen.</target>
