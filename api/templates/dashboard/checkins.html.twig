@@ -40,8 +40,16 @@
                                     <div class="d-flex no-gutters align-items-center mb-3">
                                         <div class="col text-left">
                                             <ul class="list-group mb-0">
-                                                <li class="list-group-item small p-0">Ingechecked op: {{ checkin.dateCreated|date("H:i d-m-Y", "Europe/Paris") }}</li>
-                                                <li class="list-group-item small p-0">Word verwijderd op: {{ checkin.dateToDestroy|date("H:i d-m-Y", "Europe/Paris") }}</li>
+                                                <li class="list-group-item small p-0">{{ 'Checked in on:'|trans }} {{ checkin.dateCreated|date("H:i d-m-Y", "Europe/Paris") }}</li>
+                                                {% if checkin.dateCheckedOut|default %}
+                                                    {% set now = "now"|date %}
+                                                    {% if checkin.dateCheckedOut|date("H:i d-m-Y") <= now|date("H:i d-m-Y") %}
+                                                        <li class="list-group-item small p-0">{{ 'Checked out on:'|trans }} {{ checkin.dateCheckedOut|date("H:i d-m-Y", "Europe/Paris") }}</li>
+                                                    {% else %}
+                                                        <li class="list-group-item small p-0">{{ 'Will be automatically checked out on:'|trans }} {{ checkin.dateCheckedOut|date("H:i d-m-Y", "Europe/Paris") }}</li>
+                                                    {% endif %}
+                                                {% endif %}
+                                                <li class="list-group-item small p-0">{{ 'Will be deleted on:'|trans }} {{ checkin.dateToDestroy|date("H:i d-m-Y", "Europe/Paris") }}</li>
                                             </ul>
                                         </div>
                                     </div>

@@ -44,9 +44,87 @@ class DashboardController extends AbstractController
 
         $person = $commonGroundService->getResource($this->getUser()->getPerson());
 
-        $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
 
+        $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
+        $variables['person'] = $commonGroundService->getResource($personUrl);
         $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl])['hydra:member'];
+
+        $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $organization['id']])['hydra:member'];
+
+        if ($request->isMethod('POST') && $request->get('ggdApplication')) {
+            // Get the correct node
+            $node = $commonGroundService->getResource(['component' => 'chin', 'type' => 'nodes', 'id' => $request->get('nodeId')]);
+
+            // Get all checkins on this node
+            $checkins = $commonGroundService->getResourceList(['component'=>'chin', 'type'=>'checkins'], ['node.accommodation'=>$node['accommodation']])['hydra:member'];
+
+            // Check if there are any checkins on this node
+            if (count($checkins) > 0) {
+                // If so, get all contacts of the checkins in the given period
+                $contacts = [];
+
+                // Get/Set startPeriod
+                if (!empty($request->get('startPeriod'))) {
+                    $startPeriod = new \DateTime($request->get('startPeriod', new \DateTimeZone('Europe/Paris')));
+                } else {
+                    $startPeriod = new \DateTime('now');
+                    $startPeriod->sub(new \DateInterval('P10Y'));
+                }
+
+                // Get/Set endPeriod
+                if (!empty($request->get('endPeriod'))) {
+                    $endPeriod = new \DateTime($request->get('endPeriod'), new \DateTimeZone('Europe/Paris'));
+                } else {
+                    $endPeriod = new \DateTime('now');
+                }
+
+                // Loop through all checkins
+                foreach ($checkins as $checkin) {
+                    $dateCreated = new \DateTime($checkin['dateCreated']);
+                    if (isset($checkin['$dateCheckedOut'])) {
+                        $dateCheckedOut = new \DateTime($checkin['$dateCheckedOut']);
+                    }
+
+                    // if dateCreated is in the given period add the contact of this checkin
+                    if (($dateCreated > $startPeriod and $dateCreated < $endPeriod)) {
+                        array_push($contacts, $checkin['person']);
+                    }
+                    // if dateCheckedOut is defined
+                    elseif (isset($dateCheckedOut)) {
+                        // if dateCheckedOut is in the given period add the contact of this checkin
+                        if ($dateCheckedOut > $startPeriod and $dateCheckedOut < $endPeriod) {
+                            array_push($contacts, $checkin['person']);
+                        }
+                        // if the given period is between the dateCreated and dateCheckedOut add the contact of this checkin
+                        elseif ($dateCreated < $startPeriod and $dateCheckedOut > $endPeriod) {
+                            array_push($contacts, $checkin['person']);
+                        }
+                    }
+                }
+
+                // Create a cc/person contact with the given GGD Contact info
+                // maybe first check if this contact already exists?
+                $person['givenName'] = $request->get('givenName');
+                $person['familyName'] = $request->get('familyName');
+                $person['emails'][0] = [];
+                $person['emails'][0]['email'] = $request->get('email');
+                $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
+
+                // TODO: Sent info to ggd contact? do something with these contacts...
+                // var_dump($contacts);
+
+                if (count($contacts) == 1) {
+                    $this->addFlash('success', 'Found 1 contact');
+                } else {
+                    $this->addFlash('success', 'Found '.count($contacts).' contacts');
+                }
+            } else {
+                $this->addFlash('warning', 'There are no checkins on this node: '.$node['name']);
+            }
+
+            return $this->redirect($this->generateUrl('app_dashboard_index'));
+        }
 
         return $variables;
     }
@@ -62,8 +140,8 @@ class DashboardController extends AbstractController
         $variables['accommodations'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'accommodations'], ['place.organization' => $variables['organization']['id']])['hydra:member'];
         $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $variables['organization']['id']])['hydra:member'];
 
-        //set rgb values to hex and place them in temp property
         foreach ($variables['nodes'] as &$node) {
+            //set rgb values to hex and place them in temp property
             if (isset($node['qrConfig'])) {
                 if (isset($node['qrConfig']['foreground_color'])) {
                     $colors = $node['qrConfig']['foreground_color'];
@@ -78,6 +156,13 @@ class DashboardController extends AbstractController
                 if (isset($node['qrConfig']['logo_path'])) {
                     $node['logo'] = $node['qrConfig']['logo_path'];
                 }
+            }
+
+            //set node checkinDuration to datetime
+            if (isset($node['checkinDuration'])) {
+                $checkinDuration = new \DateInterval($node['checkinDuration']);
+                $now = new \DateTime('now');
+                $node['checkinDuration'] = $now->setTime($checkinDuration->format('%H'), $checkinDuration->format('%I'))->format('H:i');
             }
         }
 
@@ -115,12 +200,16 @@ class DashboardController extends AbstractController
             $place['publicAccess'] = true;
             $place['smokingAllowed'] = false;
             if (key_exists('openingTime', $resource) and !empty($resource['openingTime'])) {
-                $place['openingTime'] = $resource['openingTime'];
+                $openingTime = new \DateTime($resource['openingTime'], new \DateTimeZone('Europe/Paris'));
+                $openingTime->setTimezone(new \DateTimeZone('UTC'));
+                $place['openingTime'] = $openingTime->format('H:i');
                 // Check if openingTime is set and if so, unset it in the resource used for creating a node
                 unset($resource['openingTime']);
             }
             if (key_exists('closingTime', $resource) and !empty($resource['closingTime'])) {
-                $place['closingTime'] = $resource['closingTime'];
+                $closingTime = new \DateTime($resource['closingTime'], new \DateTimeZone('Europe/Paris'));
+                $closingTime->setTimezone(new \DateTimeZone('UTC'));
+                $place['closingTime'] = $closingTime->format('H:i');
                 // Check if closingTime is set and if so, unset it in the resource used for creating a node
                 unset($resource['closingTime']);
             }
@@ -156,6 +245,19 @@ class DashboardController extends AbstractController
                 $type = filetype($_FILES['logo']['tmp_name']);
                 $data = file_get_contents($path);
                 $resource['qrConfig']['logo_path'] = 'data:image/'.$type.';base64,'.base64_encode($data);
+            }
+
+            // make sure checkoutTime is set to UTC
+            if (isset($resource['checkoutTime'])) {
+                $checkoutTime = new \DateTime($resource['checkoutTime'], new \DateTimeZone('Europe/Paris'));
+                $checkoutTime->setTimeZone(new \DateTimeZone('UTC'));
+                $resource['checkoutTime'] = $checkoutTime->format('H:i');
+            }
+
+            // set node checkinDuration to dateInterval
+            if (isset($resource['checkinDuration'])) {
+                $checkinDuration = new \DateTime($resource['checkinDuration']);
+                $resource['checkinDuration'] = 'P0Y0M0DT'.$checkinDuration->format('H').'H'.$checkinDuration->format('i').'M0S';
             }
 
             // Save the (new or already existing) node
@@ -457,7 +559,7 @@ class DashboardController extends AbstractController
 
         $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
 
-        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl])['hydra:member'];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl, 'order[dateCreated]' => 'desc'])['hydra:member'];
 
         return $variables;
     }
@@ -470,8 +572,11 @@ class DashboardController extends AbstractController
     {
         $variables = [];
 
-        $variables['invoices'] = $commonGroundService->getResourceList(['component' => 'bc', 'type' => 'invoices'])['hydra:member'];
-
+        if (!empty($this->getUser()->getOrganization())) {
+            $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
+            $organizationUrl = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
+            $variables['invoices'] = $commonGroundService->getResourceList(['component' => 'bc', 'type' => 'invoices'], ['customer' => $organizationUrl])['hydra:member'];
+        }
         return $variables;
     }
 
@@ -484,11 +589,6 @@ class DashboardController extends AbstractController
         $variables = [];
 
         $variables['invoice'] = $commonGroundService->getResource(['component' => 'bc', 'type' => 'invoices', 'id' => $id]);
-        $variables['organization'] = $commonGroundService->getResource($variables['invoice']['targetOrganization']);
-        $variables['organization']['contact'] = $commonGroundService->getResource($variables['organization']['contact']);
-        $variables['style'] = $variables['organization']['style'];
-
-        /*@todo make payment process*/
 
         return $variables;
     }

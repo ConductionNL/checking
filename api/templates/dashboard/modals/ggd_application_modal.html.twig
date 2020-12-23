@@ -1,0 +1,115 @@
+<div class="modal fade" id="ggdApplicationModal" tabindex="-1" role="dialog" aria-labelledby="ggdApplicationModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ 'GGD Application'|trans }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% if nodes is defined and nodes is not empty %}
+                    <form action="{{ path('app_dashboard_index') }}" method="post" enctype="multipart/form-data">
+
+                        <!-- Node -->
+                        <div class="form-group">
+                            <label for="nodeId">{{ 'code'|trans|capitalize }} <span class="text-danger">*</span></label>
+                            <select class="form-control" name="nodeId" id="nodeId" required>
+                                {% for node in nodes %}
+                                    <option value="{{ node['id'] }}">{{ node.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6">
+
+                                <!-- Start period -->
+                                <div class="form-group">
+                                    <label for="startPeriod">{{ 'start period'|trans|capitalize }}</label>
+                                    <input
+                                        class="form-control"
+                                        id="startPeriod"
+                                        type="datetime-local"
+                                        max="{{ "now"|date("Y-m-d\\TH:i", "Europe/Paris") }}"
+                                        placeholder="format jaar-maand-dag"
+                                        name="startPeriod"
+                                    >
+                                </div>
+
+                            </div>
+                            <div class="col-6">
+
+                                <!-- End period -->
+                                <div class="form-group">
+                                    <label for="endPeriod">{{ 'end period'|trans|capitalize }}</label>
+                                    <a onclick="setMinEndPeriod()">
+                                        <input
+                                            class="form-control"
+                                            id="endPeriod"
+                                            type="datetime-local"
+                                            max="{{ "now"|date("Y-m-d\\TH:i", "Europe/Paris") }}"
+                                            placeholder="format jaar-maand-dag"
+                                            name="endPeriod"
+                                        >
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- GGD Contact -->
+                        <p class="h6">{{ 'GGD Contact'|trans }}</p>
+                        <!-- Divider -->
+                        <hr class="border-gray-300 mt-1 mb-2">
+                        <div class="row">
+                            <div class="col-6">
+
+                                <!-- First Name -->
+                                <div class="form-group">
+                                    <label for="givenName">{{ 'First Name'|trans|capitalize }} <span class="text-danger">*</span></label>
+                                    <input class="form-control" name="givenName" id="givenName" type="text" placeholder="{{ 'First Name'|trans|capitalize }}" required>
+                                </div>
+
+                            </div>
+                            <div class="col-6">
+
+                                <!-- Last Name -->
+                                <div class="form-group">
+                                    <label for="familyName">{{ 'Last Name'|trans|capitalize }} <span class="text-danger">*</span></label>
+                                    <input class="form-control" name="familyName" id="familyName" type="text" placeholder="{{ 'Last Name'|trans|capitalize }}" required>
+                                </div>
+
+                            </div>
+                            <div class="col-12">
+
+                                <!-- Email -->
+                                <div class="form-group">
+                                    <label for="description">{{ 'Email'|trans|capitalize }} <span style="color: red; font-weight: bold">*</span></label>
+                                    <input class="form-control" name="email" id="email" type="email" placeholder="{{ 'example@company.com'|trans }}" required>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Submit -->
+                        <button class="btn btn-block btn-primary mt-3 lift" name="ggdApplication" value="true" type="submit">
+                            {{ 'send request'|trans|capitalize }}
+                        </button>
+                    </form>
+                {% else %}
+                    <p>{{ 'you do not yet have codes to submit a ggd request for'|trans|capitalize }}</p>
+                    <a href="#" onclick="$('#ggdApplicationModal').modal('hide')" class="btn btn-block btn-primary mt-3 lift">{{  'oke'|trans|capitalize }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function setMinEndPeriod() {
+        var startPeriod = document.getElementById('startPeriod');
+        var endPeriod = document.getElementById('endPeriod');
+        endPeriod.setAttribute("min", startPeriod.value);
+    }
+</script>
