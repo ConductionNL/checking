@@ -43,8 +43,10 @@ class DashboardController extends AbstractController
         $variables = [];
 
         $person = $commonGroundService->getResource($this->getUser()->getPerson());
-        $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
 
+
+        $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
+        $variables['person'] = $commonGroundService->getResource($personUrl);
         $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl])['hydra:member'];
 
         $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
@@ -570,8 +572,11 @@ class DashboardController extends AbstractController
     {
         $variables = [];
 
-        $variables['invoices'] = $commonGroundService->getResourceList(['component' => 'bc', 'type' => 'invoices'])['hydra:member'];
-
+        if (!empty($this->getUser()->getOrganization())) {
+            $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
+            $organizationUrl = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
+            $variables['invoices'] = $commonGroundService->getResourceList(['component' => 'bc', 'type' => 'invoices'], ['customer' => $organizationUrl])['hydra:member'];
+        }
         return $variables;
     }
 
@@ -584,11 +589,6 @@ class DashboardController extends AbstractController
         $variables = [];
 
         $variables['invoice'] = $commonGroundService->getResource(['component' => 'bc', 'type' => 'invoices', 'id' => $id]);
-        $variables['organization'] = $commonGroundService->getResource($variables['invoice']['targetOrganization']);
-        $variables['organization']['contact'] = $commonGroundService->getResource($variables['organization']['contact']);
-        $variables['style'] = $variables['organization']['style'];
-
-        /*@todo make payment process*/
 
         return $variables;
     }
