@@ -49,8 +49,10 @@ class DashboardController extends AbstractController
         $variables['person'] = $commonGroundService->getResource($personUrl);
         $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl])['hydra:member'];
 
-        $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
-        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $organization['id']])['hydra:member'];
+        if($this->getUser()->getOrganization()) {
+            $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
+            $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $organization['id']])['hydra:member'];
+        }
 
         if ($request->isMethod('POST') && $request->get('ggdApplication')) {
             // Get the correct node
