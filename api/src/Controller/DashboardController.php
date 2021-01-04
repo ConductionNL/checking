@@ -45,12 +45,11 @@ class DashboardController extends AbstractController
 
         $person = $commonGroundService->getResource($this->getUser()->getPerson());
 
-
         $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
         $variables['person'] = $commonGroundService->getResource($personUrl);
         $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl])['hydra:member'];
 
-        if($this->getUser()->getOrganization()) {
+        if ($this->getUser()->getOrganization()) {
             $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
             $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $organization['id']])['hydra:member'];
         }
@@ -108,6 +107,7 @@ class DashboardController extends AbstractController
             // TODO: Do something with this data? mail the person? download option?
 
             $this->addFlash('warning', 'W.I.P.');
+
             return $this->redirect($this->generateUrl('app_dashboard_index'));
         } elseif ($request->isMethod('POST') && $request->get('reportCorona')) {
             // Make sure the user is (still) logged in.
@@ -127,6 +127,7 @@ class DashboardController extends AbstractController
             // TODO: And mail them? /warn them that they need to take action :)
 
             $this->addFlash('warning', 'W.I.P.');
+
             return $this->redirect($this->generateUrl('app_dashboard_index'));
         }
 
@@ -581,6 +582,7 @@ class DashboardController extends AbstractController
             $organizationUrl = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
             $variables['invoices'] = $commonGroundService->getResourceList(['component' => 'bc', 'type' => 'invoices'], ['customer' => $organizationUrl])['hydra:member'];
         }
+
         return $variables;
     }
 
