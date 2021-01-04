@@ -1741,6 +1741,22 @@
         <source>GGD Application</source>
         <target>GGD Aanvraag</target>
       </trans-unit>
+      <trans-unit id="arm2u8C" resname="Request My Data">
+        <source>Request My Data</source>
+        <target>Mijn Gegevens Opvragen</target>
+      </trans-unit>
+      <trans-unit id="1VMjS9Q" resname="Report Corona">
+        <source>Report Corona</source>
+        <target>Corona Melden</target>
+      </trans-unit>
+      <trans-unit id="Acwo_Qa" resname="Enter the moment from when you first had illness symptoms.">
+        <source>Enter the moment from when you first had illness symptoms.</source>
+        <target>Voer het moment in waarop u voor het eerst ziektesymptomen had.</target>
+      </trans-unit>
+      <trans-unit id="wFJl1kb" resname="inform companies">
+        <source>inform companies</source>
+        <target>bedrijven informeren</target>
+      </trans-unit>
       <trans-unit id="uOsF1gC" resname="you do not yet have codes to submit a ggd request for">
         <source>you do not yet have codes to submit a ggd request for</source>
         <target>je hebt nog geen codes om een ggd-verzoek voor in te dienen</target>

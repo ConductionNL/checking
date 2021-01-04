@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use App\Service\CheckinService;
 use App\Service\PaymentService;
 use Conduction\BalanceBundle\Service\BalanceService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
@@ -38,7 +39,7 @@ class DashboardController extends AbstractController
      * @Route("/")
      * @Template
      */
-    public function indexAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
+    public function indexAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params, CheckinService $checkinService)
     {
         $variables = [];
 
@@ -66,55 +67,26 @@ class DashboardController extends AbstractController
                 // If so, get all contacts of the checkins in the given period
                 $contacts = [];
 
-                // Get/Set startPeriod
-                if (!empty($request->get('startPeriod'))) {
-                    $startPeriod = new \DateTime($request->get('startPeriod', new \DateTimeZone('Europe/Paris')));
-                } else {
-                    $startPeriod = new \DateTime('now');
-                    $startPeriod->sub(new \DateInterval('P10Y'));
-                }
-
-                // Get/Set endPeriod
-                if (!empty($request->get('endPeriod'))) {
-                    $endPeriod = new \DateTime($request->get('endPeriod'), new \DateTimeZone('Europe/Paris'));
-                } else {
-                    $endPeriod = new \DateTime('now');
-                }
+                $checkinsInPeriod = $checkinService->getCheckinsInPeriod($checkins, $request->get('startPeriod'), $request->get('endPeriod'));
 
                 // Loop through all checkins
-                foreach ($checkins as $checkin) {
-                    $dateCreated = new \DateTime($checkin['dateCreated']);
-                    if (isset($checkin['$dateCheckedOut'])) {
-                        $dateCheckedOut = new \DateTime($checkin['$dateCheckedOut']);
-                    }
-
-                    // if dateCreated is in the given period add the contact of this checkin
-                    if (($dateCreated > $startPeriod and $dateCreated < $endPeriod)) {
+                foreach ($checkinsInPeriod as $checkin) {
+                    if (in_array($checkin['person'], $contacts)) {
+                        continue;
+                    } else {
                         array_push($contacts, $checkin['person']);
-                    }
-                    // if dateCheckedOut is defined
-                    elseif (isset($dateCheckedOut)) {
-                        // if dateCheckedOut is in the given period add the contact of this checkin
-                        if ($dateCheckedOut > $startPeriod and $dateCheckedOut < $endPeriod) {
-                            array_push($contacts, $checkin['person']);
-                        }
-                        // if the given period is between the dateCreated and dateCheckedOut add the contact of this checkin
-                        elseif ($dateCreated < $startPeriod and $dateCheckedOut > $endPeriod) {
-                            array_push($contacts, $checkin['person']);
-                        }
                     }
                 }
 
                 // Create a cc/person contact with the given GGD Contact info
                 // maybe first check if this contact already exists?
-                $person['givenName'] = $request->get('givenName');
-                $person['familyName'] = $request->get('familyName');
-                $person['emails'][0] = [];
-                $person['emails'][0]['email'] = $request->get('email');
-                $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
+                $newPerson['givenName'] = $request->get('givenName');
+                $newPerson['familyName'] = $request->get('familyName');
+                $newPerson['emails'][0] = [];
+                $newPerson['emails'][0]['email'] = $request->get('email');
+                $commonGroundService->createResource($newPerson, ['component' => 'cc', 'type' => 'people']);
 
-                // TODO: Sent info to ggd contact? do something with these contacts...
-                // var_dump($contacts);
+                // TODO: Mail csv with contacts to the ggd contact!
 
                 if (count($contacts) == 1) {
                     $this->addFlash('success', 'Found 1 contact');
@@ -125,6 +97,36 @@ class DashboardController extends AbstractController
                 $this->addFlash('warning', 'There are no checkins on this node: '.$node['name']);
             }
 
+            return $this->redirect($this->generateUrl('app_dashboard_index'));
+        } elseif ($request->isMethod('POST') && $request->get('requestMyData')) {
+            // Make sure the user is (still) logged in.
+            if (!$this->getUser()->getPerson()) {
+                return $this->redirect($this->generateUrl('app_user_idvault'));
+            }
+
+            // TODO: Get all data on this person
+            // TODO: Do something with this data? mail the person? download option?
+
+            $this->addFlash('warning', 'W.I.P.');
+            return $this->redirect($this->generateUrl('app_dashboard_index'));
+        } elseif ($request->isMethod('POST') && $request->get('reportCorona')) {
+            // Make sure the user is (still) logged in.
+            if (!$this->getUser()->getPerson()) {
+                return $this->redirect($this->generateUrl('app_user_idvault'));
+            }
+
+            // Get all checkins of this person in the given period
+            $checkinsInPeriod = $checkinService->getCheckinsInPeriod($variables['checkins'], $request->get('startPeriod'), $request->get('endPeriod'));
+            if (count($checkinsInPeriod) == 1) {
+                $this->addFlash('success', 'Found 1 checkin in this period');
+            } else {
+                $this->addFlash('success', 'Found '.count($checkinsInPeriod).' checkins in this period');
+            }
+
+            // TODO: Now get all organizations/places where this person has been
+            // TODO: And mail them? /warn them that they need to take action :)
+
+            $this->addFlash('warning', 'W.I.P.');
             return $this->redirect($this->generateUrl('app_dashboard_index'));
         }
 
