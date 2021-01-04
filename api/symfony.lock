@@ -43,6 +43,9 @@
     "conduction/commongroundbundle": {
         "version": "dev-symfony51"
     },
+    "conduction/id-vault-php": {
+        "version": "dev-main"
+    },
     "conduction/idvaultbundle": {
         "version": "dev-master"
     },
