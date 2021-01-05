@@ -33,6 +33,18 @@ class DefaultController extends AbstractController
         $variables['query'] = array_merge($request->query->all(), $variables['post'] = $request->request->all());
 
         $variables['reservationNodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['type' => 'reservation'])['hydra:member'];
+        $reservationOrganizations = [];
+        foreach ($variables['reservationNodes'] as $reservationNode) {
+            if (isset($reservationNode['organization'])) {
+                $nodeOrganization = $commonGroundService->getResource($reservationNode['organization']);
+                if (in_array($nodeOrganization, $reservationOrganizations)) {
+                    continue;
+                } else {
+                    array_push($reservationOrganizations, $nodeOrganization);
+                }
+            }
+        }
+        $variables['reservationOrganizations'] = $reservationOrganizations;
 
         return $variables;
     }

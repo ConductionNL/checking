@@ -62,11 +62,10 @@
                     <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#manual-form">
                         <i class="far fa-keyboard mr-2"></i>{{ 'input manually'|trans|capitalize }}</a>
                     <select class="btn btn-success animate-up-2 mb-4" id="nodeTypeSelect" onchange="changeNodeType()">
-                        <option value="checkin">{{ 'checkin'|trans|capitalize }}</option>
-                        <option value="reserve">{{ 'reserve'|trans|capitalize }}</option>
-                        <option value="clockIn">{{ 'clock in'|trans|capitalize }}</option>
+                        <option style="background-color: white; color: black" value="checkin">{{ 'checkin'|trans|capitalize }}</option>
+                        <option style="background-color: white; color: black" value="reserve">{{ 'reserve'|trans|capitalize }}</option>
+                        <option style="background-color: white; color: black" value="clockIn">{{ 'clock in'|trans|capitalize }}</option>
                     </select>
-                    <p id="demo"></p>
 
                     <!-- hidden field for nodeType reservation -->
                     <div class="d-flex justify-content-center mb-2">
@@ -76,8 +75,10 @@
                                        placeholder="{{ 'organization'|trans|capitalize }}">
                                 {# This button should open a modal where you can choose a accommodation (of the nodes) from
                                 the selected organization, opening and putting the reference in the manual input #}
-                                <button type="submit" style="width: -webkit-fill-available;"
-                                        class="btn mb-2 btn-success">{{ 'select'|trans|capitalize }}</button>
+                                <button style="width: -webkit-fill-available;" data-toggle="modal"
+                                        data-target="#selectReservationNodeModal"
+                                        class="btn mb-2 btn-success" id="selectOrganizationButton"
+                                >{{ 'select'|trans|capitalize }}</button>
                             </div>
                         </div>
                     </div>
@@ -98,7 +99,7 @@
                     <div class="d-flex justify-content-center mb-2" >
                         <form action="{{ path('app_chin_checkin') }}" method="post" id="manual-form" class="collapse">
                             <div class="form-group" style="display: flex">
-                                <input type="text" class="form-control mr-2" name="code"
+                                <input type="text" class="form-control mr-2" name="code" id="code"
                                        placeholder="{{ 'fill in code'|trans|capitalize }}">
                                 <button type="submit" style="width: -webkit-fill-available;" class="btn mb-2 btn-success"
                                 >{{ 'go'|trans|capitalize }}</button>
@@ -136,7 +137,6 @@
             var reserve = document.getElementById('reserve');
             // var clockIn = document.getElementById('clockIn');
             var manualForm = document.getElementById('manual-form');
-            document.getElementById("demo").innerHTML = "You selected: " + nodeType;
 
             reserve.hidden = true;
             // clockIn.hidden = true;
@@ -175,20 +175,26 @@
                 /*append the DIV element as a child of the autocomplete container:*/
                 this.parentNode.appendChild(a);
                 /*for each item in the array...*/
-                for (i = 0; i < arr.length; i++) {
+                for (var key in arr) {
                     /*check if the item starts with the same letters as the text field value:*/
-                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    if (arr[key].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                         /*create a DIV element for each matching element:*/
                         b = document.createElement("DIV");
                         /*make the matching letters bold:*/
-                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                        b.innerHTML += arr[i].substr(val.length);
+                        b.innerHTML = "<strong>" + arr[key].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[key].substr(val.length);
                         /*insert a input field that will hold the current array item's value:*/
-                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                        b.innerHTML += "<input type='hidden' value='" + arr[key] + "'>";
                         /*execute a function when someone clicks on the item value (DIV element):*/
                         b.addEventListener("click", function(e) {
                             /*insert the value for the autocomplete text field:*/
                             inp.value = this.getElementsByTagName("input")[0].value;
+
+                            // Set the correct modal to target when clicking the select button
+                            var selectOrganizationButton = document.getElementById("selectOrganizationButton");
+                            selectOrganizationButton.setAttribute('data-target', '#selectReservationNodeModal' + key);
+                            {# TODO:fix that the correct key is used here^, it looks like it will always use the key of the last item in the list somehow #}
+
                             /*close the list of autocompleted values,
                             (or any other open lists of autocompleted values:*/
                             closeAllLists();
@@ -256,15 +262,11 @@
 
         /*An array containing all the organizations:*/
         var organizations =
-            [
-                {% for reservationNode in reservationNodes %}
-                    {% if reservationNode.organization|default
-                        and commonground_is_resource(reservationNode.organization) %}
-                        {% set organization = commonground_resource(reservationNode.organization) %}
-                        "{{ organization.name }}",
-                    {% endif %}
+            {
+                {% for reservationOrganization in reservationOrganizations %}
+                "{{ reservationOrganization.id }}":"{{ reservationOrganization.name }}",
                 {% endfor %}
-            ];
+            };
 
         /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
         autocomplete(document.getElementById("orgAutocomplete"), organizations);
@@ -326,6 +328,12 @@
 
     <!-- Modals -->
     {% include 'default/modals/newsletter_message_modal.html.twig' %}
+
+    {% if reservationOrganizations|default %}
+        {% for reservationOrganization in reservationOrganizations %}
+            {% include 'default/modals/select_reservation_node_modal.html.twig' %}
+        {% endfor %}
+    {% endif %}
 
     <script>
         {% if query.message is defined %}

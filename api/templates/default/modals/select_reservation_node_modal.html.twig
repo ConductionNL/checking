@@ -1,0 +1,38 @@
+<div class="modal fade" id="selectReservationNodeModal{{ reservationOrganization.id }}" tabindex="-1" role="dialog" aria-labelledby="selectReservationNodeModal{{ reservationOrganization.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{ reservationOrganization.name }}</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                {% for reservationNode in reservationNodes %}
+                    {% if reservationNode.organization is defined and reservationNode.organization is not empty %}
+                        {% if reservationNode.organization == commonground_cleanurl({'component': 'wrc', 'type': 'organizations', 'id': reservationOrganization.id}) %}
+                            {% if reservationNode.accommodation is defined and reservationNode.accommodation is not empty and commonground_is_resource(reservationNode.accommodation) %}
+                                {% set accommodation = commonground_resource(reservationNode.accommodation) %}
+                                <a class="btn btn-success" onclick="setNodeReference('{{ reservationNode.reference }}')" >{{ accommodation.name }}</a><br><br>
+                            {% else %}
+                                <a class="btn btn-success" onclick="setNodeReference('{{ reservationNode.reference }}')" >{{ reservationNode.name }}</a><br><br>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <script>
+                function setNodeReference(nodeReference) {
+                    // Set manual input field to the node reference
+                    document.getElementById('code').value = nodeReference;
+
+                    // If manual input is collapsed make sure it is visible for the user.
+                    {# TODO:this^ #}
+
+                    // Close this modal
+                    {# TODO:this^ #}
+                }
+            </script>
+        </div>
+    </div>
+</div>
