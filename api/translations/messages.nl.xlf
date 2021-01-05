@@ -1741,6 +1741,22 @@
         <source>GGD Application</source>
         <target>GGD Aanvraag</target>
       </trans-unit>
+      <trans-unit id="arm2u8C" resname="Request My Data">
+        <source>Request My Data</source>
+        <target>Mijn Gegevens Opvragen</target>
+      </trans-unit>
+      <trans-unit id="1VMjS9Q" resname="Report Corona">
+        <source>Report Corona</source>
+        <target>Corona Melden</target>
+      </trans-unit>
+      <trans-unit id="Acwo_Qa" resname="Enter the moment from when you first had illness symptoms.">
+        <source>Enter the moment from when you first had illness symptoms.</source>
+        <target>Voer het moment in waarop u voor het eerst ziektesymptomen had.</target>
+      </trans-unit>
+      <trans-unit id="wFJl1kb" resname="inform companies">
+        <source>inform companies</source>
+        <target>bedrijven informeren</target>
+      </trans-unit>
       <trans-unit id="uOsF1gC" resname="you do not yet have codes to submit a ggd request for">
         <source>you do not yet have codes to submit a ggd request for</source>
         <target>je hebt nog geen codes om een ggd-verzoek voor in te dienen</target>
@@ -3155,7 +3171,7 @@
       </trans-unit>
       <trans-unit id="saNtJdl" resname="select">
         <source>select</source>
-        <target>__select</target>
+        <target>selecteer</target>
       </trans-unit>
       <trans-unit id="_TJnqhH" resname="Remember me">
         <source>Remember me</source>
@@ -3436,6 +3452,10 @@
       <trans-unit id="61ElgKq" resname="why do I need to checkin?">
         <source>why do I need to checkin?</source>
         <target>waarom heb ik checkin nodig?</target>
+      </trans-unit>
+      <trans-unit id="Tm4guci" resname="easy and save checkin registration">
+        <source>easy and save checkin registration</source>
+        <target>eenvoudig en veilig inchecken</target>
       </trans-unit>
       <trans-unit id="_0Q9d3z" resname="the simple answer is contact tracing, that means then when a person is tested positively for covid-19 local health officials want to trace who that person has been in contact with so that they can contact those people and advise them to be alert for any symptoms or go into quarantine. For this reason some governments (like the Netherlands) have mandated that shops,  bars, restaurants and other small businesses and organisations keep lists of visitors.">
         <source>the simple answer is contact tracing, that means then when a person is tested positively for covid-19 local health officials want to trace who that person has been in contact with so that they can contact those people and advise them to be alert for any symptoms or go into quarantine. For this reason some governments (like the Netherlands) have mandated that shops,  bars, restaurants and other small businesses and organisations keep lists of visitors.</source>

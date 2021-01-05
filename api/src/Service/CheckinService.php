@@ -245,4 +245,51 @@ class CheckinService
     public function checkBalance($organization)
     {
     }
+
+    public function getCheckinsInPeriod($checkins, $startPeriodString = null, $endPeriodString = null)
+    {
+        $checkinsInPeriod = [];
+
+        // Get/Set startPeriod
+        if (isset($startPeriodString)) {
+            $startPeriod = new \DateTime($startPeriodString, new \DateTimeZone('Europe/Paris'));
+        } else {
+            $startPeriod = new \DateTime('now');
+            $startPeriod->sub(new \DateInterval('P10Y'));
+            // TODO: set this^ to the datecreated of the oldest checkin.
+        }
+
+        // Get/Set endPeriod
+        if (isset($endPeriodString)) {
+            $endPeriod = new \DateTime($endPeriodString, new \DateTimeZone('Europe/Paris'));
+        } else {
+            $endPeriod = new \DateTime('now');
+        }
+
+        // Loop through all checkins
+        foreach ($checkins as $checkin) {
+            $dateCreated = new \DateTime($checkin['dateCreated']);
+            if (isset($checkin['$dateCheckedOut'])) {
+                $dateCheckedOut = new \DateTime($checkin['$dateCheckedOut']);
+            }
+
+            // if dateCreated is in the given period add this checkin
+            if (($dateCreated > $startPeriod and $dateCreated < $endPeriod)) {
+                array_push($checkinsInPeriod, $checkin);
+            }
+            // if dateCheckedOut is defined
+            elseif (isset($dateCheckedOut)) {
+                // if dateCheckedOut is in the given period add this checkin
+                if ($dateCheckedOut > $startPeriod and $dateCheckedOut < $endPeriod) {
+                    array_push($checkinsInPeriod, $checkin);
+                }
+                // if the given period is between the dateCreated and dateCheckedOut add this checkin
+                elseif ($dateCreated < $startPeriod and $dateCheckedOut > $endPeriod) {
+                    array_push($checkinsInPeriod, $checkin);
+                }
+            }
+        }
+
+        return $checkinsInPeriod;
+    }
 }
