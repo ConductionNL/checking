@@ -2,6 +2,45 @@
 
 {% block content %}
 
+    <style>
+        /*the container must be positioned relative:*/
+        .autocomplete {
+            position: relative;
+            display: inline-block;
+        }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+            color: #000000;
+        }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+        /*when hovering an item:*/
+        .autocomplete-items div:hover {
+            background-color: #e9e9e9;
+        }
+
+        /*when navigating through the items using the arrow keys:*/
+        .autocomplete-active {
+            background-color: DodgerBlue !important;
+            color: #ffffff;
+        }
+    </style>
+
     <div class="preloader bg-dark flex-column justify-content-center align-items-center">
         <div class="position-relative text-center text-white">
             <i class="fas fa-qrcode fa-5x spinn"></i>
@@ -17,51 +56,54 @@
                     <h1 class="h1 px-md-6">Checking</h1>
                     <p class="lead mb-4">{{ 'easy and save checkin registration'|trans|capitalize }}</p>
 
-                    <!-- Make a dropdown option for node types and let that choice change stuff instead of this: -->
-                    <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#checkin">
-                        <i class="fas fa-qrcode mr-2"></i>{{ 'checkin'|trans|capitalize }}</a>
-                    <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#reserve">
-                        <i class="fas fa-ticket-alt mr-2"></i>{{ 'reserve'|trans|capitalize }}</a>
-                    <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#clockIn">
-                        <i class="fa fa-clock mr-2"></i>{{ 'clock in'|trans|capitalize }}</a>
+                    <a class="btn btn-secondary animate-up-2 mb-4" data-toggle="collapse" data-target="#readerView"
+                       onclick="startQrScan()" id="startScan" >
+                        <i class="fas fa-qrcode mr-2"></i>{{ 'scan with camera'|trans|capitalize }}</a>
+                    <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#manual-form">
+                        <i class="far fa-keyboard mr-2"></i>{{ 'input manually'|trans|capitalize }}</a>
+                    <select class="btn btn-success animate-up-2 mb-4" id="nodeTypeSelect" onchange="changeNodeType()">
+                        <option value="checkin">{{ 'checkin'|trans|capitalize }}</option>
+                        <option value="reserve">{{ 'reserve'|trans|capitalize }}</option>
+                        <option value="clockIn">{{ 'clock in'|trans|capitalize }}</option>
+                    </select>
+                    <p id="demo"></p>
 
+                    <!-- hidden field for nodeType reservation -->
                     <div class="d-flex justify-content-center mb-2">
-                        <div class="collapse" id="checkin">
-                            <a class="btn btn-secondary animate-up-2 mb-4" data-toggle="collapse" data-target="#readerView"
-                               onclick="startQrScan()" id="startScan" >
-                                <i class="fas fa-qrcode mr-2"></i>{{ 'scan with camera'|trans|capitalize }}</a>
-                            <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#manual-from">
-                                <i class="far fa-keyboard mr-2"></i>{{ 'input manually'|trans|capitalize }}</a>
-
-                            <div style="width: 100%; height: auto;" id="readerView" class=""></div>
-
-                            <div style="width: 100%; height: auto; display: none;" id="readerSucces">
-                                <h2>{{ 'Code scanned successfully, you will be forwarded'|trans|capitalize }}</h2>
-                            </div>
-
-                            <div class="d-flex justify-content-center mb-2" >
-                                <form action="{{ path('app_chin_checkin') }}" method="post" id="manual-from" class="collapse">
-                                    <div class="form-group" style="display: flex">
-                                        <input type="text" class="form-control mr-2" name="code"
-                                               placeholder="{{ 'fill in code'|trans|capitalize }}">
-                                        <button type="submit" style="width: -webkit-fill-available;" class="btn mb-2 btn-success"
-                                        >{{ 'go'|trans|capitalize }}</button>
-                                    </div>
-                                </form>
+                        <div id="reserve" hidden="">
+                            <div class="form-group" style="display: flex">
+                                <input type="text" class="form-control mr-2" name="orgAutocomplete" id="orgAutocomplete"
+                                       placeholder="{{ 'organization'|trans|capitalize }}">
+                                {# This button should open a modal where you can choose a accommodation (of the nodes) from
+                                the selected organization, opening and putting the reference in the manual input #}
+                                <button type="submit" style="width: -webkit-fill-available;"
+                                        class="btn mb-2 btn-success">{{ 'select'|trans|capitalize }}</button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="d-flex justify-content-center mb-2">
-                        <div class="collapse" id="reserve">
+                    <!-- hidden field for nodeType clockIn -->
+{#                    <div class="d-flex justify-content-center mb-2">#}
+{#                        <div id="clockIn" hidden="">#}
+{#                            <p>clock in</p>#}
+{#                        </div>#}
+{#                    </div>#}
 
-                        </div>
+                    <div style="width: 100%; height: auto;" id="readerView" class=""></div>
+
+                    <div style="width: 100%; height: auto; display: none;" id="readerSucces">
+                        <h2>{{ 'Code scanned successfully, you will be forwarded'|trans|capitalize }}</h2>
                     </div>
 
-                    <div class="d-flex justify-content-center mb-2">
-                        <div class="collapse" id="clockIn">
-
-                        </div>
+                    <div class="d-flex justify-content-center mb-2" >
+                        <form action="{{ path('app_chin_checkin') }}" method="post" id="manual-form" class="collapse">
+                            <div class="form-group" style="display: flex">
+                                <input type="text" class="form-control mr-2" name="code"
+                                       placeholder="{{ 'fill in code'|trans|capitalize }}">
+                                <button type="submit" style="width: -webkit-fill-available;" class="btn mb-2 btn-success"
+                                >{{ 'go'|trans|capitalize }}</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -87,6 +129,146 @@
     <section class="section bg-white">
         {% include 'widgets/faq.html.twig' %}
     </section>
+
+    <script>
+        function changeNodeType() {
+            var nodeType = document.getElementById('nodeTypeSelect').value;
+            var reserve = document.getElementById('reserve');
+            // var clockIn = document.getElementById('clockIn');
+            var manualForm = document.getElementById('manual-form');
+            document.getElementById("demo").innerHTML = "You selected: " + nodeType;
+
+            reserve.hidden = true;
+            // clockIn.hidden = true;
+            switch (nodeType) {
+                case 'checkin':
+                    manualForm.action = '/chin/checkin';
+                    break;
+                case 'reserve':
+                    reserve.hidden = false;
+                    manualForm.action = '/chin/reservation';
+                    break;
+                case 'clockIn':
+                    // clockIn.hidden = false;
+                    manualForm.action = '/chin/clockin';
+                    break;
+            }
+        }
+    </script>
+
+    <script>
+        function autocomplete(inp, arr) {
+            /*the autocomplete function takes two arguments,
+            the text field element and an array of possible autocompleted values:*/
+            var currentFocus;
+            /*execute a function when someone writes in the text field:*/
+            inp.addEventListener("input", function(e) {
+                var a, b, i, val = this.value;
+                /*close any already open lists of autocompleted values*/
+                closeAllLists();
+                if (!val) { return false;}
+                currentFocus = -1;
+                /*create a DIV element that will contain the items (values):*/
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                /*append the DIV element as a child of the autocomplete container:*/
+                this.parentNode.appendChild(a);
+                /*for each item in the array...*/
+                for (i = 0; i < arr.length; i++) {
+                    /*check if the item starts with the same letters as the text field value:*/
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        /*create a DIV element for each matching element:*/
+                        b = document.createElement("DIV");
+                        /*make the matching letters bold:*/
+                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].substr(val.length);
+                        /*insert a input field that will hold the current array item's value:*/
+                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                        /*execute a function when someone clicks on the item value (DIV element):*/
+                        b.addEventListener("click", function(e) {
+                            /*insert the value for the autocomplete text field:*/
+                            inp.value = this.getElementsByTagName("input")[0].value;
+                            /*close the list of autocompleted values,
+                            (or any other open lists of autocompleted values:*/
+                            closeAllLists();
+                        });
+                        a.appendChild(b);
+                    }
+                }
+            });
+            /*execute a function presses a key on the keyboard:*/
+            inp.addEventListener("keydown", function(e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    /*If the arrow DOWN key is pressed,
+                    increase the currentFocus variable:*/
+                    currentFocus++;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 38) { //up
+                    /*If the arrow UP key is pressed,
+                    decrease the currentFocus variable:*/
+                    currentFocus--;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 13) {
+                    /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                        /*and simulate a click on the "active" item:*/
+                        if (x) x[currentFocus].click();
+                    }
+                }
+            });
+            function addActive(x) {
+                /*a function to classify an item as "active":*/
+                if (!x) return false;
+                /*start by removing the "active" class on all items:*/
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                /*add class "autocomplete-active":*/
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+            function removeActive(x) {
+                /*a function to remove the "active" class from all autocomplete items:*/
+                for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
+            function closeAllLists(elmnt) {
+                /*close all autocomplete lists in the document,
+                except the one passed as an argument:*/
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+            /*execute a function when someone clicks in the document:*/
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+        }
+
+        /*An array containing all the organizations:*/
+        var organizations =
+            [
+                {% for reservationNode in reservationNodes %}
+                    {% if reservationNode.organization|default
+                        and commonground_is_resource(reservationNode.organization) %}
+                        {% set organization = commonground_resource(reservationNode.organization) %}
+                        "{{ organization.name }}",
+                    {% endif %}
+                {% endfor %}
+            ];
+
+        /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+        autocomplete(document.getElementById("orgAutocomplete"), organizations);
+    </script>
 
     <script>
 
@@ -142,6 +324,7 @@
 
     </script>
 
+    <!-- Modals -->
     {% include 'default/modals/newsletter_message_modal.html.twig' %}
 
     <script>

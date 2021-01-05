@@ -3,10 +3,10 @@ entries:
   checking:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2021-01-05T09:20:59.1967193Z"
+    created: "2021-01-05T11:45:34.8440969Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
-    digest: feda470246ebd8b8070f3f2f2133345df2dbf0663166cffac637c6a025bb08b8
+    digest: 0741ec7f9296bc0ea16298d08c571a36861e248c6d10da89e21c788cac486dd9
     home: www.checking.nu
     icon: www.checking.nu
     name: checking
@@ -18,7 +18,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 11.10.0
-    created: "2021-01-05T09:20:59.2143051Z"
+    created: "2021-01-05T11:45:34.8630726Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -50,7 +50,7 @@ entries:
   stage-platform:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2021-01-05T09:20:59.2024278Z"
+    created: "2021-01-05T11:45:34.8504883Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
     digest: 790f23d533d146a77ebfa029747fb23d2315c9b29e2ec9aaef90ac8bee277f79
@@ -60,4 +60,4 @@ entries:
     urls:
     - stage-platform-0.1.0.tgz
     version: 0.1.0
-generated: "2021-01-05T09:20:59.1802972Z"
+generated: "2021-01-05T11:45:34.8261753Z"

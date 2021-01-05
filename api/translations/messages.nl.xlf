@@ -3171,7 +3171,7 @@
       </trans-unit>
       <trans-unit id="saNtJdl" resname="select">
         <source>select</source>
-        <target>__select</target>
+        <target>selecteer</target>
       </trans-unit>
       <trans-unit id="_TJnqhH" resname="Remember me">
         <source>Remember me</source>

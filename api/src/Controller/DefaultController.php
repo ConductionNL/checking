@@ -32,6 +32,8 @@ class DefaultController extends AbstractController
         // On an index route we might want to filter based on user input
         $variables['query'] = array_merge($request->query->all(), $variables['post'] = $request->request->all());
 
+        $variables['reservationNodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['type' => 'reservation'])['hydra:member'];
+
         return $variables;
     }
 
