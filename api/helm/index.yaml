@@ -3,10 +3,10 @@ entries:
   checking:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2021-01-04T12:54:14.174052Z"
+    created: "2021-01-05T08:30:15.3783499Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
-    digest: c6030b88a31203c49094a4a08d4516ac83cbb74f7687f12e0ad393c8e7089380
+    digest: a3fdd53c031cb20857c51afd12c120d782179b6eaf6383cc0fa53e0f1f3b8e12
     home: www.checking.nu
     icon: www.checking.nu
     name: checking
@@ -16,7 +16,7 @@ entries:
   stage-platform:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2021-01-04T12:54:14.1789941Z"
+    created: "2021-01-05T08:30:15.384409Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
     digest: 790f23d533d146a77ebfa029747fb23d2315c9b29e2ec9aaef90ac8bee277f79
@@ -26,4 +26,4 @@ entries:
     urls:
     - stage-platform-0.1.0.tgz
     version: 0.1.0
-generated: "2021-01-04T12:54:14.1656664Z"
+generated: "2021-01-05T08:30:15.3729965Z"

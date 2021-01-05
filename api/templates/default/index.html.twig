@@ -16,18 +16,23 @@
                 <div class="col-12 text-center">
                     <h1 class="h1 px-md-6">Checking</h1>
                     <p class="lead mb-4">{{ 'easy and save checkin registration'|trans|capitalize }}</p>
-                    <a class="btn btn-secondary animate-up-2 mb-4" data-toggle="collapse" data-target="#readerView" onclick="startQrScan()" id="startScan" ><i class="fas fa-qrcode mr-2"></i>{{ 'scan with camera'|trans|capitalize }}</a>
-                    <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#manual-from"><i class="far fa-keyboard mr-2"></i>{{ 'input manually'|trans|capitalize }}</a>
-
+                    <a class="btn btn-secondary animate-up-2 mb-4" data-toggle="collapse" data-target="#readerView"
+                       onclick="startQrScan()" id="startScan" >
+                        <i class="fas fa-qrcode mr-2"></i>{{ 'scan with camera'|trans|capitalize }}</a>
+                    <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#manual-from">
+                        <i class="far fa-keyboard mr-2"></i>{{ 'input manually'|trans|capitalize }}</a>
 
                     <div style="width: 100%; height: auto;" id="readerView" class=""></div>
 
-                    <div style="width: 100%; height: auto; display: none;" id="readerSucces"><h2>{{ 'Code scanned successfully, you will be forwarded'|trans|capitalize }}</h2></div>
+                    <div style="width: 100%; height: auto; display: none;" id="readerSucces">
+                        <h2>{{ 'Code scanned successfully, you will be forwarded'|trans|capitalize }}</h2>
+                    </div>
 
                     <div class="d-flex justify-content-center mb-2" >
                         <form action="{{ path('app_chin_checkin') }}" method="post" id="manual-from" class="collapse">
                             <div class="form-group" style="display: flex">
-                                <input type="text" class="form-control mr-2" name="code" placeholder="{{ 'fill in code'|trans|capitalize }}">
+                                <input type="text" class="form-control mr-2" name="code"
+                                       placeholder="{{ 'fill in code'|trans|capitalize }}">
                                 <button type="submit" style="width: -webkit-fill-available;" class="btn mb-2 btn-success">{{ 'go'|trans|capitalize }}</button>
                             </div>
                         </form>
@@ -36,7 +41,9 @@
             </div>
         </div>
         <figure class="position-absolute bottom-0 left-0 w-100 d-none d-md-block mb-n2">
-            <svg class="fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4"><path d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z"></path></svg>
+            <svg class="fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4">
+                <path d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z"></path>
+            </svg>
         </figure>
     </section>
 
