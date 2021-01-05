@@ -1,6 +1,6 @@
 <?php
 
-// src/EventSubscriber/LocaleSubscriber.php
+// src/Subscriber/LocaleSubscriber.php
 
 namespace App\EventSubscriber;
 
@@ -17,14 +17,19 @@ class LocaleSubscriber implements EventSubscriberInterface
         $this->defaultLocale = $defaultLocale;
     }
 
+    public static function getSubscribedEvents()
+    {
+        return [
+            // must be registered before (i.e. with a higher priority than) the default Locale listener
+            KernelEvents::REQUEST => [['onKernelRequest', 20]],
+        ];
+    }
+
     public function onKernelRequest(RequestEvent $event)
     {
         $request = $event->getRequest();
         $locale = $request->get('_locale');
 
-        if (!$request->hasPreviousSession()) {
-            return;
-        }
 
         // try to see if the locale has been set as a _locale routing parameter
         if ($locale) {
@@ -36,11 +41,4 @@ class LocaleSubscriber implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents()
-    {
-        return [
-            // must be registered before (i.e. with a higher priority than) the default Locale listener
-            KernelEvents::REQUEST => [['onKernelRequest', 20]],
-        ];
-    }
 }

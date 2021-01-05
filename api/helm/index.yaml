@@ -3,20 +3,54 @@ entries:
   checking:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2021-01-05T08:30:15.3783499Z"
+    created: "2021-01-05T09:20:59.1967193Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
-    digest: a3fdd53c031cb20857c51afd12c120d782179b6eaf6383cc0fa53e0f1f3b8e12
+    digest: feda470246ebd8b8070f3f2f2133345df2dbf0663166cffac637c6a025bb08b8
     home: www.checking.nu
     icon: www.checking.nu
     name: checking
     urls:
     - checking-0.1.0.tgz
     version: 0.1.0
+  postgresql:
+  - annotations:
+      category: Database
+    apiVersion: v2
+    appVersion: 11.10.0
+    created: "2021-01-05T09:20:59.2143051Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      version: 1.x.x
+    description: Chart for PostgreSQL, an object-relational database management system
+      (ORDBMS) with an emphasis on extensibility and on standards-compliance.
+    digest: eebe8f456cf98d5927a35666d1d899174dc4d3e09f26788033f761527bc90749
+    home: https://github.com/bitnami/charts/tree/master/bitnami/postgresql
+    icon: https://bitnami.com/assets/stacks/postgresql/img/postgresql-stack-110x117.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    - replication
+    - cluster
+    maintainers:
+    - email: containers@bitnami.com
+      name: Bitnami
+    - email: cedric@desaintmartin.fr
+      name: desaintmartin
+    name: postgresql
+    sources:
+    - https://github.com/bitnami/bitnami-docker-postgresql
+    - https://www.postgresql.org/
+    urls:
+    - charts/postgresql-10.1.1.tgz
+    version: 10.1.1
   stage-platform:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2021-01-05T08:30:15.384409Z"
+    created: "2021-01-05T09:20:59.2024278Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
     digest: 790f23d533d146a77ebfa029747fb23d2315c9b29e2ec9aaef90ac8bee277f79
@@ -26,4 +60,4 @@ entries:
     urls:
     - stage-platform-0.1.0.tgz
     version: 0.1.0
-generated: "2021-01-05T08:30:15.3729965Z"
+generated: "2021-01-05T09:20:59.1802972Z"
