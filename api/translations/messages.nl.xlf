@@ -3453,6 +3453,10 @@
         <source>why do I need to checkin?</source>
         <target>waarom heb ik checkin nodig?</target>
       </trans-unit>
+      <trans-unit id="Tm4guci" resname="easy and save checkin registration">
+        <source>easy and save checkin registration</source>
+        <target>eenvoudig en veilig inchecken</target>
+      </trans-unit>
       <trans-unit id="_0Q9d3z" resname="the simple answer is contact tracing, that means then when a person is tested positively for covid-19 local health officials want to trace who that person has been in contact with so that they can contact those people and advise them to be alert for any symptoms or go into quarantine. For this reason some governments (like the Netherlands) have mandated that shops,  bars, restaurants and other small businesses and organisations keep lists of visitors.">
         <source>the simple answer is contact tracing, that means then when a person is tested positively for covid-19 local health officials want to trace who that person has been in contact with so that they can contact those people and advise them to be alert for any symptoms or go into quarantine. For this reason some governments (like the Netherlands) have mandated that shops,  bars, restaurants and other small businesses and organisations keep lists of visitors.</source>
         <target>het simpele antwoord is contact opsporen, dat betekend dat wanneer iemand positief is getest voor covid-19 locale gezondheidsautoriteiten willen weten met wie die persoon in contact is geweest zodat ze met deze mensen in contact kunnen komen en ze waarschuwen voor mogelijke symptomen of om in quarantaine te gaan. Hiervoor hebben verschillende regeringen (waaronder Nederland) het verplicht dat wienkels, cafés, restaurants en andere kleine bedrijven lijsten bijhouden van bezoekers.</target>

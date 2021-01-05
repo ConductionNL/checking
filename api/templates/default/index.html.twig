@@ -16,26 +16,52 @@
                 <div class="col-12 text-center">
                     <h1 class="h1 px-md-6">Checking</h1>
                     <p class="lead mb-4">{{ 'easy and save checkin registration'|trans|capitalize }}</p>
-                    <a class="btn btn-secondary animate-up-2 mb-4" data-toggle="collapse" data-target="#readerView"
-                       onclick="startQrScan()" id="startScan" >
-                        <i class="fas fa-qrcode mr-2"></i>{{ 'scan with camera'|trans|capitalize }}</a>
-                    <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#manual-from">
-                        <i class="far fa-keyboard mr-2"></i>{{ 'input manually'|trans|capitalize }}</a>
 
-                    <div style="width: 100%; height: auto;" id="readerView" class=""></div>
+                    <!-- Make a dropdown option for node types and let that choice change stuff instead of this: -->
+                    <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#checkin">
+                        <i class="fas fa-qrcode mr-2"></i>{{ 'checkin'|trans|capitalize }}</a>
+                    <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#reserve">
+                        <i class="fas fa-ticket-alt mr-2"></i>{{ 'reserve'|trans|capitalize }}</a>
+                    <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#clockIn">
+                        <i class="fa fa-clock mr-2"></i>{{ 'clock in'|trans|capitalize }}</a>
 
-                    <div style="width: 100%; height: auto; display: none;" id="readerSucces">
-                        <h2>{{ 'Code scanned successfully, you will be forwarded'|trans|capitalize }}</h2>
+                    <div class="d-flex justify-content-center mb-2">
+                        <div class="collapse" id="checkin">
+                            <a class="btn btn-secondary animate-up-2 mb-4" data-toggle="collapse" data-target="#readerView"
+                               onclick="startQrScan()" id="startScan" >
+                                <i class="fas fa-qrcode mr-2"></i>{{ 'scan with camera'|trans|capitalize }}</a>
+                            <a class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#manual-from">
+                                <i class="far fa-keyboard mr-2"></i>{{ 'input manually'|trans|capitalize }}</a>
+
+                            <div style="width: 100%; height: auto;" id="readerView" class=""></div>
+
+                            <div style="width: 100%; height: auto; display: none;" id="readerSucces">
+                                <h2>{{ 'Code scanned successfully, you will be forwarded'|trans|capitalize }}</h2>
+                            </div>
+
+                            <div class="d-flex justify-content-center mb-2" >
+                                <form action="{{ path('app_chin_checkin') }}" method="post" id="manual-from" class="collapse">
+                                    <div class="form-group" style="display: flex">
+                                        <input type="text" class="form-control mr-2" name="code"
+                                               placeholder="{{ 'fill in code'|trans|capitalize }}">
+                                        <button type="submit" style="width: -webkit-fill-available;" class="btn mb-2 btn-success"
+                                        >{{ 'go'|trans|capitalize }}</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="d-flex justify-content-center mb-2" >
-                        <form action="{{ path('app_chin_checkin') }}" method="post" id="manual-from" class="collapse">
-                            <div class="form-group" style="display: flex">
-                                <input type="text" class="form-control mr-2" name="code"
-                                       placeholder="{{ 'fill in code'|trans|capitalize }}">
-                                <button type="submit" style="width: -webkit-fill-available;" class="btn mb-2 btn-success">{{ 'go'|trans|capitalize }}</button>
-                            </div>
-                        </form>
+                    <div class="d-flex justify-content-center mb-2">
+                        <div class="collapse" id="reserve">
+
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mb-2">
+                        <div class="collapse" id="clockIn">
+
+                        </div>
                     </div>
                 </div>
             </div>
