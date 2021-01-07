@@ -72,7 +72,7 @@
                         <div id="reserve" hidden="">
                             <div class="form-group" style="display: flex">
                                 <input type="text" class="form-control mr-2" name="orgAutocomplete" id="orgAutocomplete"
-                                       placeholder="{{ 'organization'|trans|capitalize }}">
+                                       placeholder="{{ 'organization'|trans|capitalize }}" onClick="this.select();">
                                 {# This button opens a modal where you can choose a accommodation (of the nodes) from
                                 the selected organization, opening and putting the reference in the manual-form input #}
                                 <button style="width: -webkit-fill-available;" data-toggle="modal"
@@ -81,13 +81,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- hidden field for nodeType clockIn -->
-{#                    <div class="d-flex justify-content-center mb-2">#}
-{#                        <div id="clockIn" hidden="">#}
-{#                            <p>clock in</p>#}
-{#                        </div>#}
-{#                    </div>#}
 
                     <div style="width: 100%; height: auto;" id="readerView" class=""></div>
 
@@ -98,8 +91,8 @@
                     <div class="d-flex justify-content-center mb-2" >
                         <form action="{{ path('app_chin_checkin') }}" method="post" id="manual-form" class="collapse">
                             <div class="form-group" style="display: flex">
-                                <input type="text" class="form-control mr-2" name="code" id="code"
-                                       placeholder="{{ 'fill in code'|trans|capitalize }}">
+                                <input type="text" class="form-control mr-2" name="code" id="code" onchange="updateManualForm()"
+                                       placeholder="{{ 'fill in code'|trans|capitalize }}" onClick="this.select();">
                                 <button type="submit" style="width: -webkit-fill-available;" class="btn mb-2 btn-success"
                                 >{{ 'go'|trans|capitalize }}</button>
                             </div>
@@ -134,23 +127,39 @@
         function changeNodeType() {
             var nodeType = document.getElementById('nodeTypeSelect').value;
             var reserve = document.getElementById('reserve');
-            // var clockIn = document.getElementById('clockIn');
             var manualForm = document.getElementById('manual-form');
 
             reserve.hidden = true;
-            // clockIn.hidden = true;
             switch (nodeType) {
                 case 'checkin':
                     manualForm.action = '/chin/checkin';
+                    manualForm.method = 'post';
                     break;
                 case 'reserve':
                     reserve.hidden = false;
-                    manualForm.action = '/chin/reservation';
+                    manualForm.removeAttribute('method');
                     break;
                 case 'clockIn':
                     // clockIn.hidden = false;
                     manualForm.action = '/chin/clockin';
+                    manualForm.method = 'post';
                     break;
+            }
+        }
+    </script>
+
+    <script>
+        // Onchange van manual code input
+        function updateManualForm() {
+            if (document.getElementById('nodeTypeSelect').value === 'reserve') {
+                var code = document.getElementById('code').value;
+                var manualForm = document.getElementById('manual-form');
+
+                if (code) {
+                    manualForm.action = '/chin/reservation/' + code;
+                } else {
+                    manualForm.action = '?message=Please+fill+in+a+code+first!';
+                }
             }
         }
     </script>
@@ -345,7 +354,10 @@
                 // Set manual input field to the node reference
                 document.getElementById('code').value = nodeReference;
 
-                // If manual input is collapsed make sure it is visible for the user.
+                // Set manual form action to the correct uri with nodeReference
+                document.getElementById('manual-form').action = '/chin/reservation/' + nodeReference;
+
+                // If manual form is collapsed make sure it is visible for the user.
                 $('#manual-form').collapse('show');
             }
         </script>
