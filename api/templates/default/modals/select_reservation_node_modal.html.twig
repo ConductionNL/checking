@@ -3,11 +3,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title text-center">{{ reservationOrganization.name }}</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body text-center">
+            <div class="modal-body">
                 {% for reservationNode in reservationNodes %}
                     {% if reservationNode.organization is defined and reservationNode.organization is not empty %}
                         {% if reservationNode.organization == commonground_cleanurl({'component': 'wrc', 'type': 'organizations', 'id': reservationOrganization.id}) %}
@@ -60,14 +60,14 @@
             </div>
             <script>
                 function setNodeReference(nodeReference) {
+                    // Close this modal
+                    document.getElementById("closeButton").click();
+
                     // Set manual input field to the node reference
                     document.getElementById('code').value = nodeReference;
 
                     // If manual input is collapsed make sure it is visible for the user.
                     $('#manual-form').collapse('show');
-
-                    // Close this modal
-                    $('#selectReservationNodeModal{{ reservationOrganization.id }}').modal('hide');
                 }
             </script>
         </div>

@@ -191,8 +191,7 @@
                             inp.value = this.getElementsByTagName("input")[1].value;
 
                             // Set the correct modal to target when clicking the select button
-                            var selectOrganizationButton = document.getElementById("selectOrganizationButton");
-                            selectOrganizationButton.setAttribute('data-target',
+                            document.getElementById("selectOrganizationButton").setAttribute('data-target',
                                 '#selectReservationNodeModal' + this.getElementsByTagName("input")[0].value);
 
                             /*close the list of autocompleted values,
@@ -205,6 +204,11 @@
             });
             /*execute a function presses a key on the keyboard:*/
             inp.addEventListener("keydown", function(e) {
+                // Remove data-target from button if it has one
+                if (document.getElementById("selectOrganizationButton").hasAttribute('data-target')) {
+                    document.getElementById("selectOrganizationButton").removeAttribute('data-target');
+                }
+
                 var x = document.getElementById(this.id + "autocomplete-list");
                 if (x) x = x.getElementsByTagName("div");
                 if (e.keyCode == 40) {
