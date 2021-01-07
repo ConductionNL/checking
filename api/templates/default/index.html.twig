@@ -73,10 +73,9 @@
                             <div class="form-group" style="display: flex">
                                 <input type="text" class="form-control mr-2" name="orgAutocomplete" id="orgAutocomplete"
                                        placeholder="{{ 'organization'|trans|capitalize }}">
-                                {# This button should open a modal where you can choose a accommodation (of the nodes) from
-                                the selected organization, opening and putting the reference in the manual input #}
+                                {# This button opens a modal where you can choose a accommodation (of the nodes) from
+                                the selected organization, opening and putting the reference in the manual-form input #}
                                 <button style="width: -webkit-fill-available;" data-toggle="modal"
-                                        data-target="#selectReservationNodeModal"
                                         class="btn mb-2 btn-success" id="selectOrganizationButton"
                                 >{{ 'select'|trans|capitalize }}</button>
                             </div>
@@ -184,16 +183,17 @@
                         b.innerHTML = "<strong>" + arr[key].substr(0, val.length) + "</strong>";
                         b.innerHTML += arr[key].substr(val.length);
                         /*insert a input field that will hold the current array item's value:*/
+                        b.innerHTML += "<input type='hidden' value='" + key + "'>";
                         b.innerHTML += "<input type='hidden' value='" + arr[key] + "'>";
                         /*execute a function when someone clicks on the item value (DIV element):*/
                         b.addEventListener("click", function(e) {
                             /*insert the value for the autocomplete text field:*/
-                            inp.value = this.getElementsByTagName("input")[0].value;
+                            inp.value = this.getElementsByTagName("input")[1].value;
 
                             // Set the correct modal to target when clicking the select button
                             var selectOrganizationButton = document.getElementById("selectOrganizationButton");
-                            selectOrganizationButton.setAttribute('data-target', '#selectReservationNodeModal' + key);
-                            {# TODO:fix that the correct key is used here^, it looks like it will always use the key of the last item in the list somehow #}
+                            selectOrganizationButton.setAttribute('data-target',
+                                '#selectReservationNodeModal' + this.getElementsByTagName("input")[0].value);
 
                             /*close the list of autocompleted values,
                             (or any other open lists of autocompleted values:*/

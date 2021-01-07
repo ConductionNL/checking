@@ -6,7 +6,7 @@ url: "https://github.com/ConductionNL/checking"
 landingURL: "dev.checking.nu" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V1.0"
-releaseDate: "2021-05-01"
+releaseDate: "2021-07-01"
 logo: www.checking.nu 
 monochromeLogo: img/logo-mono.svg
 
