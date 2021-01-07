@@ -46,7 +46,7 @@
                                     <div class="col-auto">
 
                                         <!-- Select button -->
-                                        <button class="btn btn-block btn-primary mt-3 lift" onclick="setNodeReference('{{ reservationNode.reference }}')">{{ 'select'|trans|capitalize }}</button>
+                                        <button class="btn btn-block btn-primary mt-3 lift" onclick="setNodeReference('{{ reservationNode.reference }}', '{{ reservationOrganization.id }}')">{{ 'select'|trans|capitalize }}</button>
 
                                     </div>
                                 </div>
@@ -58,18 +58,6 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <script>
-                function setNodeReference(nodeReference) {
-                    // Close this modal
-                    document.getElementById("closeButton").click();
-
-                    // Set manual input field to the node reference
-                    document.getElementById('code').value = nodeReference;
-
-                    // If manual input is collapsed make sure it is visible for the user.
-                    $('#manual-form').collapse('show');
-                }
-            </script>
         </div>
     </div>
 </div>
