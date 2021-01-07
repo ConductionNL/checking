@@ -2,37 +2,62 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title">{{ reservationOrganization.name }}</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h6 class="modal-title text-center">{{ reservationOrganization.name }}</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body text-center">
+            <div class="modal-body">
                 {% for reservationNode in reservationNodes %}
                     {% if reservationNode.organization is defined and reservationNode.organization is not empty %}
                         {% if reservationNode.organization == commonground_cleanurl({'component': 'wrc', 'type': 'organizations', 'id': reservationOrganization.id}) %}
-                            {% if reservationNode.accommodation is defined and reservationNode.accommodation is not empty and commonground_is_resource(reservationNode.accommodation) %}
-                                {% set accommodation = commonground_resource(reservationNode.accommodation) %}
-                                <a class="btn btn-success" onclick="setNodeReference('{{ reservationNode.reference }}')" >{{ accommodation.name }}</a><br><br>
-                            {% else %}
-                                <a class="btn btn-success" onclick="setNodeReference('{{ reservationNode.reference }}')" >{{ reservationNode.name }}</a><br><br>
-                            {% endif %}
+                            <div class="list-group-item">
+                                <!-- Header -->
+                                <div class="row mb-0">
+                                    <div class="col">
+
+                                        <!-- Heading -->
+                                        <div class="list-group list-group-flush">
+                                            <!-- Property of this claim -->
+                                            <div style="border: none" class="list-group-item pb-0">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <!-- Heading -->
+                                                        <p class="mb-0 font-weight-bold">
+                                                            {% if reservationNode.accommodation is defined and reservationNode.accommodation is not empty and commonground_is_resource(reservationNode.accommodation) %}
+                                                                {% set accommodation = commonground_resource(reservationNode.accommodation) %}
+                                                                {{ accommodation.name }}
+                                                            {% else %}
+                                                                {{ reservationNode.name }}
+                                                            {% endif %}
+                                                        </p>
+                                                        {% if reservationNode.description|default %}
+                                                            <!-- Description -->
+                                                            <p class="text-gray-700">
+                                                                {{ reservationNode.description }}
+                                                            </p>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-auto">
+
+                                        <!-- Select button -->
+                                        <button class="btn btn-block btn-primary mt-3 lift" onclick="setNodeReference('{{ reservationNode.reference }}', '{{ reservationOrganization.id }}')">{{ 'select'|trans|capitalize }}</button>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Divider -->
+                            <hr class="border-gray-300 my-0">
                         {% endif %}
                     {% endif %}
                 {% endfor %}
             </div>
-            <script>
-                function setNodeReference(nodeReference) {
-                    // Set manual input field to the node reference
-                    document.getElementById('code').value = nodeReference;
-
-                    // If manual input is collapsed make sure it is visible for the user.
-                    {# TODO:this^ #}
-
-                    // Close this modal
-                    {# TODO:this^ #}
-                }
-            </script>
         </div>
     </div>
 </div>

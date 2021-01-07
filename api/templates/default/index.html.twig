@@ -72,23 +72,15 @@
                         <div id="reserve" hidden="">
                             <div class="form-group" style="display: flex">
                                 <input type="text" class="form-control mr-2" name="orgAutocomplete" id="orgAutocomplete"
-                                       placeholder="{{ 'organization'|trans|capitalize }}">
-                                {# This button should open a modal where you can choose a accommodation (of the nodes) from
-                                the selected organization, opening and putting the reference in the manual input #}
+                                       placeholder="{{ 'organization'|trans|capitalize }}" onClick="this.select();">
+                                {# This button opens a modal where you can choose a accommodation (of the nodes) from
+                                the selected organization, opening and putting the reference in the manual-form input #}
                                 <button style="width: -webkit-fill-available;" data-toggle="modal"
-                                        data-target="#selectReservationNodeModal"
                                         class="btn mb-2 btn-success" id="selectOrganizationButton"
                                 >{{ 'select'|trans|capitalize }}</button>
                             </div>
                         </div>
                     </div>
-
-                    <!-- hidden field for nodeType clockIn -->
-{#                    <div class="d-flex justify-content-center mb-2">#}
-{#                        <div id="clockIn" hidden="">#}
-{#                            <p>clock in</p>#}
-{#                        </div>#}
-{#                    </div>#}
 
                     <div style="width: 100%; height: auto;" id="readerView" class=""></div>
 
@@ -99,8 +91,8 @@
                     <div class="d-flex justify-content-center mb-2" >
                         <form action="{{ path('app_chin_checkin') }}" method="post" id="manual-form" class="collapse">
                             <div class="form-group" style="display: flex">
-                                <input type="text" class="form-control mr-2" name="code" id="code"
-                                       placeholder="{{ 'fill in code'|trans|capitalize }}">
+                                <input type="text" class="form-control mr-2" name="code" id="code" onchange="updateManualForm()"
+                                       placeholder="{{ 'fill in code'|trans|capitalize }}" onClick="this.select();">
                                 <button type="submit" style="width: -webkit-fill-available;" class="btn mb-2 btn-success"
                                 >{{ 'go'|trans|capitalize }}</button>
                             </div>
@@ -135,23 +127,39 @@
         function changeNodeType() {
             var nodeType = document.getElementById('nodeTypeSelect').value;
             var reserve = document.getElementById('reserve');
-            // var clockIn = document.getElementById('clockIn');
             var manualForm = document.getElementById('manual-form');
 
             reserve.hidden = true;
-            // clockIn.hidden = true;
             switch (nodeType) {
                 case 'checkin':
                     manualForm.action = '/chin/checkin';
+                    manualForm.method = 'post';
                     break;
                 case 'reserve':
                     reserve.hidden = false;
-                    manualForm.action = '/chin/reservation';
+                    manualForm.removeAttribute('method');
                     break;
                 case 'clockIn':
                     // clockIn.hidden = false;
                     manualForm.action = '/chin/clockin';
+                    manualForm.method = 'post';
                     break;
+            }
+        }
+    </script>
+
+    <script>
+        // Onchange van manual code input
+        function updateManualForm() {
+            if (document.getElementById('nodeTypeSelect').value === 'reserve') {
+                var code = document.getElementById('code').value;
+                var manualForm = document.getElementById('manual-form');
+
+                if (code) {
+                    manualForm.action = '/chin/reservation/' + code;
+                } else {
+                    manualForm.action = '?message=Please+fill+in+a+code+first!';
+                }
             }
         }
     </script>
@@ -184,16 +192,16 @@
                         b.innerHTML = "<strong>" + arr[key].substr(0, val.length) + "</strong>";
                         b.innerHTML += arr[key].substr(val.length);
                         /*insert a input field that will hold the current array item's value:*/
+                        b.innerHTML += "<input type='hidden' value='" + key + "'>";
                         b.innerHTML += "<input type='hidden' value='" + arr[key] + "'>";
                         /*execute a function when someone clicks on the item value (DIV element):*/
                         b.addEventListener("click", function(e) {
                             /*insert the value for the autocomplete text field:*/
-                            inp.value = this.getElementsByTagName("input")[0].value;
+                            inp.value = this.getElementsByTagName("input")[1].value;
 
                             // Set the correct modal to target when clicking the select button
-                            var selectOrganizationButton = document.getElementById("selectOrganizationButton");
-                            selectOrganizationButton.setAttribute('data-target', '#selectReservationNodeModal' + key);
-                            {# TODO:fix that the correct key is used here^, it looks like it will always use the key of the last item in the list somehow #}
+                            document.getElementById("selectOrganizationButton").setAttribute('data-target',
+                                '#selectReservationNodeModal' + this.getElementsByTagName("input")[0].value);
 
                             /*close the list of autocompleted values,
                             (or any other open lists of autocompleted values:*/
@@ -205,6 +213,11 @@
             });
             /*execute a function presses a key on the keyboard:*/
             inp.addEventListener("keydown", function(e) {
+                // Remove data-target from button if it has one
+                if (document.getElementById("selectOrganizationButton").hasAttribute('data-target')) {
+                    document.getElementById("selectOrganizationButton").removeAttribute('data-target');
+                }
+
                 var x = document.getElementById(this.id + "autocomplete-list");
                 if (x) x = x.getElementsByTagName("div");
                 if (e.keyCode == 40) {
@@ -333,6 +346,21 @@
         {% for reservationOrganization in reservationOrganizations %}
             {% include 'default/modals/select_reservation_node_modal.html.twig' %}
         {% endfor %}
+        <script>
+            function setNodeReference(nodeReference, reservationOrganizationId) {
+                // Close this modal
+                $('#selectReservationNodeModal' + reservationOrganizationId).modal('hide');
+
+                // Set manual input field to the node reference
+                document.getElementById('code').value = nodeReference;
+
+                // Set manual form action to the correct uri with nodeReference
+                document.getElementById('manual-form').action = '/chin/reservation/' + nodeReference;
+
+                // If manual form is collapsed make sure it is visible for the user.
+                $('#manual-form').collapse('show');
+            }
+        </script>
     {% endif %}
 
     <script>
