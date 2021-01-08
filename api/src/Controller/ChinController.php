@@ -641,6 +641,9 @@ class ChinController extends AbstractController
 
             $person['emails'][0] = [];
             $person['emails'][0]['email'] = $request->get('email');
+            if ($request->get('telephone')) {
+                $person['telephones'][0]['telephone'] = $request->get('telephone');
+            }
             foreach ($person['telephones'] as &$telephone) {
                 $telephone = '/telephones/'.$telephone['id'];
             }

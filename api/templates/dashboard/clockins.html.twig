@@ -43,7 +43,7 @@
                                                 <li class="list-group-item small p-0">{{ 'Clocked in on:'|trans }} {{ clockin.dateCreated|date("H:i d-m-Y", "Europe/Paris") }}</li>
                                                 {% if clockin.dateCheckedOut|default %}
                                                     {% set now = "now"|date %}
-                                                    {% if clockin.dateCheckedOut|date("H:i d-m-Y") <= now|date("H:i d-m-Y") %}
+                                                    {% if clockin.dateCheckedOut|date("Y-m-d H:i") <= now|date("Y-m-d H:i") %}
                                                         <li class="list-group-item small p-0">{{ 'Clocked out on:'|trans }} {{ clockin.dateCheckedOut|date("H:i d-m-Y", "Europe/Paris") }}</li>
                                                     {% else %}
                                                         <li class="list-group-item small p-0">{{ 'Will be automatically clocked out on:'|trans }} {{ clockin.dateCheckedOut|date("H:i d-m-Y", "Europe/Paris") }}</li>

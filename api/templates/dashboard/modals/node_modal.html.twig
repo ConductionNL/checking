@@ -76,7 +76,7 @@
                     <br>
 
                     <div class="form-group">
-                        <label class="input__label" for="type">{{ 'the type of this code'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                        <label class="input__label" for="type">{{ 'the type of this code'|trans|capitalize }} {% if not item.type|default %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
                         <a type="button" class="ml-2" data-toggle="tooltip" data-placement="bottom" data-background-color="white"
                            title="{{ 'checkin = normal checkin and checkout.'|trans|capitalize }}">
                             <i class="fas fa-info-circle"></i>
@@ -88,7 +88,7 @@
                            title="{{ 'clock in = this code can be used to allow your employees to clockin and clockout.'|trans|capitalize }}">
                             <i class="fas fa-info-circle"></i>
                         </a>
-                        <select class="form-control" id="type" name="type" required>
+                        <select class="form-control" id="type" name="type" required {% if item.type|default %}disabled{% endif %}>
                             <option {% if item.type|default and item.type == 'checkin' %}selected{% endif%} style="background-color: white; color: black" value="checkin">{{ 'checkin'|trans|capitalize }}</option>
                             <option {% if item.type|default and item.type == 'reservation' %}selected{% endif%} style="background-color: white; color: black" value="reservation">{{ 'reserve'|trans|capitalize }}</option>
                             <option {% if item.type|default and item.type == 'clockin' %}selected{% endif%} style="background-color: white; color: black" value="clockin">{{ 'clock in'|trans|capitalize }}</option>

@@ -3,14 +3,20 @@
 {% endif %}
 <span style="color: black">Uw accountgegevens:</span>
 <div class="form-group">
-    <input type="text" id="additionalName" name="name" placeholder="Naam"
+    <input type="text" id="additionalName" name="name" placeholder="{{ 'name'|trans|capitalize }}"
            class="form-control" required
            {% if person.name is defined and person.name is not empty %}value="{{ person.name }}"
            {% elseif user_info.name is defined and user_info.name is not empty %}value="{{ user_info.name }}"{% endif %}>
 </div>
 <div class="form-group">
-    <input type="text" id="additionalName" name="email" placeholder="Email"
+    <input type="email" id="additionalName" name="email" placeholder="{{ 'email'|trans|capitalize }}"
            class="form-control" required
            {% if person.emails[0].email is defined and person.emails[0].email is not empty %}value="{{ person.emails[0].email }}"
         {% elseif user_info.email is defined and user_info.email is not empty %}value="{{ user_info.email }}"{% endif %}>
+</div>
+<div class="form-group">
+    <input type="tel" id="additionalName" name="telephone" placeholder="{{ 'telephone number'|trans|capitalize }}"
+           class="form-control" required
+           {% if person.telephones[0].telephone is defined and person.telephones[0].telephone is not empty %}value="{{ person.telephones[0].telephone }}"
+           {% elseif user_info.telephone is defined and user_info.telephone is not empty %}value="{{ user_info.telephone }}"{% endif %}>
 </div>

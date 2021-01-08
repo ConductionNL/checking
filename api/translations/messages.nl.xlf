@@ -1697,6 +1697,10 @@
         <source>clock in</source>
         <target>inklokken</target>
       </trans-unit>
+      <trans-unit id="w88cc9y" resname="clockin">
+        <source>clockin</source>
+        <target>inklokken</target>
+      </trans-unit>
       <trans-unit id="kTWILTI" resname="Datum">
         <source>Datum</source>
         <target>Datum</target>
