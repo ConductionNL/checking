@@ -501,6 +501,21 @@ class DashboardController extends AbstractController
     public function ReservationsAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
     {
         $variables = [];
+
+        $variables['reservationNodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['type' => 'reservation'])['hydra:member'];
+        $reservationOrganizations = [];
+        foreach ($variables['reservationNodes'] as $reservationNode) {
+            if (isset($reservationNode['organization'])) {
+                $nodeOrganization = $commonGroundService->getResource($reservationNode['organization']);
+                if (in_array($nodeOrganization, $reservationOrganizations)) {
+                    continue;
+                } else {
+                    array_push($reservationOrganizations, $nodeOrganization);
+                }
+            }
+        }
+        $variables['reservationOrganizations'] = $reservationOrganizations;
+
         if (in_array('group.admin', $this->getUser()->getRoles())) {
             $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
             $organization = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
