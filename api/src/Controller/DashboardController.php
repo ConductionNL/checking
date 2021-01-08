@@ -183,8 +183,19 @@ class DashboardController extends AbstractController
                     if (key_exists('address', $place) and !empty($place['address'])) {
                         $address = $commonGroundService->getResource($commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'addresses', 'id' => $place['address']['id']]));
                     }
+                    if (key_exists('calendar', $place) and !empty($place['calendar'])) {
+                        $calendar = $commonGroundService->getResource($place['calendar']);
+                    }
                 }
             }
+
+            // Create a new Calendar or update the existing one for the place of this node
+            $calendar['name'] = $resource['name'];
+            $calendar['description'] = 'calendar for '.$resource['name'];
+            $calendar['timeZone'] = 'CET';
+            $calendar['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $variables['organization']['id']]);
+            $calendar = $commonGroundService->saveResource($calendar, (['component' => 'arc', 'type' => 'calendars']));
+            $place['calendar'] = $commonGroundService->cleanUrl(['component' => 'arc', 'type' => 'calendars', 'id' => $calendar['id']]);
 
             // Create a new address or update the existing one for the place of this node
             $address['name'] = $resource['name'];
@@ -201,7 +212,7 @@ class DashboardController extends AbstractController
 
             // Create a new place or update the existing one for this node
             $place['name'] = $resource['name'];
-            $place['description'] = $resource['description'];
+            $place['description'] = 'place for '. $resource['name'];
             $place['publicAccess'] = true;
             $place['smokingAllowed'] = false;
             if (key_exists('openingTime', $resource) and !empty($resource['openingTime'])) {
@@ -227,7 +238,7 @@ class DashboardController extends AbstractController
 
             // Create a new accommodation or update the existing one for this node
             $accommodation['name'] = $resource['name'];
-            $accommodation['description'] = $resource['description'];
+            $accommodation['description'] = 'accommodation for '.$resource['name'];
             $accommodation['place'] = '/places/'.$place['id'];
             if (key_exists('maximumAttendeeCapacity', $resource) and !empty($resource['maximumAttendeeCapacity'])) {
                 $accommodation['maximumAttendeeCapacity'] = (int) $resource['maximumAttendeeCapacity'];
@@ -235,6 +246,10 @@ class DashboardController extends AbstractController
                 unset($resource['maximumAttendeeCapacity']);
             }
             $accommodation = $commonGroundService->saveResource($accommodation, (['component' => 'lc', 'type' => 'accommodations']));
+
+            // Update calendar (of the place of this node) to set the calendar resource to the accommodation we just created or updated^
+            $calendar['resource'] = $commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'accommodations', 'id' => $accommodation['id']]);
+            $calendar = $commonGroundService->saveResource($calendar, (['component' => 'arc', 'type' => 'calendars']));
 
             // Node configuration/personalization
             if (key_exists('qrConfig', $resource)) {
@@ -582,7 +597,7 @@ class DashboardController extends AbstractController
 
         $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
 
-        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl, 'order[dateCreated]' => 'desc'])['hydra:member'];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['node.type' => 'checkin', 'person' => $personUrl, 'order[dateCreated]' => 'desc'])['hydra:member'];
 
         return $variables;
     }
