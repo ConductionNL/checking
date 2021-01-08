@@ -246,7 +246,7 @@ class ChinController extends AbstractController
         if ($request->isMethod('POST') && $request->request->get('method') == 'checkin') {
             $person = $commonGroundService->getResource($this->getUser()->getPerson());
 
-            $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+            $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['node.type' => 'checkin', 'person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
 
             // If the user has any checkins on this node
             if ((count($checkIns) > 0)) {
@@ -615,7 +615,7 @@ class ChinController extends AbstractController
      * @Route("/clockin/{code}")
      * @Template
      */
-    public function clockinAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $code = null)
+    public function clockinAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, CheckinService $checkinService, ParameterBagInterface $params, $code = null)
     {
 
         // Fallback options of establishing
@@ -648,6 +648,54 @@ class ChinController extends AbstractController
         }
 
         $variables['code'] = $code;
+
+        if ($request->isMethod('POST') && $request->request->get('method') == 'clockin') {
+            $person = $commonGroundService->getResource($this->getUser()->getPerson());
+
+            $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['node.type' => 'clockin', 'person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+
+            // If the user has any clock ins on this node
+            if ((count($checkIns) > 0)) {
+                // And if no dateCheckedOut is set yet (= no auto clock out settings set on the node)
+                if ($checkIns[0]['dateCheckedOut'] == null) {
+                    // Show the you are already checked in message with option to clock out
+                    return $this->redirect($this->generateUrl('app_chin_checkout', ['code'=>$code]));
+                }
+                // DateCheckedOut is set (= auto checkout settings are set on the node)
+                else {
+                    $dateCheckedOut = new \DateTime($checkIns[0]['dateCheckedOut']);
+                    $now = new \DateTime('now');
+                    // If it is not yet the auto checkout time yet
+                    if ($dateCheckedOut > $now) {
+                        // Show the you are already checked in message with option to checkout
+                        return $this->redirect($this->generateUrl('app_chin_checkout', ['code' => $code]));
+                    }
+                }
+            }
+
+            // Create (check-in/) clock-in
+
+            $person['emails'][0] = [];
+            $person['emails'][0]['email'] = $request->get('email');
+            foreach ($person['telephones'] as &$telephone) {
+                $telephone = '/telephones/'.$telephone['id'];
+            }
+            foreach ($person['adresses'] as &$address) {
+                $address = '/addresses/'.$address['id'];
+            }
+            foreach ($person['socials'] as &$social) {
+                $social = '/socials/'.$social['id'];
+            }
+
+            $commonGroundService->updateResource($person);
+
+            $checkIn = $checkinService->createCheckin($variables['resource']);
+            if (isset($checkIn['errorMessage'])) {
+                return $this->redirect($this->generateUrl('app_chin_error', ['message'=>$checkIn['errorMessage'], 'id'=>$checkIn['node']['id']]));
+            }
+
+            return $this->redirect($this->generateUrl('app_chin_confirmation', ['id'=>$checkIn['id']]));
+        }
 
         return $variables;
     }

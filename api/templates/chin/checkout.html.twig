@@ -34,20 +34,33 @@
                         {% include 'chin/widgets/checkin_widget_nodeinfo.html.twig' %}
 
                         {% if checkout is defined %}
-                            <p>{{ 'you have been checked out'|trans|capitalize }}
+                            {% if resource.type == 'clockin' %}
+                                <p>{{ 'you have been clocked out'|trans|capitalize }}
+                            {% else %}
+                                <p>{{ 'you have been checked out'|trans|capitalize }}
+                            {% endif %}
                             <div style="margin-top: 10px; margin-bottom: 10px; padding: 0 10px;">
                                 <a href="{{ path('app_default_index') }}" class="btn btn-danger">
                                     {{ 'back'|trans|capitalize }}</a>
                             </div>
                         {% else %}
-                            <p>{{ 'you are currently still checked in'|trans|capitalize }}<br>
-                                {{ 'do you wish to checkout'|trans|capitalize }}?</p>
+                            {% if resource.type == 'clockin' %}
+                                <p>{{ 'you are already clocked in'|trans|capitalize }}<br>
+                                    {{ 'do you wish to clockout'|trans|capitalize }}?</p>
+                            {% else %}
+                                <p>{{ 'you are currently still checked in'|trans|capitalize }}<br>
+                                    {{ 'do you wish to checkout'|trans|capitalize }}?</p>
+                            {% endif %}
 
                             <form action="{{ path('app_chin_checkout') }}" method="post">
                                 <div style="margin-top: 10px; margin-bottom: 10px; padding: 0 10px;">
                                     <input type="hidden" name="confirmation" value="true">
                                     <button type="submit" class="btn btn-success">
-                                        {{ 'checkout'|trans|capitalize }}
+                                        {% if resource.type == 'clockin' %}
+                                            {{ 'clockout'|trans|capitalize }}
+                                        {% else %}
+                                            {{ 'checkout'|trans|capitalize }}
+                                        {% endif %}
                                     </button>
                                 </div>
                             </form>
