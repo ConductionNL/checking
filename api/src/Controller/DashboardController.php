@@ -284,6 +284,12 @@ class DashboardController extends AbstractController
                 unset($resource['checkinDuration']);
             }
 
+            // !!!
+            // If this node is a clockin node, make sure the checkins(/clockins) on this node are destroyed after 7 years, not 14 days!!!
+            if ($resource['type'] == 'clockin') {
+                $resource['configuration'] = ['lifespan' => '2555']; // 7 years in days
+            }
+
             // Save the (new or already existing) node
             $resource['accommodation'] = $commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'accommodations', 'id' => $accommodation['id']]);
             $commonGroundService->saveResource($resource, (['component' => 'chin', 'type' => 'nodes']));
