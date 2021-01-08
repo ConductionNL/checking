@@ -47,7 +47,7 @@ class DashboardController extends AbstractController
 
         $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
         $variables['person'] = $commonGroundService->getResource($personUrl);
-        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $personUrl])['hydra:member'];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['node.type' => 'checkin' ,'person' => $personUrl])['hydra:member'];
 
         if ($this->getUser()->getOrganization()) {
             $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
