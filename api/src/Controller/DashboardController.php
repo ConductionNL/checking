@@ -212,7 +212,7 @@ class DashboardController extends AbstractController
 
             // Create a new place or update the existing one for this node
             $place['name'] = $resource['name'];
-            $place['description'] = 'place for '. $resource['name'];
+            $place['description'] = 'place for '.$resource['name'];
             $place['publicAccess'] = true;
             $place['smokingAllowed'] = false;
             if (key_exists('openingTime', $resource) and !empty($resource['openingTime'])) {
