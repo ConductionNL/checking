@@ -18,7 +18,10 @@
                                     <div class="d-flex no-gutters align-items-center mb-3">
                                         <div class="col text-left">
                                             <a data-toggle="modal" data-target="#node-{{ code.id }}">
-                                                <h2 class="h5">{{ code.reference }}</h2>
+                                                <h2 class="h5 mb-1">{{ code.reference }}</h2>
+                                                {% if code.type|default %}
+                                                    <p class="text-gray-700">{{ 'Code type:'|trans|capitalize }} {{ code.type }}</p>
+                                                {% endif %}
                                             </a>
                                         </div>
                                         <div class="col text-right">
