@@ -284,6 +284,12 @@ class DashboardController extends AbstractController
                 unset($resource['checkinDuration']);
             }
 
+            // !!!
+            // If this node is a clockin node, make sure the checkins(/clockins) on this node are destroyed after 7 years, not 14 days!!!
+            if ($resource['type'] == 'clockin') {
+                $resource['configuration'] = ['lifespan' => '2555']; // 7 years in days
+            }
+
             // Save the (new or already existing) node
             $resource['accommodation'] = $commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'accommodations', 'id' => $accommodation['id']]);
             $commonGroundService->saveResource($resource, (['component' => 'chin', 'type' => 'nodes']));
@@ -495,6 +501,21 @@ class DashboardController extends AbstractController
     public function ReservationsAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
     {
         $variables = [];
+
+        $variables['reservationNodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['type' => 'reservation'])['hydra:member'];
+        $reservationOrganizations = [];
+        foreach ($variables['reservationNodes'] as $reservationNode) {
+            if (isset($reservationNode['organization'])) {
+                $nodeOrganization = $commonGroundService->getResource($reservationNode['organization']);
+                if (in_array($nodeOrganization, $reservationOrganizations)) {
+                    continue;
+                } else {
+                    array_push($reservationOrganizations, $nodeOrganization);
+                }
+            }
+        }
+        $variables['reservationOrganizations'] = $reservationOrganizations;
+
         if (in_array('group.admin', $this->getUser()->getRoles())) {
             $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
             $organization = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);

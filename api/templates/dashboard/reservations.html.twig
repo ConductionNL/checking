@@ -1,8 +1,83 @@
 {% extends '/dashboard/dashboard.html.twig' %}
 
 {% block dashboard %}
+    <!-- Styling for (reservation organization search) autocomplete -->
+    <style>
+        /*the container must be positioned relative:*/
+        .autocomplete {
+            position: relative;
+            display: inline-block;
+        }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+            color: #000000;
+        }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+        /*when hovering an item:*/
+        .autocomplete-items div:hover {
+            background-color: #e9e9e9;
+        }
+
+        /*when navigating through the items using the arrow keys:*/
+        .autocomplete-active {
+            background-color: DodgerBlue !important;
+            color: #ffffff;
+        }
+    </style>
+
     <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-6 col-lg-12">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <a style="color: white" class="btn btn-secondary animate-up-2 mb-4" data-toggle="collapse" data-target="#readerView" onclick="startQrScan()" id="startScan" ><i class="fas fa-qrcode mr-2"></i>{{ 'scan with camera'|trans|capitalize }}</a>
+                    <a style="color: white" class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#manual-form"><i class="far fa-keyboard mr-2"></i>{{ 'input manually'|trans|capitalize }}</a>
+                    <a style="color: white" class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#reserve"><i class="fa fa-search mr-2"></i>{{ 'search_2'|trans|capitalize }} {{ 'organization'|trans|capitalize }}</a>
+
+                    <div class="d-flex justify-content-center mb-2">
+                        <div id="reserve" class="collapse">
+                            <div class="form-group" style="display: flex">
+                                <input type="text" class="form-control mr-2" name="orgAutocomplete" id="orgAutocomplete"
+                                       placeholder="{{ 'search_2'|trans|capitalize }} {{ 'organization'|trans|capitalize }}"
+                                       onClick="this.select();">
+                                {# This button opens a modal where you can choose a accommodation (of the nodes) from
+                                the selected organization, opening and putting the reference in the manual-form input #}
+                                <button style="width: -webkit-fill-available;" data-toggle="modal"
+                                        class="btn mb-2 btn-success" id="selectOrganizationButton"
+                                >{{ 'select'|trans|capitalize }}</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="width: 100%; height: auto;" id="readerView" class=""></div>
+
+                    <div style="width: 100%; height: auto; display: none;" id="readerSucces"><h2>{{ 'Code scanned successfully, you will be forwarded'|trans|capitalize }}</h2></div>
+
+                    <div class="d-flex justify-content-center mb-2" >
+                        <form action="{{ path('app_chin_reservation') }}" method="post" id="manual-form" class="collapse">
+                            <div class="form-group" style="display: flex">
+                                <input type="text" class="form-control mr-2" name="code" id="code" placeholder="{{ 'fill in code'|trans|capitalize }}">
+                                <button type="submit" style="width: -webkit-fill-available;" class="btn mb-2 btn-success">{{ 'go'|trans|capitalize }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             {% if reservations is defined and reservations is not empty %}
                 {% for reservation in reservations %}
                     <div class="card border-light mb-4">
@@ -63,4 +138,197 @@
         </div>
     </div>
 
+    <script>
+        function autocomplete(inp, arr) {
+            /*the autocomplete function takes two arguments,
+            the text field element and an array of possible autocompleted values:*/
+            var currentFocus;
+            /*execute a function when someone writes in the text field:*/
+            inp.addEventListener("input", function(e) {
+                var a, b, i, val = this.value;
+                /*close any already open lists of autocompleted values*/
+                closeAllLists();
+                if (!val) { return false;}
+                currentFocus = -1;
+                /*create a DIV element that will contain the items (values):*/
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                /*append the DIV element as a child of the autocomplete container:*/
+                this.parentNode.appendChild(a);
+                /*for each item in the array...*/
+                for (var key in arr) {
+                    /*check if the item starts with the same letters as the text field value:*/
+                    if (arr[key].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        /*create a DIV element for each matching element:*/
+                        b = document.createElement("DIV");
+                        /*make the matching letters bold:*/
+                        b.innerHTML = "<strong>" + arr[key].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[key].substr(val.length);
+                        /*insert a input field that will hold the current array item's value:*/
+                        b.innerHTML += "<input type='hidden' value='" + key + "'>";
+                        b.innerHTML += "<input type='hidden' value='" + arr[key] + "'>";
+                        /*execute a function when someone clicks on the item value (DIV element):*/
+                        b.addEventListener("click", function(e) {
+                            /*insert the value for the autocomplete text field:*/
+                            inp.value = this.getElementsByTagName("input")[1].value;
+
+                            // Set the correct modal to target when clicking the select button
+                            document.getElementById("selectOrganizationButton").setAttribute('data-target',
+                                '#selectReservationNodeModal' + this.getElementsByTagName("input")[0].value);
+
+                            /*close the list of autocompleted values,
+                            (or any other open lists of autocompleted values:*/
+                            closeAllLists();
+                        });
+                        a.appendChild(b);
+                    }
+                }
+            });
+            /*execute a function presses a key on the keyboard:*/
+            inp.addEventListener("keydown", function(e) {
+                // Remove data-target from button if it has one
+                if (document.getElementById("selectOrganizationButton").hasAttribute('data-target')) {
+                    document.getElementById("selectOrganizationButton").removeAttribute('data-target');
+                }
+
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    /*If the arrow DOWN key is pressed,
+                    increase the currentFocus variable:*/
+                    currentFocus++;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 38) { //up
+                    /*If the arrow UP key is pressed,
+                    decrease the currentFocus variable:*/
+                    currentFocus--;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 13) {
+                    /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                        /*and simulate a click on the "active" item:*/
+                        if (x) x[currentFocus].click();
+                    }
+                }
+            });
+            function addActive(x) {
+                /*a function to classify an item as "active":*/
+                if (!x) return false;
+                /*start by removing the "active" class on all items:*/
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                /*add class "autocomplete-active":*/
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+            function removeActive(x) {
+                /*a function to remove the "active" class from all autocomplete items:*/
+                for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
+            function closeAllLists(elmnt) {
+                /*close all autocomplete lists in the document,
+                except the one passed as an argument:*/
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+            /*execute a function when someone clicks in the document:*/
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+        }
+
+        /*An array containing all the organizations:*/
+        var organizations =
+            {
+                {% for reservationOrganization in reservationOrganizations %}
+                "{{ reservationOrganization.id }}":"{{ reservationOrganization.name }}",
+                {% endfor %}
+            };
+
+        /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+        autocomplete(document.getElementById("orgAutocomplete"), organizations);
+    </script>
+
+    <script>
+
+        function onScanError(errorMessage) {
+            // handle on error condition, with error message
+            //console.log(errorMessage);
+        }
+
+        function startQrScan() {
+            //document.getElementById('readerView').style.display = 'block';
+            //document.getElementById('startScan').style.display = 'none';
+
+            // This method will trigger user permissions
+            Html5Qrcode.getCameras().then(devices => {
+                /**
+                 * devices would be an array of objects of type:
+                 * { id: "id", label: "label" }
+                 */
+                if (devices && devices.length) {
+                    var cameraId = devices[0].id;
+
+                    const html5QrCode = new Html5Qrcode("readerView");
+                    const config = {fps: 10};
+
+                    //html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess , onScanError);
+
+                    html5QrCode.start(
+                        {facingMode: "environment"},
+                        {
+                            fps: 1,    // Optional frame per seconds for qr code scanning
+                            qrbox: 250  // Optional if you want bounded box UI
+                        },
+                        qrCodeMessage => {
+                            document.getElementById('readerSucces').style.display = 'block';
+                            document.getElementById('readerView').style.display = 'none';
+                            window.location.href = qrCodeMessage;
+                            html5QrCode.stop();
+                            window.alert('QR Code Succesvol Verwerk');
+                        },
+                        errorMessage => {
+                            // parse error, ignore it.
+                        })
+                        .catch(err => {
+                            // Start failed, handle it.
+                            console.log(errorMessage);
+                        });
+
+                }
+            }).catch(err => {
+                console.log("Er is iets mis gegaan bij het verkrijgen van toegang tot de camera");
+            });
+        }
+
+    </script>
+
+    <!-- Modals -->
+    {% if reservationOrganizations|default %}
+        {% for reservationOrganization in reservationOrganizations %}
+            {% include 'default/modals/select_reservation_node_modal.html.twig' %}
+        {% endfor %}
+        <script>
+            function setNodeReference(nodeReference, reservationOrganizationId) {
+                // Close this modal
+                $('#selectReservationNodeModal' + reservationOrganizationId).modal('hide');
+
+                // Set manual input field to the node reference
+                document.getElementById('code').value = nodeReference;
+
+                // If manual form is collapsed make sure it is visible for the user.
+                $('#manual-form').collapse('show');
+            }
+        </script>
+    {% endif %}
 {% endblock %}

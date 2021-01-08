@@ -561,7 +561,7 @@ class ChinController extends AbstractController
 
         if ($request->isMethod('POST') && $request->get('confirmation')) {
             $person = $commonGroundService->getResource($this->getUser()->getPerson());
-            $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+            $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['node.type' => $variables['resource']['type'], 'person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
 
             $checkIn = $checkIns[0];
             $date = new \DateTime('now');
@@ -602,6 +602,12 @@ class ChinController extends AbstractController
 
         $session->set('code', $code);
         $variables['code'] = $code;
+
+        // Oke we want a user so lets check if we have one
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_user_idvault').'?backUrl='.$request->getUri());
+        }
+
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
         if (count($variables['resources']) > 0) {
             $variables['resource'] = $variables['resources'][0];
@@ -609,6 +615,25 @@ class ChinController extends AbstractController
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
             return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        // We want this resource to be a clockin
+        if ($variables['resource']['type'] != 'clockin') {
+            switch ($variables['resource']['type']) {
+                case 'reservation':
+                    return $this->redirect($this->generateUrl('app_chin_reservation', ['code'=>$code]));
+                    break;
+                case 'checkin':
+                    return $this->redirect($this->generateUrl('app_chin_checkin', ['code'=>$code]));
+                    break;
+                case 'mailing':
+                    return $this->redirect($this->generateUrl('app_chin_mailing', ['code'=>$code]));
+                    break;
+                default:
+                    $this->addFlash('warning', 'Could not find a valid type for reference '.$code);
+
+                    return $this->redirect($this->generateUrl('app_default_index'));
+            }
         }
 
         $variables['code'] = $code;
@@ -641,19 +666,14 @@ class ChinController extends AbstractController
 
             $person['emails'][0] = [];
             $person['emails'][0]['email'] = $request->get('email');
-            if ($request->get('telephone')) {
-                $person['telephones'][0]['telephone'] = $request->get('telephone');
-            }
-            foreach ($person['telephones'] as &$telephone) {
-                $telephone = '/telephones/'.$telephone['id'];
-            }
+            $person['telephones'][0]['telephone'] = [];
+            $person['telephones'][0]['telephone'] = $request->get('telephone');
             foreach ($person['adresses'] as &$address) {
                 $address = '/addresses/'.$address['id'];
             }
             foreach ($person['socials'] as &$social) {
                 $social = '/socials/'.$social['id'];
             }
-
             $commonGroundService->updateResource($person);
 
             $checkIn = $checkinService->createCheckin($variables['resource']);
