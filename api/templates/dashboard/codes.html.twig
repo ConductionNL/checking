@@ -20,7 +20,7 @@
                                             <a data-toggle="modal" data-target="#node-{{ code.id }}">
                                                 <h2 class="h5 mb-1">{{ code.reference }}</h2>
                                                 {% if code.type|default %}
-                                                    <p class="text-gray-700">{{ 'Code type:'|trans|capitalize }} {{ code.type }}</p>
+                                                    <p class="text-gray-700">{{ 'Code type:'|trans|capitalize }} {{ code.type|trans|capitalize }}</p>
                                                 {% endif %}
                                             </a>
                                         </div>
