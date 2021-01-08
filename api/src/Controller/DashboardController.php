@@ -506,6 +506,24 @@ class DashboardController extends AbstractController
     }
 
     /**
+     * @Route("/clockins")
+     * @Template
+     */
+    public function ClockinsAction(CommonGroundService $commonGroundService, Request $request, ParameterBagInterface $params)
+    {
+        // On an index route we might want to filter based on user input
+        $variables['query'] = array_merge($request->query->all(), $variables['post'] = $request->request->all());
+
+        $person = $commonGroundService->getResource($this->getUser()->getPerson());
+
+        $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
+
+        $variables['clockins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['node.type' => 'clockin', 'person' => $personUrl, 'order[dateCreated]' => 'desc'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
      * @Route("/transactions/{organization}")
      * @Template
      */

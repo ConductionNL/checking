@@ -324,7 +324,7 @@ class ChinController extends AbstractController
 
         // Oke we want a user so lets check if we have one
         if (!$this->getUser()) {
-            return $this->redirect($this->generateUrl('app_chin_login', ['code'=>$code]));
+            return $this->redirect($this->generateUrl('app_user_idvault').'?backUrl='.$request->getUri());
         }
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
         if (count($variables['resources']) > 0) {
@@ -363,10 +363,12 @@ class ChinController extends AbstractController
         if (count($calendars) > 0) {
             $variables['calendar'] = $calendars[0];
         } else {
-            $variables['error'] = 'Something went wrong';
+            $this->addFlash('warning', 'Could not find a valid calendar for node with code: '.$code);
+
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod('POST') && $request->request->get('method') == 'reservation') {
             $validChars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $name = substr(str_shuffle(str_repeat($validChars, ceil(3 / strlen($validChars)))), 1, 5);
 
@@ -386,11 +388,16 @@ class ChinController extends AbstractController
 
             $date = \DateTime::createFromFormat('Y-m-d H:i', $request->get('date').$request->get('time'));
 
-            $reservation['event']['name'] = $name;
-            $reservation['event']['startDate'] = $date->format('Y-m-d H:i');
-            $reservation['event']['endDate'] = $date->format('Y-m-d H:i');
-            $reservation['event']['calendar'] = '/calendars/'.$variables['calendar']['id'];
-            $reservation = $commonGroundService->createResource($reservation, ['component' => 'arc', 'type' => 'reservations']);
+            $event = [];
+            $event['name'] = $name;
+            $event['description'] = 'Reservation event for '.$name;
+            $event['startDate'] = $date->format('Y-m-d H:i');
+            $event['endDate'] = $date->format('Y-m-d H:i');
+            $event['calendar'] = '/calendars/'.$variables['calendar']['id'];
+            $event = $commonGroundService->createResource($event, ['component' => 'arc', 'type' => 'events']);
+
+            $reservation['event'] = '/events/'.$event['id'];
+            $commonGroundService->createResource($reservation, ['component' => 'arc', 'type' => 'reservations']);
 
             return $this->redirect($this->generateUrl('app_dashboard_reservations'));
         }

@@ -1293,6 +1293,10 @@
         <source>search</source>
         <target>zoeken</target>
       </trans-unit>
+      <trans-unit id="BHLByk6" resname="search_2">
+        <source>search</source>
+        <target>zoek</target>
+      </trans-unit>
       <trans-unit id="8xuHaDl" resname="no items found">
         <source>no items found</source>
         <target>niet gevonden</target>
@@ -3296,6 +3300,10 @@
       <trans-unit id="lFniS0w" resname="checkins">
         <source>checkins</source>
         <target>check-ins</target>
+      </trans-unit>
+      <trans-unit id="gf3i0W_" resname="clockins">
+        <source>clockins</source>
+        <target>clock-ins</target>
       </trans-unit>
       <trans-unit id="TzPPGsZ" resname="scan with camera">
         <source>scan with camera</source>
