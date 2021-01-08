@@ -268,16 +268,20 @@ class DashboardController extends AbstractController
             }
 
             // make sure checkoutTime is set to UTC
-            if (isset($resource['checkoutTime'])) {
+            if (isset($resource['checkoutTime']) && !empty($resource['checkoutTime'])) {
                 $checkoutTime = new \DateTime($resource['checkoutTime'], new \DateTimeZone('Europe/Paris'));
                 $checkoutTime->setTimeZone(new \DateTimeZone('UTC'));
                 $resource['checkoutTime'] = $checkoutTime->format('H:i');
+            } else {
+                unset($resource['checkoutTime']);
             }
 
             // set node checkinDuration to dateInterval
-            if (isset($resource['checkinDuration'])) {
+            if (isset($resource['checkinDuration']) && !empty($resource['checkinDuration'])) {
                 $checkinDuration = new \DateTime($resource['checkinDuration']);
                 $resource['checkinDuration'] = 'P0Y0M0DT'.$checkinDuration->format('H').'H'.$checkinDuration->format('i').'M0S';
+            } else {
+                unset($resource['checkinDuration']);
             }
 
             // Save the (new or already existing) node

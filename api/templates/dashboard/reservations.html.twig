@@ -28,14 +28,15 @@
                                                 </button>
                                                 <div class="dropdown-menu">
                                                     {% if reservation.cantCancel is not defined and reservation.event.status != 'cancelled'  %}
-                                                        <a class="dropdown-item" href="{{ path('app_chin_cancel', {'code':reservation.node.reference, 'reservation':reservation['id']}) }}">
-                                                            {{ 'cancel'|trans|capitalize }}</a>
+                                                        {# TODO: Get the node.reference of the node of this reservation #}
+{#                                                        <a class="dropdown-item" href="{{ path('app_chin_cancel', {'code':reservation.node.reference, 'reservation':reservation['id']}) }}">#}
+{#                                                            {{ 'cancel'|trans|capitalize }}</a>#}
                                                     {% endif %}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <h2 class="h5">{{ commonground_resource(reservation.underName).name }}</h2>
+                                    <h2 class="h5">{{ commonground_resource(reservation.provider).name }}</h2>
                                     <div class="col d-flex pl-0">
                                         <span class="text-success font-small mr-3"><span class="fas fa-building mr-2"></span>{{ commonground_resource(reservation.event.calendar.resource).name }}</span>
                                         <span class="text-success font-small mr-3"><span class="fas fa-user-friends mr-2"></span>{{ reservation.numberOfParticipants }}</span>
