@@ -246,7 +246,7 @@ class ChinController extends AbstractController
         if ($request->isMethod('POST') && $request->request->get('method') == 'checkin') {
             $person = $commonGroundService->getResource($this->getUser()->getPerson());
 
-            $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+            $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['node.type' => 'checkin', 'person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
 
             // If the user has any checkins on this node
             if ((count($checkIns) > 0)) {
@@ -324,7 +324,7 @@ class ChinController extends AbstractController
 
         // Oke we want a user so lets check if we have one
         if (!$this->getUser()) {
-            return $this->redirect($this->generateUrl('app_chin_login', ['code'=>$code]));
+            return $this->redirect($this->generateUrl('app_user_idvault').'?backUrl='.$request->getUri());
         }
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
         if (count($variables['resources']) > 0) {
@@ -363,10 +363,12 @@ class ChinController extends AbstractController
         if (count($calendars) > 0) {
             $variables['calendar'] = $calendars[0];
         } else {
-            $variables['error'] = 'Something went wrong';
+            $this->addFlash('warning', 'Could not find a valid calendar for node with code: '.$code);
+
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod('POST') && $request->request->get('method') == 'reservation') {
             $validChars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $name = substr(str_shuffle(str_repeat($validChars, ceil(3 / strlen($validChars)))), 1, 5);
 
@@ -386,11 +388,16 @@ class ChinController extends AbstractController
 
             $date = \DateTime::createFromFormat('Y-m-d H:i', $request->get('date').$request->get('time'));
 
-            $reservation['event']['name'] = $name;
-            $reservation['event']['startDate'] = $date->format('Y-m-d H:i');
-            $reservation['event']['endDate'] = $date->format('Y-m-d H:i');
-            $reservation['event']['calendar'] = '/calendars/'.$variables['calendar']['id'];
-            $reservation = $commonGroundService->createResource($reservation, ['component' => 'arc', 'type' => 'reservations']);
+            $event = [];
+            $event['name'] = $name;
+            $event['description'] = 'Reservation event for '.$name;
+            $event['startDate'] = $date->format('Y-m-d H:i');
+            $event['endDate'] = $date->format('Y-m-d H:i');
+            $event['calendar'] = '/calendars/'.$variables['calendar']['id'];
+            $event = $commonGroundService->createResource($event, ['component' => 'arc', 'type' => 'events']);
+
+            $reservation['event'] = '/events/'.$event['id'];
+            $commonGroundService->createResource($reservation, ['component' => 'arc', 'type' => 'reservations']);
 
             return $this->redirect($this->generateUrl('app_dashboard_reservations'));
         }
@@ -608,7 +615,7 @@ class ChinController extends AbstractController
      * @Route("/clockin/{code}")
      * @Template
      */
-    public function clockinAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $code = null)
+    public function clockinAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, CheckinService $checkinService, ParameterBagInterface $params, $code = null)
     {
 
         // Fallback options of establishing
@@ -641,6 +648,54 @@ class ChinController extends AbstractController
         }
 
         $variables['code'] = $code;
+
+        if ($request->isMethod('POST') && $request->request->get('method') == 'clockin') {
+            $person = $commonGroundService->getResource($this->getUser()->getPerson());
+
+            $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['node.type' => 'clockin', 'person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+
+            // If the user has any clock ins on this node
+            if ((count($checkIns) > 0)) {
+                // And if no dateCheckedOut is set yet (= no auto clock out settings set on the node)
+                if ($checkIns[0]['dateCheckedOut'] == null) {
+                    // Show the you are already checked in message with option to clock out
+                    return $this->redirect($this->generateUrl('app_chin_checkout', ['code'=>$code]));
+                }
+                // DateCheckedOut is set (= auto checkout settings are set on the node)
+                else {
+                    $dateCheckedOut = new \DateTime($checkIns[0]['dateCheckedOut']);
+                    $now = new \DateTime('now');
+                    // If it is not yet the auto checkout time yet
+                    if ($dateCheckedOut > $now) {
+                        // Show the you are already checked in message with option to checkout
+                        return $this->redirect($this->generateUrl('app_chin_checkout', ['code' => $code]));
+                    }
+                }
+            }
+
+            // Create (check-in/) clock-in
+
+            $person['emails'][0] = [];
+            $person['emails'][0]['email'] = $request->get('email');
+            foreach ($person['telephones'] as &$telephone) {
+                $telephone = '/telephones/'.$telephone['id'];
+            }
+            foreach ($person['adresses'] as &$address) {
+                $address = '/addresses/'.$address['id'];
+            }
+            foreach ($person['socials'] as &$social) {
+                $social = '/socials/'.$social['id'];
+            }
+
+            $commonGroundService->updateResource($person);
+
+            $checkIn = $checkinService->createCheckin($variables['resource']);
+            if (isset($checkIn['errorMessage'])) {
+                return $this->redirect($this->generateUrl('app_chin_error', ['message'=>$checkIn['errorMessage'], 'id'=>$checkIn['node']['id']]));
+            }
+
+            return $this->redirect($this->generateUrl('app_chin_confirmation', ['id'=>$checkIn['id']]));
+        }
 
         return $variables;
     }

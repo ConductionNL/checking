@@ -76,6 +76,26 @@
                     <br>
 
                     <div class="form-group">
+                        <label class="input__label" for="type">{{ 'the type of this code'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                        <a type="button" class="ml-2" data-toggle="tooltip" data-placement="bottom" data-background-color="white"
+                           title="{{ 'checkin = normal checkin and checkout.'|trans|capitalize }}">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        <a type="button" class="ml-1" data-toggle="tooltip" data-placement="bottom" data-background-color="white"
+                           title="{{ 'reserve = this code can only be used to reserve.'|trans|capitalize }}">
+                            <i class="fas fa-info-circle"></i>
+                        </a><a type="button" class="ml-2" data-toggle="tooltip" data-placement="bottom" data-background-color="white"
+                           title="{{ 'clock in = this code can be used to allow your employees to clockin and clockout.'|trans|capitalize }}">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        <select class="form-control" id="type" name="type" required>
+                            <option {% if item.type|default and item.type == 'checkin' %}selected{% endif%} style="background-color: white; color: black" value="checkin">{{ 'checkin'|trans|capitalize }}</option>
+                            <option {% if item.type|default and item.type == 'reservation' %}selected{% endif%} style="background-color: white; color: black" value="reservation">{{ 'reserve'|trans|capitalize }}</option>
+                            <option {% if item.type|default and item.type == 'clockin' %}selected{% endif%} style="background-color: white; color: black" value="clockin">{{ 'clock in'|trans|capitalize }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label class="input__label" for="maximumAttendeeCapacity">{{ 'maximum number of simultaneous visitors'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                         <input
                             required=""

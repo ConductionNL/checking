@@ -10,6 +10,8 @@
             <div class="list-group dashboard-menu list-group-sm mt-4">
                 <a href="{{ path('app_dashboard_index') }}" class="d-flex list-group-item list-group-item-action {% if app.request.get('_route') == 'app_dashboard_index' %}active {% endif %}">{{ 'overview'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
                 <a href="{{ path('app_dashboard_checkins') }}" class="d-flex list-group-item list-group-item-action {% if app.request.get('_route') == 'app_dashboard_checkins' %}}active {% endif %}">{{ 'checkins'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
+                <a href="{{ path('app_dashboard_reservations') }}" class="d-flex list-group-item list-group-item-action {% if app.request.get('_route') == 'app_dashboard_reservations' %}active {% endif %}">{{ 'reservations'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
+                <a href="{{ path('app_dashboard_clockins') }}" class="d-flex list-group-item list-group-item-action {% if app.request.get('_route') == 'app_dashboard_clockins' %}active {% endif %}">{{ 'clockins'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
                 <a href="#panel-1" onclick="rotate()" data-target="#panel-1" class="d-flex list-group-item list-group-item-action {% if app.request.get('_route') == 'app_dashboard_codes' or app.request.get('_route') == 'app_dashboard_organizations' %} active {% endif %}" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="panel-1">{{ 'manage'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span id="rotate" style="transition: transform .2s ease" class="fas fa-chevron-right"></span></span></a>
                 <div class="collapse" id="panel-1">
                     <div class="">
@@ -20,7 +22,6 @@
                         <a href="{{ path('app_dashboard_invoices') }}" class="d-flex list-group-item list-group-item-action {% if app.request.get('_route') == 'app_dashboard_invoices' %}active {% endif %}">{{ 'invoices'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
                     </div>
                 </div>
-                <a href="{{ path('app_dashboard_reservations') }}" class="d-flex list-group-item list-group-item-action {% if app.request.get('_route') == 'app_dashboard_reservations' %}active {% endif %}">{{ 'reservations'|trans|capitalize }} <span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span></a>
                 <a href="{{ path('app_user_logout') }}" class="btn btn-block btn-danger mt-2">{{ 'logout'|trans|capitalize }}</a>
             </div>
         </div>

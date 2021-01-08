@@ -3,53 +3,116 @@
 {% block dashboard %}
     <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-6 col-lg-12">
-            {% if reservations is defined and reservations is not empty %}
-                {% for reservation in reservations %}
+            <div class="row">
+                <div class="col-12 text-center">
+                    <a style="color: white" class="btn btn-secondary animate-up-2 mb-4" data-toggle="collapse" data-target="#readerView" onclick="startQrScan()" id="startScan" ><i class="fas fa-qrcode mr-2"></i>{{ 'scan with camera'|trans|capitalize }}</a>
+                    <a style="color: white" class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#manual-from"><i class="far fa-keyboard mr-2"></i>{{ 'input manually'|trans|capitalize }}</a>
+
+
+                    <div style="width: 100%; height: auto;" id="readerView" class=""></div>
+
+                    <div style="width: 100%; height: auto; display: none;" id="readerSucces"><h2>{{ 'Code scanned successfully, you will be forwarded'|trans|capitalize }}</h2></div>
+
+                    <div class="d-flex justify-content-center mb-2" >
+                        <form action="{{ path('app_chin_clockin') }}" method="post" id="manual-from" class="collapse">
+                            <div class="form-group" style="display: flex">
+                                <input type="text" class="form-control mr-2" name="code" placeholder="{{ 'fill in code'|trans|capitalize }}">
+                                <button type="submit" style="width: -webkit-fill-available;" class="btn mb-2 btn-success">{{ 'go'|trans|capitalize }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% if clockins is defined and clockins is not empty %}
+            {% for clockin in clockins %}
                     <div class="card border-light mb-4">
-                        <div class="row no-gutters align-items-center">
+                        <div class="row no-gutters align-items-center ">
                             <div class="col-12 col-lg-6 col-xl-4 text-center">
                                 <img style="width: 130px" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgODI2LjY3IDg0NC43MyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXItZ3JhZGllbnQiIHgxPSIxOTguMzMiIHkxPSIxOTguNzUiIHgyPSI3MDEuNSIgeTI9IjcwMS45MiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzJiODdjMyIvPjxzdG9wIG9mZnNldD0iMC4zNSIgc3RvcC1jb2xvcj0iIzJhOGFjNiIvPjxzdG9wIG9mZnNldD0iMC42MiIgc3RvcC1jb2xvcj0iIzI3OTRjZSIvPjxzdG9wIG9mZnNldD0iMC44OCIgc3RvcC1jb2xvcj0iIzIyYTVkYiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzFmYjBlNCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxnIHN0eWxlPSJpc29sYXRpb246aXNvbGF0ZSI+PGcgaWQ9IkxheWVyXzEiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+PGNpcmNsZSBjeD0iNDE0LjI2IiBjeT0iNDIxLjk0IiByPSI0MDEuMDkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xNzcuMDIgNDE2LjUxKSByb3RhdGUoLTQ1KSIgc3R5bGU9ImZpbGw6IzIyYjFlNSIvPjxwYXRoIGQ9Ik04MTUuMzUsNDIxLjk0cTAtMjAuNDMtMi00MC4zNEw2MzQuMTksMjAyLjQ2aDBhMjAuNzUsMjAuNzUsMCwwLDAtMTcuNTYtOS44SDIxM2EyMC43OSwyMC43OSwwLDAsMC0yMC43MywyMC43M1Y2MTdhMjAuNjgsMjAuNjgsMCwwLDAsNi40NCwxNUwzODguOSw4MjIuMjFjOC4zOS41MiwxNi44NC44MiwyNS4zNi44MkM2MzUuNzgsODIzLDgxNS4zNSw2NDMuNDYsODE1LjM1LDQyMS45NFoiIHN0eWxlPSJmaWxsOnVybCgjbGluZWFyLWdyYWRpZW50KSIvPjxnIHN0eWxlPSJvcGFjaXR5OjAuNzAwMDAwMDAwMDAwMDAwMTttaXgtYmxlbmQtbW9kZTpjb2xvci1idXJuIj48cmVjdCB4PSI1MjYuOTEiIHk9IjY0Ny44NyIgd2lkdGg9IjYxLjc4IiBoZWlnaHQ9IjI1LjgxIiBzdHlsZT0iZmlsbDojMmQyYTI3Ii8+PHJlY3QgeD0iMjY3Ljg1IiB5PSI2NDcuODciIHdpZHRoPSI2MS43OCIgaGVpZ2h0PSIyNS44MSIgc3R5bGU9ImZpbGw6IzJkMmEyNyIvPjxwYXRoIGQ9Ik02NDcsMzQ5LjN2LTQuMTVoMy45YTIwLjczLDIwLjczLDAsMCwwLDIwLjcyLTIwLjczdi0zMi45YTIwLjcyLDIwLjcyLDAsMCwwLTIwLjcyLTIwLjcySDY0N1YyMjNhMjAuNzcsMjAuNzcsMCwwLDAtMjAuNzEtMjAuNzJIMjIyLjU4QTIwLjc5LDIwLjc5LDAsMCwwLDIwMS44NiwyMjNWNjI2LjY2YTIwLjc5LDIwLjc5LDAsMCwwLDIwLjcyLDIwLjcySDYyNi4yNUEyMC43NywyMC43NywwLDAsMCw2NDcsNjI2LjY2VjU4NC4xOWgzLjlhMjAuNzIsMjAuNzIsMCwwLDAsMjAuNzItMjAuNzJWNTMwLjU4YTIwLjczLDIwLjczLDAsMCwwLTIwLjcyLTIwLjc0SDY0N1YzNDkuM1oiIHN0eWxlPSJmaWxsOiMyZDJhMjciLz48L2c+PHJlY3QgeD0iNTE3LjI4IiB5PSI2MzguMjQiIHdpZHRoPSI2MS43OCIgaGVpZ2h0PSIyNS44MSIgc3R5bGU9ImZpbGw6IzQwM2MzYSIvPjxyZWN0IHg9IjI1OC4yMiIgeT0iNjM4LjI0IiB3aWR0aD0iNjEuNzgiIGhlaWdodD0iMjUuODEiIHN0eWxlPSJmaWxsOiM0MDNjM2EiLz48cGF0aCBkPSJNNjM3LjM0LDYxN2EyMC43OCwyMC43OCwwLDAsMS0yMC43MiwyMC43M0gyMTNBMjAuOCwyMC44LDAsMCwxLDE5Mi4yMyw2MTdWMjEzLjM5QTIwLjc5LDIwLjc5LDAsMCwxLDIxMywxOTIuNjZINjE2LjYyYTIwLjc4LDIwLjc4LDAsMCwxLDIwLjcyLDIwLjczWiIgc3R5bGU9ImZpbGw6I2Y0ZjRmNiIvPjxwYXRoIGQ9Ik01OTEuNDQsNjA3SDIzOC4xNEExNS4xOCwxNS4xOCwwLDAsMSwyMjMsNTkxLjg3VjIzOC41NWExNS4xNywxNS4xNywwLDAsMSwxNS4xOC0xNS4xNWgzNTMuM2ExNS4xNywxNS4xNywwLDAsMSwxNS4xNywxNS4xNVY1OTEuODdBMTUuMTgsMTUuMTgsMCwwLDEsNTkxLjQ0LDYwN1pNMjM4LjE0LDIzMy41YTUuMDcsNS4wNywwLDAsMC01LjA3LDUuMDVWNTkxLjg3YTUuMDcsNS4wNywwLDAsMCw1LjA3LDVoMzUzLjNhNS4wNyw1LjA3LDAsMCwwLDUuMDctNVYyMzguNTVhNS4wNyw1LjA3LDAsMCwwLTUuMDctNS4wNVoiIHN0eWxlPSJmaWxsOiNmZmYiLz48cGF0aCBkPSJNNTk1Ljg3LDYxMS44NUgyMzMuNjhhMTUuNTcsMTUuNTcsMCwwLDEtMTUuNTUtMTUuNTRWMjM0LjExYTE1LjU3LDE1LjU3LDAsMCwxLDE1LjU1LTE1LjU1SDU5NS44N2ExNS41NSwxNS41NSwwLDAsMSwxNS41NSwxNS41NXYzNjIuMkExNS41NSwxNS41NSwwLDAsMSw1OTUuODcsNjExLjg1Wk0yMzMuNjgsMjI4Ljk0YTUuMTYsNS4xNiwwLDAsMC01LjE3LDUuMTd2MzYyLjJhNS4xNiw1LjE2LDAsMCwwLDUuMTcsNS4xN0g1OTUuODdhNS4xNyw1LjE3LDAsMCwwLDUuMTgtNS4xN1YyMzQuMTFhNS4xNyw1LjE3LDAsMCwwLTUuMTgtNS4xN1oiIHN0eWxlPSJmaWxsOiNiOGI1YjUiLz48cGF0aCBkPSJNNTUzLjcsNDIzLjA2QTEzNS4wNiwxMzUuMDYsMCwxLDEsNDE4LjY0LDI4OCwxMzUuMDYsMTM1LjA2LDAsMCwxLDU1My43LDQyMy4wNloiIHN0eWxlPSJmaWxsOiNkMmQxZDAiLz48cmVjdCB4PSI1NTkuNTYiIHk9IjI2MS4xNyIgd2lkdGg9IjEwMi4zOSIgaGVpZ2h0PSI3NC4zNSIgcng9IjIwLjczIiBzdHlsZT0iZmlsbDojOWE5Njk1Ii8+PHBhdGggZD0iTTYzNy4zNCwzMzUuNTJINTgwLjI5YTIwLjc0LDIwLjc0LDAsMCwxLTIwLjczLTIwLjcyVjI4MS44OWEyMC43NSwyMC43NSwwLDAsMSwyMC43My0yMC43Mmg1Ny4wNVYyNTdINTgwLjI5YTI0LjksMjQuOSwwLDAsMC0yNC44NywyNC44N1YzMTQuOGEyNC45LDI0LjksMCwwLDAsMjQuODcsMjQuODdoNTcuMDVaIiBzdHlsZT0iZmlsbDojZmZmIi8+PHBhdGggZD0iTTYzNy4zNCw1NzQuNTdINTgwLjI5YTIwLjc1LDIwLjc1LDAsMCwxLTIwLjczLTIwLjczVjUyMWEyMC43NCwyMC43NCwwLDAsMSwyMC43My0yMC43NGg1Ny4wNXYtNC4xNUg1ODAuMjlBMjQuOSwyNC45LDAsMCwwLDU1NS40Miw1MjF2MzIuODhhMjQuOSwyNC45LDAsMCwwLDI0Ljg3LDI0Ljg3aDU3LjA1WiIgc3R5bGU9ImZpbGw6I2ZmZiIvPjxwYXRoIGQ9Ik01ODYuNSwyODMuNDlhNy4yMyw3LjIzLDAsMSwxLTcuMjMtNy4yMkE3LjIyLDcuMjIsMCwwLDEsNTg2LjUsMjgzLjQ5WiIgc3R5bGU9ImZpbGw6IzQ4NDQ0MiIvPjxwYXRoIGQ9Ik01ODYuNSwzMTYuNTJhNy4yMyw3LjIzLDAsMSwxLTcuMjMtNy4yMkE3LjIzLDcuMjMsMCwwLDEsNTg2LjUsMzE2LjUyWiIgc3R5bGU9ImZpbGw6IzQ4NDQ0MiIvPjxwYXRoIGQ9Ik02NDguNjUsMjgzLjQ5YTcuMjMsNy4yMywwLDEsMS03LjIyLTcuMjJBNy4yMiw3LjIyLDAsMCwxLDY0OC42NSwyODMuNDlaIiBzdHlsZT0iZmlsbDojNDg0NDQyIi8+PHBhdGggZD0iTTY0OC42NSwzMTYuNTJhNy4yMyw3LjIzLDAsMSwxLTcuMjItNy4yMkE3LjIzLDcuMjMsMCwwLDEsNjQ4LjY1LDMxNi41MloiIHN0eWxlPSJmaWxsOiM0ODQ0NDIiLz48cGF0aCBkPSJNNjYyLDU1My44NGEyMC43MywyMC43MywwLDAsMS0yMC43MiwyMC43M0g1ODAuMjlhMjAuNzUsMjAuNzUsMCwwLDEtMjAuNzMtMjAuNzNWNTIxYTIwLjc0LDIwLjc0LDAsMCwxLDIwLjczLTIwLjc0aDYwLjk0QTIwLjczLDIwLjczLDAsMCwxLDY2Miw1MjFaIiBzdHlsZT0iZmlsbDojOWE5Njk1Ii8+PHBhdGggZD0iTTU4Ni41LDUyMi41M2E3LjIzLDcuMjMsMCwxLDEtNy4yMy03LjIyQTcuMjIsNy4yMiwwLDAsMSw1ODYuNSw1MjIuNTNaIiBzdHlsZT0iZmlsbDojNDg0NDQyIi8+PHBhdGggZD0iTTU4Ni41LDU1NS41NmE3LjIzLDcuMjMsMCwxLDEtNy4yMy03LjIyQTcuMjQsNy4yNCwwLDAsMSw1ODYuNSw1NTUuNTZaIiBzdHlsZT0iZmlsbDojNDg0NDQyIi8+PHBhdGggZD0iTTY0OC42NSw1MjIuNTNhNy4yMyw3LjIzLDAsMSwxLTcuMjItNy4yMkE3LjIyLDcuMjIsMCwwLDEsNjQ4LjY1LDUyMi41M1oiIHN0eWxlPSJmaWxsOiM0ODQ0NDIiLz48cGF0aCBkPSJNNjQ4LjY1LDU1NS41NmE3LjIzLDcuMjMsMCwxLDEtNy4yMi03LjIyQTcuMjQsNy4yNCwwLDAsMSw2NDguNjUsNTU1LjU2WiIgc3R5bGU9ImZpbGw6IzQ4NDQ0MiIvPjxwYXRoIGQ9Ik01MDAuNzQsNDY3LjkydjI3Ljc2Yy03LjA5LDQuNzYtMTYuMTMsOC44Ni0yNi41OSwxMi4wN1Y0NzQuNDdsLTUuNzUsMzQuOTFhMjAyLjg1LDIwMi44NSwwLDAsMS05Ny41OC0uMDVsLTUuNzQtMzQuODZ2MzMuMjJjLTExLjQ2LTMuNTMtMjEuMjEtOC4xMy0yOC41My0xMy41VjQ2Ny45MmMwLTI3Ljc4LDkuNTEtNTMuNDUsNjEuODktNTguNzNhNDYuNTUsNDYuNTUsMCwwLDAsNDIuNDMsMEM0OTQsNDE0LjM1LDUwMC43NCw0NDAuMDcsNTAwLjc0LDQ2Ny45MlptLTgxLjEyLTE1MS40YTQzLjU3LDQzLjU3LDAsMSwwLDQzLjU1LDQzLjU3QTQzLjU3LDQzLjU3LDAsMCwwLDQxOS42MiwzMTYuNTJaIiBzdHlsZT0iZmlsbDojZmZmIi8+PC9nPjwvZz48L3N2Zz4=" class="card-img p-2 rounded-xl">
                             </div>
                             <div class="col-12 col-lg-6 col-xl-8">
                                 <div class="card-body py-lg-0">
+                                    {% if clockin.node.accommodation is defined and clockin.node.accommodation is not empty %}
+                                        {% set accommodation = commonground_resource(clockin.node.accommodation) %}
+                                        {% set place = accommodation.place %}
+                                        <h2 class="h5">{{ place.name }}</h2>
+                                    {% endif %}
                                     <div class="d-flex no-gutters align-items-center mb-3">
                                         <div class="col text-left">
                                             <ul class="list-group mb-0">
-                                                <li class="list-group-item small p-0">{{ reservation.event.startDate|date("H:i d-m-Y") }}</li>
+                                                <li class="list-group-item small p-0">{{ 'Clocked in on:'|trans }} {{ clockin.dateCreated|date("H:i d-m-Y", "Europe/Paris") }}</li>
+                                                {% if clockin.dateCheckedOut|default %}
+                                                    {% set now = "now"|date %}
+                                                    {% if clockin.dateCheckedOut|date("H:i d-m-Y") <= now|date("H:i d-m-Y") %}
+                                                        <li class="list-group-item small p-0">{{ 'Clocked out on:'|trans }} {{ clockin.dateCheckedOut|date("H:i d-m-Y", "Europe/Paris") }}</li>
+                                                    {% else %}
+                                                        <li class="list-group-item small p-0">{{ 'Will be automatically clocked out on:'|trans }} {{ clockin.dateCheckedOut|date("H:i d-m-Y", "Europe/Paris") }}</li>
+                                                    {% endif %}
+                                                {% endif %}
+                                                <li class="list-group-item small p-0">{{ 'Will be deleted on:'|trans }} {{ clockin.dateToDestroy|date("H:i d-m-Y", "Europe/Paris") }}</li>
                                             </ul>
                                         </div>
-                                        <div class="col text-right">
-                                            <div class="btn-group">
-                                                <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <span class="icon icon-sm">
-                                                        <span class="fas fa-ellipsis-h icon-secondary"></span>
-                                                    </span>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    {% if reservation.cantCancel is not defined and reservation.event.status != 'cancelled'  %}
-                                                        {# TODO: Get the node.reference of the node of this reservation #}
-{#                                                        <a class="dropdown-item" href="{{ path('app_chin_cancel', {'code':reservation.node.reference, 'reservation':reservation['id']}) }}">#}
-{#                                                            {{ 'cancel'|trans|capitalize }}</a>#}
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h2 class="h5">{{ commonground_resource(reservation.provider).name }}</h2>
-                                    <div class="col d-flex pl-0">
-                                        <span class="text-success font-small mr-3"><span class="fas fa-building mr-2"></span>{{ commonground_resource(reservation.event.calendar.resource).name }}</span>
-                                        <span class="text-success font-small mr-3"><span class="fas fa-user-friends mr-2"></span>{{ reservation.numberOfParticipants }}</span>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                {% endfor %}
-            {% endif %}
+            {% endfor %}
+        {% endif %}
         </div>
     </div>
 
+    <script>
+
+        function onScanError(errorMessage) {
+            // handle on error condition, with error message
+            //console.log(errorMessage);
+        }
+
+        function startQrScan() {
+            //document.getElementById('readerView').style.display = 'block';
+            //document.getElementById('startScan').style.display = 'none';
+
+            // This method will trigger user permissions
+            Html5Qrcode.getCameras().then(devices => {
+                /**
+                 * devices would be an array of objects of type:
+                 * { id: "id", label: "label" }
+                 */
+                if (devices && devices.length) {
+                    var cameraId = devices[0].id;
+
+                    const html5QrCode = new Html5Qrcode("readerView");
+                    const config = {fps: 10};
+
+                    //html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess , onScanError);
+
+                    html5QrCode.start(
+                        {facingMode: "environment"},
+                        {
+                            fps: 1,    // Optional frame per seconds for qr code scanning
+                            qrbox: 250  // Optional if you want bounded box UI
+                        },
+                        qrCodeMessage => {
+                            document.getElementById('readerSucces').style.display = 'block';
+                            document.getElementById('readerView').style.display = 'none';
+                            window.location.href = qrCodeMessage;
+                            html5QrCode.stop();
+                            window.alert('QR Code Succesvol Verwerk');
+                        },
+                        errorMessage => {
+                            // parse error, ignore it.
+                        })
+                        .catch(err => {
+                            // Start failed, handle it.
+                            console.log(errorMessage);
+                        });
+
+                }
+            }).catch(err => {
+                console.log("Er is iets mis gegaan bij het verkrijgen van toegang tot de camera");
+            });
+        }
+
+    </script>
 {% endblock %}
