@@ -2381,6 +2381,14 @@
         <source>your reservation has been cancelled</source>
         <target>uw reservering is geannuleerd</target>
       </trans-unit>
+      <trans-unit id="73cyFD-" resname="are you sure you wish to cancel this reservation">
+        <source>are you sure you wish to cancel this reservation</source>
+        <target>weet u zeker dat u deze reservering wilt annuleren</target>
+      </trans-unit>
+      <trans-unit id="LE-818u" resname="are you sure you wish to delete this reservation">
+        <source>are you sure you wish to delete this reservation</source>
+        <target>weet u zeker dat u deze reservering wilt verwijderen</target>
+      </trans-unit>
       <trans-unit id="gd.rjiw" resname="for this mail list the following information will be used">
         <source>for this mail list the following information will be used</source>
         <target>voor deze mailing lijst worden de volgende gegevens van u gebruikt</target>

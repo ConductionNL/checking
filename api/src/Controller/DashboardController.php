@@ -508,6 +508,8 @@ class DashboardController extends AbstractController
                 $nodes = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['accommodation' => $reservation['event']['calendar']['resource']])['hydra:member'];
                 if (count($nodes) > 0) {
                     $reservation['node'] = $nodes[0];
+                } else {
+                    $reservation['node'] = 'not found';
                 }
 
                 if (isset($nodes[0]['configuration']['cancelable'])) {

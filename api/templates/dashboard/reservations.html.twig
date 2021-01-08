@@ -16,6 +16,7 @@
                                         <div class="col text-left">
                                             <ul class="list-group mb-0">
                                                 <li class="list-group-item small p-0">{{ reservation.event.startDate|date("H:i d-m-Y") }}</li>
+                                                {% if reservation.event.status == 'cancelled' %}<li class="list-group-item small p-0" style="color: red">{{ 'cancelled'|trans }}</li>{% endif %}
                                             </ul>
                                         </div>
                                         <div class="col text-right">
@@ -27,10 +28,20 @@
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    {% if reservation.cantCancel is not defined and reservation.event.status != 'cancelled'  %}
-                                                        {# TODO: Get the node.reference of the node of this reservation #}
-{#                                                        <a class="dropdown-item" href="{{ path('app_chin_cancel', {'code':reservation.node.reference, 'reservation':reservation['id']}) }}">#}
-{#                                                            {{ 'cancel'|trans|capitalize }}</a>#}
+                                                    {% if reservation.cantCancel is not defined %}
+                                                        {% if reservation.event.status == 'cancelled' %}
+                                                            <a class="dropdown-item" href="{{ path('app_chin_cancel', {'code':'notFound', 'reservation':reservation['id']}) }}"
+                                                               style="color: red">
+                                                                {{ 'delete reservation'|trans|capitalize }}</a>
+                                                        {% elseif reservation.node == 'not found' %}
+                                                            <p class="dropdown-item">{{ 'The code of this reservation no longer exists!'|trans|capitalize }}</p>
+                                                            <a class="dropdown-item" href="{{ path('app_chin_cancel', {'code':'notFound', 'reservation':reservation['id']}) }}"
+                                                            style="color: red">
+                                                                {{ 'delete reservation'|trans|capitalize }}</a>
+                                                        {% else %}
+                                                            <a class="dropdown-item" href="{{ path('app_chin_cancel', {'code':reservation.node.reference, 'reservation':reservation['id']}) }}">
+                                                                {{ 'cancel'|trans|capitalize }}</a>
+                                                        {% endif %}
                                                     {% endif %}
                                                 </div>
                                             </div>
