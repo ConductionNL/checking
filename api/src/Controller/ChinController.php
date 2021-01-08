@@ -35,42 +35,6 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 class ChinController extends AbstractController
 {
     /**
-     * @Route("/checkin/reservations")
-     * @Template
-     */
-    public function checkinReservationsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
-    {
-        $variables = [];
-        if (in_array('group.admin', $this->getUser()->getRoles())) {
-            $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
-            $organization = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
-            $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['provider' => $organization, 'order[dateCreated]' => 'desc'])['hydra:member'];
-        } else {
-            $person = $commonGroundService->getResource($this->getUser()->getPerson());
-            $person = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
-            $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['underName' => $person, 'order[dateCreated]' => 'desc'])['hydra:member'];
-
-            foreach ($variables['reservations'] as &$reservation) {
-                $nodes = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['accommodation' => $reservation['event']['calendar']['resource']])['hydra:member'];
-                if (count($nodes) > 0) {
-                    $reservation['node'] = $nodes[0];
-                }
-
-                if (isset($nodes[0]['configuration']['cancelable'])) {
-                    $hourDiff = round((strtotime('now') - strtotime($reservation['event']['startDate'])) / 3600);
-                    $dayDiff = round((strtotime($reservation['event']['startDate']) - strtotime('now')) / (60 * 60 * 24));
-
-                    if ($hourDiff < (float) $nodes[0]['configuration']['cancelable'] && $dayDiff == 0) {
-                        $reservation['cantCancel'] = true;
-                    }
-                }
-            }
-        }
-
-        return $variables;
-    }
-
-    /**
      * This function shows all available locations.
      *
      * @Route("/")
@@ -720,26 +684,22 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_default_index'));
+            return $this->redirect($this->generateUrl('app_dashboard_reservations'));
         }
 
         $variables = [];
 
         $session->set('code', $code);
         $variables['code'] = $code;
-        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
-        if (count($variables['resources']) > 0) {
-            $variables['resource'] = $variables['resources'][0];
-        } else {
-            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
-
-            return $this->redirect($this->generateUrl('app_default_index'));
-        }
-
-        $variables['code'] = $code;
         $variables['reservation'] = $commonGroundService->getResource(['component' => 'arc', 'type' => 'reservations', 'id' => $reservation]);
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod('POST') && $request->request->get('method') == 'delete') {
+            $reservation = $commonGroundService->getResource(['component' => 'arc', 'type' => 'reservations', 'id' => $request->get('reservationId')]);
+
+            $commonGroundService->deleteResource($reservation);
+
+            return $this->redirect($this->generateUrl('app_dashboard_reservations'));
+        } elseif ($request->isMethod('POST')) {
             $reservation = $commonGroundService->getResource(['component' => 'arc', 'type' => 'reservations', 'id' => $request->get('reservationId')]);
 
             $event = $reservation['event'];
@@ -748,6 +708,8 @@ class ChinController extends AbstractController
 
             $commonGroundService->updateResource($event);
             $variables['cancelled'] = true;
+
+            return $this->redirect($this->generateUrl('app_dashboard_reservations'));
         }
 
         return $variables;
