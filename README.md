@@ -1,62 +1,84 @@
-# Readme
--------
+# Checking
+
+Description
+----
 Welcome to the the VNG Common Ground proto component!
 
-This "proto" component provides a plug and play solution for component generation on Common Ground. That means that it takes away all the hassle of setting op codebases, containers and following the VNG Api Standaard. It does all that for you! 
+This "proto" component provides a plug and play solution for component generation on Common Ground. That means that it takes away all the hassle of setting op codebases, containers and following the VNG Api Standaard. It does all that for you!
 
-For that we use **[Api Platform](https://api-platform.com)**, a next-generation web framework designed to easily create API-first projects, without compromising extensibility and flexibility. 
+For that we use **[Api Platform](https://api-platform.com)**, a next-generation web framework designed to easily create API-first projects, without compromising extensibility and flexibility.
 
-Getting started
--------
-Do you want to create your own Commonground component? Take a look at our in depht [tutorial](TUTORIAL.md) on spinning up your own component!
+Additional Information
+----
 
-The commonground bundle
--------
-This repository uses the power of conductions [commonground bundle](https://packagist.org/packages/conduction/commongroundbundle) for symfony to provide common ground specific functionality based on the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). Including  
-
-* Build in support for public API's like BAG (Kadaster), KVK (Kamer van Koophandel)
-* Build in validators for common dutch variables like BSN (Burger service nummer), RSIN(), KVK(), BTW()
-* AVG and VNG proof audit trails
-* And [much more](https://packagist.org/packages/conduction/commongroundbundle) .... 
-
-Be sure to read our [design considerations](/design.md) concerning the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). 
+- [Contributing](CONTRIBUTING.md)
+- [ChangeLogs](CHANGELOG.md)
+- [RoadMap](ROADMAP.md)
+- [Security](SECURITY.md)
+- [Licence](LICENSE.md)
 
 
-Requesting features
--------
-Do you need a feature that is not on this list? don't hesitate to send us a [feature request](https://github.com/ConductionNL/commonground-component/issues/new?assignees=&labels=&template=feature_request.md&title=).  
+Installation
+----
+We differentiate between two way's of installing this component, a local installation as part of the provided developers toolkit or an [helm](https://helm.sh/) installation on an development or production environment.
 
-Staying up to date
--------
+#### Local installation
+First make sure you have [docker desktop](https://www.docker.com/products/docker-desktop) running on your computer. Then clone the repository to a directory on your local machine through a [git command](https://github.com/git-guides/git-clone) or [git kraken](https://www.gitkraken.com) (ui for git). If successful you can now navigate to the directory of your cloned repository in a command prompt and execute docker-compose up.
+```CLI
+$ docker-compose up
+```
+This will build the docker image and run the used containers and when seeing the log from the php container: "NOTICE: ready to handle connections", u are ready to view the documentation at localhost on your preferred browser.
 
-## Features
--------
-API Platform embraces open web standards (OpenAPI, JSON-LD, GraphQL, Hydra, HAL, JSONAPI, JWT, OAuth, HTTP...) and the [Linked Data](https://www.w3.org/standards/semanticweb/data) movement. Your API will automatically expose structured data in Schema.org/JSON-LD.
-It means that your commonground application is usable **out of the box** with technologies of the semantic web.
+#### Instalation on Kubernetes or Haven
+As a haven compliant commonground component this component is installable on kubernetes trough helm. The helm files can be found in the api/helm folder. For installing this component trough helm simply open your (still) favorite command line interface and run
+```CLI
+$ helm install [name] ./api/helm --kubeconfig kubeconfig.yaml --namespace [name] --set settings.env=prod,settings.debug=0,settings.cache=1
+```
+For an in depth installation guide you can refer to the [installation guide](INSTALLATION.md), it also contains a short tutorial on getting your cluster ready to expose your installation to the world
 
-* Comes with a paired [React](https://reactjs.org/) application, to provide face to your code
-* And a fully functional (and automatically updated) [React Admin](https://marmelab.com/react-admin/) backend to easily test and proof your component
-* Design your own data model as plain old PHP classes or [**import an existing one**](https://api-platform.com/docs/schema-generator)
-  from the [Schema.org](https://schema.org/) vocabulary
-* **Expose in minutes a hypermedia REST or a GraphQL API** with pagination, data validation, access control, relation embedding,
-  filters and error handling...
-* Benefit from Content Negotiation: [GraphQL](http://graphql.org), [JSON-LD](http://json-ld.org), [Hydra](http://hydra-cg.com),
-  [HAL](http://stateless.co/hal_specification.html), [JSONAPI](https://jsonapi.org/), [YAML](http://yaml.org/), [JSON](http://www.json.org/), [XML](https://www.w3.org/XML/) and [CSV](https://www.ietf.org/rfc/rfc4180.txt) are supported out of the box
-* Enjoy the **beautiful automatically generated API documentation** (Swagger/[OpenAPI](https://www.openapis.org/))
-* Add [**a convenient Material Design administration interface**](https://api-platform.com/docs/admin) built with [React](https://reactjs.org/)
-  without writing a line of code
-* **Scaffold fully functional Progressive-Web-Apps and mobile apps** built with [React](https://api-platform.com/docs/client-generator/react), [Vue.js](https://api-platform.com/docs/client-generator/vuejs) or [React Native](https://api-platform.com/docs/client-generator/react-native) thanks to [the client
-  generator](https://api-platform.com/docs/client-generator) (a Vue.js generator is also available)
-* Install a development environment and deploy your project in production using **[Docker](https://api-platform.com/docs/distribution#using-the-official-distribution-recommended)** and [Kubernetes](https://api-platform.com/docs/deployment/kubernetes)
-* Easily add **[JSON Web Token](https://api-platform.com/docs/core/jwt) or [OAuth](https://oauth.net/) authentication**
-* Create specs and tests with a **developer friendly API testing tool** on top of [Behat](http://behat.org/)
-* use **thousands of Symfony bundles and React components** with API Platform
-* reuse **all your Symfony and React skills**, benefit of the incredible amount of documentation available
-* enjoy the popular [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) (used by default, but fully optional:
-  you can use the data provider you want, including but not limited to MongoDB and ElasticSearch)
-  
+Standards
+----
+
+This component adheres to international, national and local standards (in that order), notable standards are:
+
+- Any applicable [W3C](https://www.w3.org) standard, including but not limited to [rest](https://www.w3.org/2001/sw/wiki/REST), [JSON-LD](https://www.w3.org/TR/json-ld11/) and [WEBSUB](https://www.w3.org/TR/websub/)
+- Any applicable [schema](https://schema.org/) standard
+- [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md)
+- [GAIA-X](https://www.data-infrastructure.eu/GAIAX/Navigation/EN/Home/home.html)
+- [Publiccode](https://docs.italia.it/italia/developers-italia/publiccodeyml-en/en/master/index.html), see the [publiccode](api/public/schema/publiccode.yaml) for further information
+- [Forum Stanaardisatie](https://www.forumstandaardisatie.nl/open-standaarden)
+- [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie/)
+- [Common Ground Realisatieprincipes](https://componentencatalogus.commonground.nl/20190130_-_Common_Ground_-_Realisatieprincipes.pdf)
+- [Haven](https://haven.commonground.nl/docs/de-standaard)
+- [NLX](https://docs.nlx.io/understanding-the-basics/introduction)
+- [Standard for Public Code](https://standard.publiccode.net/), see the [compliancy scan](publiccode.md) for further information.
+
+Developers toolkit and technical information
+----
+You can find the data model, OAS documentation and other helpfull developers material like a  postman collection under api/public/schema, development support is provided trough the [samenorganiseren slack channel](https://join.slack.com/t/samenorganiseren/shared_invite/zt-dex1d7sk-wy11sKYWCF0qQYjJHSMW5Q).
+
+Couple of quick tips when you start developing
+- If you not yet have setup the component locally read the Tutorial for setting up your local environment.
+- You can find the other components on [Github](https://github.com/ConductionNL).
+- Take a look at the [commonground componenten catalogus](https://componentencatalogus.commonground.nl/componenten?) to prevent development collitions.
+- Use [Commongroun.conduction.nl](https://commonground.conduction.nl/) for easy deployment of test environments to deploy your development to.
+- For information on how to work with the component you can refer to the tutorial [here](TUTORIAL.md).
+
+
+Contributing
+----
+First of al please read the [Contributing](CONTRIBUTING.md) guideline's ;)
+
+But most imporantly, welcome! We strife to keep an active community at [commonground.nl](https://commonground.nl/), please drop by and tell is what you are thinking about so that we can help you along.
+
 
 Credits
--------
+----
 
-Created by [Ruben van der Linde](https://www.conduction.nl/team) for conduction. But based on [api platform](https://api-platform.com) by [Kévin Dunglas](https://dunglas.fr). Commercial support for common ground components available from [Conduction](https://www.conduction.nl).
+Information about the authors of this component can be found [here](AUTHORS.md)
+
+
+
+
+
+Copyright © [Utrecht](https://www.utrecht.nl/) 2019
