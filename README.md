@@ -53,10 +53,6 @@ This component adheres to international, national and local standards (in that o
 - [NLX](https://docs.nlx.io/understanding-the-basics/introduction)
 - [Standard for Public Code](https://standard.publiccode.net/), see the [compliancy scan](publiccode.md) for further information.
 
-This component is based on the following [schema.org](https://schema.org) sources:
-- [Address](https://schema.org/PostalAddress)
-- [Person](https://schema.org/Person)
-
 Developers toolkit and technical information
 ----
 You can find the data model, OAS documentation and other helpfull developers material like a  postman collection under api/public/schema, development support is provided trough the [samenorganiseren slack channel](https://join.slack.com/t/samenorganiseren/shared_invite/zt-dex1d7sk-wy11sKYWCF0qQYjJHSMW5Q).
