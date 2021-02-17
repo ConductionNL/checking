@@ -1,14 +1,14 @@
 openapi: 3.0.3
 info:
-  title: checking
+  title: ''
   description: |-
     API Details
-    - Component: checking
+    - Component: 
     - Reference: checking
     - Enviroment: dev
     - Version: V1.0
     - Repository: [online](https://github.com/ConductionNL/checking) / [zip](https://github.com/ConductionNL/checking/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/checking-php) 
+    - Docker Image: [online]() 
     - Datamodel: [postman](schema/checking.postman_collection.json) / [oas](schema/openapi.yaml) / [pdf](schema/datamodel.pdf) / [modelio (zip)](schema/Datamodel_Modelio.zip) 
 
     Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.

@@ -182,6 +182,9 @@
             ".php_cs.dist"
         ]
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "1.x-dev"
+    },
     "gedmo/doctrine-extensions": {
         "version": "v3.0.0"
     },

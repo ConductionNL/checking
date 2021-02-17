@@ -708,12 +708,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ConductionNL/CommonGroundBundle.git",
-                "reference": "1128891793e744654459318df7b027ae958c07fa"
+                "reference": "d7ce0aea1db322f32b2f6ae5a6c1720c8dbb97d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ConductionNL/CommonGroundBundle/zipball/1128891793e744654459318df7b027ae958c07fa",
-                "reference": "1128891793e744654459318df7b027ae958c07fa",
+                "url": "https://api.github.com/repos/ConductionNL/CommonGroundBundle/zipball/d7ce0aea1db322f32b2f6ae5a6c1720c8dbb97d3",
+                "reference": "d7ce0aea1db322f32b2f6ae5a6c1720c8dbb97d3",
                 "shasum": ""
             },
             "require": {
@@ -791,7 +791,7 @@
                 "postcode",
                 "rsin"
             ],
-            "time": "2021-02-16T17:31:32+00:00"
+            "time": "2021-02-17T15:37:02+00:00"
         },
         {
             "name": "conduction/id-vault-php",
