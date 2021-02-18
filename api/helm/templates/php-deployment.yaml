@@ -24,11 +24,11 @@ spec:
     spec:
       containers:
         - name: {{ .Values.settings.name }}-php
-        {{ if eq .Values.settings.env "prod"}}
+          {{ if eq .Values.settings.env "prod"}}
           image: "{{ .Values.settings.registryBase }}/{{ .Values.settings.projectName }}-php:latest"
-        {{ else }}
+          {{ else }}
           image: "{{ .Values.settings.registryBase }}/{{ .Values.settings.projectName }}-php:{{ .Values.settings.env }}"
-        {{ end }}
+          {{ end }}
           imagePullPolicy: {{ .Values.settings.pullPolicy }}
           ports:
             - containerPort: 9000
@@ -248,20 +248,6 @@ spec:
                 secretKeyRef:
                   name: {{ template "fullname" . }}
                   key: app_commonground_key
-            - name: APP_URL
-              {{- if and (eq $.Values.settings.env "prod") (eq $.Values.settings.type "component") }}
-              value: https://{{ $.Values.settings.domain }}/api/{{ $.Values.settings.majorVersion }}/{{ $.Values.settings.subpath }}
-              {{- else if and (eq $.Values.settings.env "prod") $.Values.settings.subpath }}
-              value: https://{{ $.Values.settings.domain }}/{{ $.Values.settings.subpath }}
-              {{- else if eq $.Values.settings.env "prod" }}
-              value: https://{{ $.Values.settings.domain }}
-              {{- else if eq $.Values.settings.type "component" }}
-              value: https://{{ $.Values.settings.env }}.{{ $.Values.settings.domain }}/api/{{ $.Values.settings.majorVersion }}/{{ $.Values.settings.subpath }}
-              {{- else if $.Values.settings.subpath }}
-              value: https://{{ $.Values.settings.env }}.{{ $.Values.settings.domain }}/{{ $.Values.settings.subpath }}
-              {{- else }}
-              value: https://{{ $.Values.settings.env }}.{{ $.Values.settings.domain }}
-              {{- end }}
             - name: APP_APPLICATION_KEY
               valueFrom:
                 secretKeyRef:
@@ -286,12 +272,13 @@ spec:
               {{- else }}
               value: https://{{ $.Values.settings.env }}.{{ $.Values.settings.domain }}
               {{- end }}
+              
               {{ if .Values.security.mollieKey }}
-              -   name: APP_MOLLIE_KEY
-                  valueFrom:
-                      secretKeyRef:
-                          name: {{ template "fullname" . }}
-                          key: app_mollie_key
+            - name: APP_MOLLIE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app_mollie_key
               {{ end }}
           #Redis
             - name: REDIS_HOST

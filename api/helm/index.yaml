@@ -3,61 +3,14 @@ entries:
   checking:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2021-02-17T17:45:53.2386019Z"
+    created: "2020-12-03T14:36:51.4137749Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
-    digest: 05beddadcf12f1729ff74d41ce3f5e67992ad341aff530089f155268dbb01b74
+    digest: 0ce4d4c34805b11b1783542b8a7ed818874dedd35fa46922727276d85ace9dd0
     home: www.checking.nu
     icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
     name: checking
     urls:
     - checking-0.1.0.tgz
     version: 0.1.0
-  postgresql:
-  - annotations:
-      category: Database
-    apiVersion: v2
-    appVersion: 11.10.0
-    created: "2021-02-17T17:45:53.2568112Z"
-    dependencies:
-    - name: common
-      repository: https://charts.bitnami.com/bitnami
-      version: 1.x.x
-    description: Chart for PostgreSQL, an object-relational database management system
-      (ORDBMS) with an emphasis on extensibility and on standards-compliance.
-    digest: eebe8f456cf98d5927a35666d1d899174dc4d3e09f26788033f761527bc90749
-    home: https://github.com/bitnami/charts/tree/master/bitnami/postgresql
-    icon: https://bitnami.com/assets/stacks/postgresql/img/postgresql-stack-110x117.png
-    keywords:
-    - postgresql
-    - postgres
-    - database
-    - sql
-    - replication
-    - cluster
-    maintainers:
-    - email: containers@bitnami.com
-      name: Bitnami
-    - email: cedric@desaintmartin.fr
-      name: desaintmartin
-    name: postgresql
-    sources:
-    - https://github.com/bitnami/bitnami-docker-postgresql
-    - https://www.postgresql.org/
-    urls:
-    - charts/postgresql-10.1.1.tgz
-    version: 10.1.1
-  stage-platform:
-  - apiVersion: v1
-    appVersion: V1.0
-    created: "2021-02-17T17:45:53.2443544Z"
-    description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
-      beschikbaar.
-    digest: 790f23d533d146a77ebfa029747fb23d2315c9b29e2ec9aaef90ac8bee277f79
-    home: www.stage-platform.com
-    icon: www.stage-platform.com
-    name: stage-platform
-    urls:
-    - stage-platform-0.1.0.tgz
-    version: 0.1.0
-generated: "2021-02-17T17:45:53.1623708Z"
+generated: "2020-12-03T14:36:51.4068596Z"

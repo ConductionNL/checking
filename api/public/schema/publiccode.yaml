@@ -121,3 +121,6 @@ installations:
     - type: helm
       url: "https://raw.githubusercontent.com/ConductionNL/checking/master/api/helm/"
 
+installations:
+    - type: helm
+      url: "https://raw.githubusercontent.com/ConductionNL/checking/master/api/helm/"
