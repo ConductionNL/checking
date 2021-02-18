@@ -8,7 +8,7 @@ entries:
       beschikbaar.
     digest: 05beddadcf12f1729ff74d41ce3f5e67992ad341aff530089f155268dbb01b74
     home: www.checking.nu
-    icon: www.checking.nu
+    icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
     name: checking
     urls:
     - checking-0.1.0.tgz

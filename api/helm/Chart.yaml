@@ -4,7 +4,7 @@ description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interfa
 name: checking
 version: 0.1.0
 home: www.checking.nu
-icon: www.checking.nu
+icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
 sources:
     - https://commonground.conduction.nl/
     - https://www.commonground.nl/
