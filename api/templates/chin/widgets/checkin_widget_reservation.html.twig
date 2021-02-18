@@ -8,6 +8,7 @@
 </div>
 <div class="form-group">
     <input style="height: 35px" type="date" id="additionalName" name="date"
+           min="{{ "now"|date("Y-m-d", "Europe/Paris") }}"
            class="form-control" required>
 </div>
 <div class="form-group">
@@ -22,9 +23,4 @@
     <textarea style="height: 35px" type="text" id="additionalName" name="comment" rows="3" cols="3" placeholder="{{ 'comment'|trans|capitalize }}"
               class="form-control"></textarea>
 </div>
-{% if error is defined %}
-    <div>
-        <p>{{ error }}</p>
-    </div>
-{% endif %}
 

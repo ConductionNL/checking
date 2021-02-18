@@ -32,6 +32,7 @@
     },
     "require-dev" : {
         "api-platform/schema-generator": "^2.1",
+        "phpunit/phpunit": "^9",
         "symfony/maker-bundle": "^1.11",
         "symfony/profiler-pack": "^1.0"
     },
@@ -62,6 +63,7 @@
     "conflict" : {
         "symfony/symfony" : "*"
     },
+    "minimum-stability" : "dev",
     "extra" : {
         "symfony" : {
             "allow-contrib" : false,

@@ -1,46 +1,46 @@
 {% if organization.contact is defined and organization.contact is not empty %}
     {% set orgCc = commonground_resource(organization.contact) %}
-        {% if orgCc.socials[0] is defined %}
-            {% set social = orgCc.socials[0] %}
+        {% if orgCc.socials is defined %}
+            {% set socials = orgCc.socials %}
         {% endif %}
 {% endif %}
 
-    {% if social is defined and social is not empty %}
-        {% if social.website is defined and social.website is not empty %}
-            <a target="_blank" href="{{ social.website }}">
-                <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
-                    <span class="btn-inner-icon"><i class="fas fa-globe"></i></span>
-                </button>
-            </a>
-        {% endif %}
-        {% if social.facebook is defined and social.facebook is not empty %}
-            <a target="_blank" href="{{ social.facebook }}">
-                <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
-                    <span class="btn-inner-icon"><i class="fab fa-facebook-f"></i></span>
-                </button>
-            </a>
-        {% endif %}
-        {% if social.instagram is defined and social.instagram is not empty %}
-            <a target="_blank" href="{{ social.instagram }}">
-                <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
-                    <span class="btn-inner-icon"><i class="fab fa-instagram"></i></span>
-                </button>
-            </a>
-        {% endif %}
-        {% if social.twitter is defined and social.twitter is not empty %}
-            <a target="_blank" href="{{ social.twitter }}">
-                <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
-                    <span class="btn-inner-icon"><i class="fab fa-twitter"></i></span>
-                </button>
-            </a>
-        {% endif %}
-        {% if social.linkedin is defined and social.linkedin is not empty %}
-            <a target="_blank" href="{{ social.linkedin }}">
-                <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
-                    <span class="btn-inner-icon"><i class="fab fa-linkedin-in"></i></span>
-                </button>
-            </a>
-        {% endif %}
+    {% if socials is defined and socials is not empty %}
+        {% for social in contact.socials %}
+            {% if social.url|default %}
+                <a target="_blank" href="{{ social.url }}">
+                    {% if social.type == 'website' %}
+                        <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
+                            <span class="btn-inner-icon"><i class="fas fa-globe"></i></span>
+                        </button>
+                    {% elseif social.type == 'twitter' %}
+                        <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
+                            <span class="btn-inner-icon"><i class="fab fa-twitter"></i></span>
+                        </button>
+                    {% elseif social.type == 'facebook' %}
+                        <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
+                            <span class="btn-inner-icon"><i class="fab fa-facebook-f"></i></span>
+                        </button>
+                    {% elseif social.type == 'instagram' %}
+                        <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
+                            <span class="btn-inner-icon"><i class="fab fa-instagram"></i></span>
+                        </button>
+                    {% elseif social.type == 'linkedin' %}
+                        <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
+                            <span class="btn-inner-icon"><i class="fab fa-linkedin-in"></i></span>
+                        </button>
+                    {% elseif social.type == 'github' %}
+                        <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
+                            <span class="btn-inner-icon"><i class="fa fa-github"></i></span>
+                        </button>
+                    {% elseif social.type == 'other' %}
+                        <button class="btn mb-2 mr-2 btn-icon-only rounded-circle btn-primary" type="button">
+                            <span class="btn-inner-icon"><i class="fas fa-globe"></i></span>
+                        </button>
+                    {% endif %}
+                </a>
+            {% endif %}
+        {% endfor %}
     </div>
     {% endif %}
 </div>

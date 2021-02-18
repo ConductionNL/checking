@@ -1293,6 +1293,10 @@
         <source>search</source>
         <target>zoeken</target>
       </trans-unit>
+      <trans-unit id="BHLByk6" resname="search_2">
+        <source>search</source>
+        <target>zoek</target>
+      </trans-unit>
       <trans-unit id="8xuHaDl" resname="no items found">
         <source>no items found</source>
         <target>niet gevonden</target>
@@ -1348,6 +1352,10 @@
       <trans-unit id="9A.VYvY" resname="subscribe">
         <source>subscribe</source>
         <target>abonneren</target>
+      </trans-unit>
+      <trans-unit id="76-ZBCQ" resname="click here to subscribe to our newsletter!">
+        <source>click here to subscribe to our newsletter!</source>
+        <target>klik hier om u aan te melden voor onze nieuwsbrief!</target>
       </trans-unit>
       <trans-unit id="bCoDPGD" resname="iDin">
         <source>iDin</source>
@@ -1481,13 +1489,49 @@
         <source>telephone</source>
         <target>telefoon</target>
       </trans-unit>
+      <trans-unit id="E8cxoRB" resname="checkin duration">
+        <source>checkin duration</source>
+        <target>checkin duur</target>
+      </trans-unit>
+      <trans-unit id="VuM-3Xk" resname="checkin = normal checkin and checkout.">
+        <source>checkin = normal checkin and checkout.</source>
+        <target>inchecken = normaal in- en uitchecken.</target>
+      </trans-unit>
+      <trans-unit id="WB86SiL" resname="reserve = this code can only be used to reserve.">
+        <source>reserve = this code can only be used to reserve.</source>
+        <target>reserveren = deze code kan alleen worden gebruikt om te reserveren.</target>
+      </trans-unit>
+      <trans-unit id="FSjuV31" resname="clock in = this code can be used to allow your employees to clockin and clockout.">
+        <source>clock in = this code can be used to allow your employees to clockin and clockout.</source>
+        <target>inklokken = deze code kan worden gebruikt om uw medewerkers te laten in- en uitklokken.</target>
+      </trans-unit>
+      <trans-unit id="0jTqvzf" resname="When customers check-in they are automatically checked out after this duration.">
+        <source>When customers check-in they are automatically checked out after this duration.</source>
+        <target>Wanneer klanten inchecken, worden ze na deze periode automatisch uitgecheckt.</target>
+      </trans-unit>
+      <trans-unit id="zlL2Jrd" resname="checkout time">
+        <source>checkout time</source>
+        <target>check-uit tijd</target>
+      </trans-unit>
+      <trans-unit id="DOOi5n8" resname="Every day at this time all checkins are checked out">
+        <source>Every day at this time all checkins are checked out</source>
+        <target>Elke dag worden op dit tijdstip alle check-ins uitgecheckt</target>
+      </trans-unit>
       <trans-unit id="XWdwnUK" resname="opening time">
         <source>opening time</source>
         <target>openingstijd</target>
       </trans-unit>
+      <trans-unit id="tzra9oY" resname="Customers can only check-in after the opening time.">
+        <source>Customers can only check-in after the opening time.</source>
+        <target>Klanten kunnen alleen inchecken na de openingstijd.</target>
+      </trans-unit>
       <trans-unit id="96czj_6" resname="closing time">
         <source>closing time</source>
         <target>sluitingstijd</target>
+      </trans-unit>
+      <trans-unit id="eZXZfz-" resname="Customers can only check-in before the closing time.">
+        <source>Customers can only check in-before the closing time.</source>
+        <target>Klanten kunnen alleen inchecken voor sluitingstijd.</target>
       </trans-unit>
       <trans-unit id="bse4eIC" resname="public access">
         <source>public access</source>
@@ -1649,6 +1693,14 @@
         <source>checkin</source>
         <target>inchecken</target>
       </trans-unit>
+      <trans-unit id="jO6ER1c" resname="clock in">
+        <source>clock in</source>
+        <target>inklokken</target>
+      </trans-unit>
+      <trans-unit id="w88cc9y" resname="clockin">
+        <source>clockin</source>
+        <target>inklokken</target>
+      </trans-unit>
       <trans-unit id="kTWILTI" resname="Datum">
         <source>Datum</source>
         <target>Datum</target>
@@ -1709,6 +1761,30 @@
         <source>data request</source>
         <target>data verzoek</target>
       </trans-unit>
+      <trans-unit id="CXk3nwB" resname="GGD Application">
+        <source>GGD Application</source>
+        <target>GGD Aanvraag</target>
+      </trans-unit>
+      <trans-unit id="arm2u8C" resname="Request My Data">
+        <source>Request My Data</source>
+        <target>Mijn Gegevens Opvragen</target>
+      </trans-unit>
+      <trans-unit id="1VMjS9Q" resname="Report Corona">
+        <source>Report Corona</source>
+        <target>Corona Melden</target>
+      </trans-unit>
+      <trans-unit id="Acwo_Qa" resname="Enter the moment from when you first had illness symptoms.">
+        <source>Enter the moment from when you first had illness symptoms.</source>
+        <target>Voer het moment in waarop u voor het eerst ziektesymptomen had.</target>
+      </trans-unit>
+      <trans-unit id="wFJl1kb" resname="inform companies">
+        <source>inform companies</source>
+        <target>bedrijven informeren</target>
+      </trans-unit>
+      <trans-unit id="uOsF1gC" resname="you do not yet have codes to submit a ggd request for">
+        <source>you do not yet have codes to submit a ggd request for</source>
+        <target>je hebt nog geen codes om een ggd-verzoek voor in te dienen</target>
+      </trans-unit>
       <trans-unit id="3qcRGoQ" resname="information">
         <source>information</source>
         <target>informatie</target>
@@ -1748,6 +1824,50 @@
       <trans-unit id="jny0l5e" resname="succes">
         <source>succes</source>
         <target>succes</target>
+      </trans-unit>
+      <trans-unit id="jLUoRpd" resname="Will be deleted on:">
+        <source>Will be deleted on:</source>
+        <target>Wordt verwijderd op:</target>
+      </trans-unit>
+      <trans-unit id="6udb7X6" resname="Will be automatically checked out on:">
+        <source>Will be automatically checked out on:</source>
+        <target>Wordt automatisch uitgecheckt op:</target>
+      </trans-unit>
+      <trans-unit id="Rjrbbul" resname="Will be automatically clocked out on:">
+        <source>Will be automatically clocked out on:</source>
+        <target>Wordt automatisch uitgeklokt op:</target>
+      </trans-unit>
+      <trans-unit id="lkbPHd8" resname="Checked out on:">
+        <source>Checked out on:</source>
+        <target>Uitgechecked op:</target>
+      </trans-unit>
+      <trans-unit id="hOOxUS3" resname="Clocked out on:">
+        <source>Clocked out on:</source>
+        <target>Uitgeklokt op:</target>
+      </trans-unit>
+      <trans-unit id="HxDTbv2" resname="Checked in on:">
+        <source>Checked in on:</source>
+        <target>Ingechecked op:</target>
+      </trans-unit>
+      <trans-unit id="MhlwoEn" resname="Clocked in on:">
+        <source>Clocked in on:</source>
+        <target>Ingeklokt op:</target>
+      </trans-unit>
+      <trans-unit id="ZG4DhMc" resname="You are checked in!">
+        <source>You are checked in!</source>
+        <target>U bent ingecheckt!</target>
+      </trans-unit>
+      <trans-unit id="uI0xT8z" resname="You are clocked in!">
+        <source>You are clocked in!</source>
+        <target>U bent ingeklokt!</target>
+      </trans-unit>
+      <trans-unit id="Knh4vxj" resname="You will be automatically checked out at:">
+        <source>You will be automatically checked out at:</source>
+        <target>U wordt automatisch uitgecheckt op:</target>
+      </trans-unit>
+      <trans-unit id="oPCe4sj" resname="You will be automatically clocked out at:">
+        <source>You will be automatically clocked out at:</source>
+        <target>U wordt automatisch uitgeklokt op:</target>
       </trans-unit>
       <trans-unit id="Sz6Heuz" resname="Your data is safely stored in the data vault and only accessible to the GGD for the next 14 days.">
         <source>Your data is safely stored in the data vault and only accessible to the GGD for the next 14 days.</source>
@@ -2033,6 +2153,10 @@
         <source>you are currently still checked in</source>
         <target>u bent momenteel nog ingechecked</target>
       </trans-unit>
+      <trans-unit id="Pkp4svp" resname="you are already clocked in">
+        <source>you are already clocked in</source>
+        <target>u bent al ingeklokt</target>
+      </trans-unit>
       <trans-unit id="eN1GlND" resname="name of the internship">
         <source>name of the internship</source>
         <target>naam van de stage</target>
@@ -2137,13 +2261,25 @@
         <source>do you wish to checkout</source>
         <target>wilt u uitchecken</target>
       </trans-unit>
+      <trans-unit id="ZBCTgrn" resname="do you wish to clockout">
+        <source>do you wish to clockout</source>
+        <target>wilt u uitklokken</target>
+      </trans-unit>
       <trans-unit id="x3YeWJa" resname="checkout">
         <source>checkout</source>
         <target>uitchecken</target>
       </trans-unit>
+      <trans-unit id="1oCFc3q" resname="clockout">
+        <source>clockout</source>
+        <target>uitklokken</target>
+      </trans-unit>
       <trans-unit id="ZZIF2by" resname="you have been checked out">
         <source>you have been checked out</source>
         <target>u bent uitgechecked</target>
+      </trans-unit>
+      <trans-unit id="mrlHoBW" resname="you have been clocked out">
+        <source>you have been clocked out</source>
+        <target>u bent uitgeklokt</target>
       </trans-unit>
       <trans-unit id="xhWWjpx" resname="no requests for consent have been found">
         <source>no requests for consent have been found</source>
@@ -2248,6 +2384,14 @@
       <trans-unit id="_aGS1MV" resname="your reservation has been cancelled">
         <source>your reservation has been cancelled</source>
         <target>uw reservering is geannuleerd</target>
+      </trans-unit>
+      <trans-unit id="73cyFD-" resname="are you sure you wish to cancel this reservation">
+        <source>are you sure you wish to cancel this reservation</source>
+        <target>weet u zeker dat u deze reservering wilt annuleren</target>
+      </trans-unit>
+      <trans-unit id="LE-818u" resname="are you sure you wish to delete this reservation">
+        <source>are you sure you wish to delete this reservation</source>
+        <target>weet u zeker dat u deze reservering wilt verwijderen</target>
       </trans-unit>
       <trans-unit id="gd.rjiw" resname="for this mail list the following information will be used">
         <source>for this mail list the following information will be used</source>
@@ -3095,7 +3239,7 @@
       </trans-unit>
       <trans-unit id="saNtJdl" resname="select">
         <source>select</source>
-        <target>__select</target>
+        <target>selecteer</target>
       </trans-unit>
       <trans-unit id="_TJnqhH" resname="Remember me">
         <source>Remember me</source>
@@ -3220,6 +3364,10 @@
       <trans-unit id="lFniS0w" resname="checkins">
         <source>checkins</source>
         <target>check-ins</target>
+      </trans-unit>
+      <trans-unit id="gf3i0W_" resname="clockins">
+        <source>clockins</source>
+        <target>klok-ins</target>
       </trans-unit>
       <trans-unit id="TzPPGsZ" resname="scan with camera">
         <source>scan with camera</source>
@@ -3353,6 +3501,10 @@
         <source>newsletter</source>
         <target>nieuwsbrief</target>
       </trans-unit>
+      <trans-unit id="C-iAUwQ" resname="you have successfully signed up for the newsletter!">
+        <source>you have successfully signed up for the newsletter!</source>
+        <target>u heeft zich succesvol aangemeld voor de nieuwsbrief!</target>
+      </trans-unit>
       <trans-unit id="wvyiqjq" resname="copyright">
         <source>copyright</source>
         <target>auteursrecht</target>
@@ -3372,6 +3524,10 @@
       <trans-unit id="61ElgKq" resname="why do I need to checkin?">
         <source>why do I need to checkin?</source>
         <target>waarom heb ik checkin nodig?</target>
+      </trans-unit>
+      <trans-unit id="Tm4guci" resname="easy and save checkin registration">
+        <source>easy and save checkin registration</source>
+        <target>eenvoudig en veilig inchecken</target>
       </trans-unit>
       <trans-unit id="_0Q9d3z" resname="the simple answer is contact tracing, that means then when a person is tested positively for covid-19 local health officials want to trace who that person has been in contact with so that they can contact those people and advise them to be alert for any symptoms or go into quarantine. For this reason some governments (like the Netherlands) have mandated that shops,  bars, restaurants and other small businesses and organisations keep lists of visitors.">
         <source>the simple answer is contact tracing, that means then when a person is tested positively for covid-19 local health officials want to trace who that person has been in contact with so that they can contact those people and advise them to be alert for any symptoms or go into quarantine. For this reason some governments (like the Netherlands) have mandated that shops,  bars, restaurants and other small businesses and organisations keep lists of visitors.</source>

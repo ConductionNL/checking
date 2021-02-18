@@ -12,6 +12,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * The Procces test handles any calls that have not been picked up by another test, and wel try to handle the slug based against the wrc.
@@ -30,6 +31,20 @@ class DefaultController extends AbstractController
     {
         // On an index route we might want to filter based on user input
         $variables['query'] = array_merge($request->query->all(), $variables['post'] = $request->request->all());
+
+        $variables['reservationNodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['type' => 'reservation'])['hydra:member'];
+        $reservationOrganizations = [];
+        foreach ($variables['reservationNodes'] as $reservationNode) {
+            if (isset($reservationNode['organization'])) {
+                $nodeOrganization = $commonGroundService->getResource($reservationNode['organization']);
+                if (in_array($nodeOrganization, $reservationOrganizations)) {
+                    continue;
+                } else {
+                    array_push($reservationOrganizations, $nodeOrganization);
+                }
+            }
+        }
+        $variables['reservationOrganizations'] = $reservationOrganizations;
 
         return $variables;
     }
@@ -148,21 +163,15 @@ class DefaultController extends AbstractController
      */
     public function newsletterAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        // TODO: use email used in form to subscribe to the newsletter?
-
         $session->set('backUrl', $request->query->get('backUrl'));
 
         $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'id-vault', 'application' => $params->get('app_id')])['hydra:member'];
         $provider = $providers[0];
 
-        $redirect = $request->getUri();
-
-        if (strpos($redirect, '?') == true) {
-            $redirect = substr($redirect, 0, strpos($redirect, '?'));
-        }
+        $redirect = $this->generateUrl('app_default_index', ['message' => 'you have successfully signed up for the newsletter!'], UrlGeneratorInterface::ABSOLUTE_URL);
 
         if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
-            return $this->redirect('http://id-vault.com/sendlist/authorize?client_id='.$provider['configuration']['app_id'].'&send_lists=98e72bec-e632-4b61-ba0f-53452ffe5ed9&redirect_uri='.$redirect);
+            return $this->redirect('http://id-vault.com/sendlist/authorize?client_id='.$provider['configuration']['app_id'].'&send_lists=a6f37e4b-bc79-4a0d-96a7-92fbd5e4a46c&redirect_uri='.$redirect);
         } else {
             return $this->render('500.html.twig');
         }

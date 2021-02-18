@@ -76,6 +76,26 @@
                     <br>
 
                     <div class="form-group">
+                        <label class="input__label" for="type">{{ 'the type of this code'|trans|capitalize }} {% if not item.type|default %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
+                        <a type="button" class="ml-2" data-toggle="tooltip" data-placement="bottom" data-background-color="white"
+                           title="{{ 'checkin = normal checkin and checkout.'|trans|capitalize }}">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        <a type="button" class="ml-1" data-toggle="tooltip" data-placement="bottom" data-background-color="white"
+                           title="{{ 'reserve = this code can only be used to reserve.'|trans|capitalize }}">
+                            <i class="fas fa-info-circle"></i>
+                        </a><a type="button" class="ml-2" data-toggle="tooltip" data-placement="bottom" data-background-color="white"
+                           title="{{ 'clock in = this code can be used to allow your employees to clockin and clockout.'|trans|capitalize }}">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        <select class="form-control" id="type" name="type" required {% if item.type|default %}disabled{% endif %}>
+                            <option {% if item.type|default and item.type == 'checkin' %}selected{% endif%} style="background-color: white; color: black" value="checkin">{{ 'checkin'|trans|capitalize }}</option>
+                            <option {% if item.type|default and item.type == 'reservation' %}selected{% endif%} style="background-color: white; color: black" value="reservation">{{ 'reserve'|trans|capitalize }}</option>
+                            <option {% if item.type|default and item.type == 'clockin' %}selected{% endif%} style="background-color: white; color: black" value="clockin">{{ 'clock in'|trans|capitalize }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label class="input__label" for="maximumAttendeeCapacity">{{ 'maximum number of simultaneous visitors'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                         <input
                             required=""
@@ -92,13 +112,61 @@
                     <div class="row" style="margin-bottom: 5px">
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label for="openingTime">{{ 'opening time'|trans|capitalize }} </label>
+                                <div class="d-flex">
+                                    <label class="input__label" for="checkinDuration">{{ 'checkin duration'|trans|capitalize }}</label>
+                                    <a type="button" class="ml-2" data-toggle="tooltip" data-placement="bottom" data-background-color="white" title="{{ 'When customers check-in they are automatically checked out after this duration.'|trans|capitalize }}">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                </div>
+                                <input
+                                    class="form-control"
+                                    id="checkinDuration"
+                                    type="time"
+                                    {% if item.checkinDuration is defined and item.checkinDuration is not empty %}
+                                        value="{{ item.checkinDuration }}"
+                                    {% else %}
+                                        placeholder="format jaar-maand-dag"
+                                    {% endif %}
+                                    name="checkinDuration"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <div class="d-flex">
+                                    <label class="input__label" for="checkoutTime">{{ 'checkout time'|trans|capitalize }}</label>
+                                    <a type="button" class="ml-2" data-toggle="tooltip" data-placement="bottom" data-background-color="white" title="{{ 'Every day at this time all checkins are checked out'|trans|capitalize }}">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                </div>
+                                <input
+                                    class="form-control"
+                                    id="checkoutTime"
+                                    type="time"
+                                    {% if item.checkoutTime is defined and item.checkoutTime is not empty %}
+                                        value="{{ item.checkoutTime|date("H:i", "Europe/Paris") }}"
+                                    {% else %}
+                                        placeholder="format jaar-maand-dag"
+                                    {% endif %}
+                                    name="checkoutTime"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-bottom: 5px">
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="openingTime">{{ 'opening time'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                                <a type="button" class="ml-2" data-toggle="tooltip" data-placement="bottom" data-background-color="white" title="{{ 'Customers can only check-in after the opening time.'|trans|capitalize }}">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
                                 <input
                                     class="form-control"
                                     id="openingTime"
                                     type="time"
                                     {% if itemAccommodation['place']['openingTime'] is defined and itemAccommodation['place']['openingTime'] is not empty %}
-                                        value="{{ itemAccommodation['place']['openingTime']|date("H:i") }}"
+                                        value="{{ itemAccommodation['place']['openingTime']|date("H:i", "Europe/Paris") }}"
                                     {% else %}
                                         placeholder="format jaar-maand-dag"
                                     {% endif %}
@@ -109,13 +177,16 @@
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label for="closingTime">{{ 'closing time'|trans|capitalize }} </label>
+                                <label for="closingTime">{{ 'closing time'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                                <a type="button" class="ml-2" data-toggle="tooltip" data-placement="bottom" data-background-color="white" title="{{ 'Customers can only check-in before the closing time.'|trans|capitalize }}">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
                                 <input
                                     class="form-control"
                                     id="closingTime"
                                     type="time"
                                     {% if itemAccommodation['place']['closingTime'] is defined and itemAccommodation['place']['openingTime'] is not empty %}
-                                        value="{{ itemAccommodation['place']['closingTime']|date("H:i") }}"
+                                        value="{{ itemAccommodation['place']['closingTime']|date("H:i", "Europe/Paris") }}"
                                     {% else %}
                                         placeholder="format jaar-maand-dag"
                                     {% endif %}

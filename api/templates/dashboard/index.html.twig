@@ -4,38 +4,138 @@
 
 {% block dashboard %}
     <div class="row">
-        {% if checkins is defined and checkins is not empty %}
-            <div class="col-12 col-md-6 mb-4">
+        <div class="col-12 col-md-6 mb-4">
+            <div class="card border-light">
+                <div class="card-body d-block d-md-flex align-items-center">
+                    <div class="icon icon-shape icon-md icon-shape-primary rounded-circle mr-3 mb-4 mb-md-0">
+                        <span class="fas fa-check"></span>
+                    </div>
+                    <div>
+                        <span class="d-block h6 font-weight-normal">
+                            {{ 'Checkins'|trans|capitalize }}
+                        </span>
+                        <h5 class="h3 font-weight-bold mb-1">{{ 'total'|trans|capitalize }}: {% if checkins is defined and checkins is not empty %}{{ checkins|length }}{% else %}0{% endif %}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 mb-4">
+            {% if app.user.organization is defined and app.user.organization is not empty %}
                 <div class="card border-light">
                     <div class="card-body d-block d-md-flex align-items-center">
-                        <div class="icon icon-shape icon-md icon-shape-primary rounded-circle mr-3 mb-4 mb-md-0">
-                            <span class="fas fa-check"></span>
-                        </div>
                         <div>
                             <span class="d-block h6 font-weight-normal">
-                                Checkins
+                                {{ 'GGD Application'|trans }}
                             </span>
-                            <h5 class="h3 font-weight-bold mb-1">{{ 'total'|trans|capitalize }}: {{ checkins|length }}</h5>
+                            {% if nodes|default %}
+                                <a class="btn btn-block btn-success mt-2" data-toggle="modal" data-target="#ggdApplicationModal">
+                                    <h6 class="font-weight-bold mb-1">
+                                        {{ 'start request'|trans|capitalize }}
+                                    </h6>
+                                </a>
+                            {% else %}
+                                <p>{{ 'you do not yet have codes to submit a ggd request for'|trans|capitalize }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-12 col-md-6 mb-4">
+            <div class="card border-light">
+                <div class="card-body d-block d-md-flex align-items-center">
+                    <div class="icon icon-shape icon-md icon-shape-primary rounded-circle mr-3 mb-4 mb-md-0">
+                        <span class="fas fa-user"></span>
+                    </div>
+                    <div>
+                            <span class="d-block h6 font-weight-bold">
+                                {{ 'user info'|trans|capitalize }}
+                            </span>
+                        <div>
+                            <span class="d-block">
+                               <strong> {{ 'name'|trans|capitalize }}:</strong><br>
+                                <p class="paragraph--s"> {{ person.name }}</p>
+                            </span>
+                            <span class="d-block">
+                                <strong> {{ 'email'|trans|capitalize }}:</strong>
+                                {% if person.emails[0] is defined and person.emails[0] is not empty %}
+                               <p class="paragraph--s"> {{ person.emails[0].email }}</p>
+                                {% else %}
+                               <p class="paragraph--s"> {{ 'email not found'|trans|capitalize }}</p>
+                                {% endif %}
+                            </span>
+                            <span class="d-block">
+                                <strong> {{ 'date of birth'|trans|capitalize }}:</strong>
+                                {% if person.birthday is defined and person.birthday is not empty %}
+                              <p class="paragraph--s">  {{ person.birthday }}</p>
+                                {% else %}
+                                <p class="paragraph--s"> {{ 'date of birth not found'|trans|capitalize }}</p>
+                                {% endif %}
+                            </span>
+                            <span class="d-block">
+                                <strong>{{ 'phone number'|trans|capitalize }}:</strong>
+                                {% if person.telephones[0] is defined and person.telephones[0] is not empty %}
+                               <p class="paragraph--s"> {{ person.telephones[0].telephone }}</p>
+                                {% else %}
+                               <p class="paragraph--s"> {{ 'phone number not found' }}</p>
+                                {% endif %}
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
-        {% else %}
-            <div class="col-12 col-md-6 mb-4">
+        </div>
+
+        <div class="col-12 col-md-6 mb-4">
+            <div class="mb-4">
                 <div class="card border-light">
                     <div class="card-body d-block d-md-flex align-items-center">
-                        <div class="icon icon-shape icon-md icon-shape-primary rounded-circle mr-3 mb-4 mb-md-0">
-                            <span class="fas fa-check"></span>
-                        </div>
                         <div>
-                            <span class="d-block h6 font-weight-normal">
-                                Checkins
-                            </span>
-                            <h5 class="h3 font-weight-bold mb-1">{{ 'total'|trans|capitalize }}: 0</h5>
+                        <span class="d-block h6 font-weight-normal">
+                            {{ 'Request My Data'|trans }}
+                        </span>
+                            {#                        {% if nodes|default %}#}
+                            <a class="btn btn-block btn-success mt-2" data-toggle="modal" data-target="#requestMyDataModal">
+                                <h6 class="font-weight-bold mb-1">
+                                    {{ 'start request'|trans|capitalize }}
+                                </h6>
+                            </a>
+                            {#                        {% else %}#}
+                            {#                            <p>{{ 'you do not yet have codes to submit a ggd request for'|trans|capitalize }}</p>#}
+                            {#                        {% endif %}#}
                         </div>
                     </div>
                 </div>
             </div>
-        {% endif %}
+
+            <div class="card border-light">
+                <div class="card-body d-block d-md-flex align-items-center">
+                    <div>
+                        <span class="d-block h6 font-weight-normal">
+                            {{ 'Report Corona'|trans }}
+                        </span>
+{#                        {% if nodes|default %}#}
+                            <a class="btn btn-block btn-success mt-2" data-toggle="modal" data-target="#reportCoronaModal">
+                                <h6 class="font-weight-bold mb-1">
+                                    {{ 'inform companies'|trans|capitalize }}
+                                </h6>
+                            </a>
+{#                        {% else %}#}
+{#                            <p>{{ 'you do not yet have codes to submit a ggd request for'|trans|capitalize }}</p>#}
+{#                        {% endif %}#}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
+
+    <!-- Modals -->
+    {% include '/dashboard/modals/ggd_application_modal.html.twig' %}
+    {% include '/dashboard/modals/request_my_data_modal.html.twig' %}
+    {% include '/dashboard/modals/report_corona_modal.html.twig' %}
+
 {% endblock %}

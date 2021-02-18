@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <a style="color: white" class="btn btn-secondary animate-up-2 mb-4" data-toggle="collapse" data-target="#readerView" onclick="startQrScan()" id="startScan" ><i class="fas fa-qrcode mr-2"></i>{{ 'scan with camera'|trans|capitalize }}</a>
-                    <a style="color: white" class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#manual-from"><i class="far fa-keyboard mr-2"></i>{{ 'input manually'|trans|capitalize }}</a>
+                    <a style="color: white" class="btn btn-success animate-up-2 mb-4" data-toggle="collapse" data-target="#manual-form"><i class="far fa-keyboard mr-2"></i>{{ 'input manually'|trans|capitalize }}</a>
 
 
                     <div style="width: 100%; height: auto;" id="readerView" class=""></div>
@@ -14,7 +14,7 @@
                     <div style="width: 100%; height: auto; display: none;" id="readerSucces"><h2>{{ 'Code scanned successfully, you will be forwarded'|trans|capitalize }}</h2></div>
 
                     <div class="d-flex justify-content-center mb-2" >
-                        <form action="{{ path('app_chin_checkin') }}" method="post" id="manual-from" class="collapse">
+                        <form action="{{ path('app_chin_checkin') }}" method="post" id="manual-form" class="collapse">
                             <div class="form-group" style="display: flex">
                                 <input type="text" class="form-control mr-2" name="code" placeholder="{{ 'fill in code'|trans|capitalize }}">
                                 <button type="submit" style="width: -webkit-fill-available;" class="btn mb-2 btn-success">{{ 'go'|trans|capitalize }}</button>
@@ -40,8 +40,16 @@
                                     <div class="d-flex no-gutters align-items-center mb-3">
                                         <div class="col text-left">
                                             <ul class="list-group mb-0">
-                                                <li class="list-group-item small p-0">Ingechecked op: {{ checkin.dateCreated|date("H:i d-m-Y", "Europe/Paris") }}</li>
-                                                <li class="list-group-item small p-0">Word verwijderd op: {{ checkin.dateToDestroy|date("H:i d-m-Y", "Europe/Paris") }}</li>
+                                                <li class="list-group-item small p-0">{{ 'Checked in on:'|trans }} {{ checkin.dateCreated|date("H:i d-m-Y", "Europe/Paris") }}</li>
+                                                {% if checkin.dateCheckedOut|default %}
+                                                    {% set now = "now"|date %}
+                                                    {% if checkin.dateCheckedOut|date("Y-m-d H:i") <= now|date("Y-m-d H:i") %}
+                                                        <li class="list-group-item small p-0">{{ 'Checked out on:'|trans }} {{ checkin.dateCheckedOut|date("H:i d-m-Y", "Europe/Paris") }}</li>
+                                                    {% else %}
+                                                        <li class="list-group-item small p-0">{{ 'Will be automatically checked out on:'|trans }} {{ checkin.dateCheckedOut|date("H:i d-m-Y", "Europe/Paris") }}</li>
+                                                    {% endif %}
+                                                {% endif %}
+                                                <li class="list-group-item small p-0">{{ 'Will be deleted on:'|trans }} {{ checkin.dateToDestroy|date("H:i d-m-Y", "Europe/Paris") }}</li>
                                             </ul>
                                         </div>
                                     </div>

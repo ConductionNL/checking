@@ -34,7 +34,7 @@ class CheckinService
 
     public function createCheckin($node, $person = null, $user = null)
     {
-        // TODO: Only create a checkin if the current amount of checkins on the node isn't higher than the node.maximumAttendeeCapacity?!
+        // TODO: Only create a checkin if the current amount of checkins on the node isn't equal to or higher than the node.maximumAttendeeCapacity?!
         // ^unless more checkins than the node.maximumAttendeeCapacity are allowed
 
         // Return if trying to checkin outside opening hours of the place
@@ -60,7 +60,54 @@ class CheckinService
             }
         }
 
-        $checkin = [];
+        // Set standard checkout (DateTime).
+        if (isset($node['checkinDuration'])) {
+            // If the node has a checkinDuration, set checkout to now + this duration.
+            $now = new \DateTime('now');
+            $checkOut = $now->add(new \DateInterval($node['checkinDuration']));
+        }
+        if (isset($node['checkoutTime'])) {
+            // If the node has a checkoutTime, set this checkoutTime on that time, but make sure it is set on this day.
+            $nodeCheckOutTime = new \DateTime($node['checkoutTime']);
+            $now = new \DateTime('now');
+            $nodeCheckOutTime = $now->setTime($nodeCheckOutTime->format('H'), $nodeCheckOutTime->format('i'));
+
+            // If it is already past that time today, add one day so checkoutTime is set on the correct time, but tomorrow.
+            // (common example: now = 23:00, checkoutTime = 1:00)
+            $now = new \DateTime('now');
+            if ($now > $nodeCheckOutTime) {
+                $nodeCheckOutTime->add(new \DateInterval('P1D'));
+            }
+
+            if (!isset($checkOut)) {
+                // If the node only has a checkoutTime and no checkinDuration, set checkout to the nodeCheckOutTime.
+                $checkOut = $nodeCheckOutTime;
+            } else {
+                // If the node has a checkoutTime and a checkinDuration, make sure that adding the checkOut is not past the checkoutTime.
+                //
+                // ...before we check this^, make sure checkinDuration is not more than just 1 day! (maybe this should just not be possible?)
+                // ...if this is so, checkout is days ahead of the checkout(Date)Time and more days should also be added to the checkoutTime.
+                // ...in order to compare checkout and the node checkoutTime correctly.
+                $nodeCheckOutDay = $nodeCheckOutTime->format('Y-m-d');
+                $checkOutDay = $checkOut->format('Y-m-d');
+                while ($checkOutDay > $nodeCheckOutDay) {
+                    $nodeCheckOutTime->add(new \DateInterval('P1D'));
+                    $nodeCheckOutDay = $nodeCheckOutTime->format('Y-m-d');
+                }
+
+                // The check if the checkOut is not past the checkoutTime:
+                if ($checkOut > $nodeCheckOutTime) {
+                    // If checkOut (with added checkinDuration) is past the checkoutTime, set checkout to the checkoutTime.
+                    $checkOut = $nodeCheckOutTime;
+                }
+            }
+        }
+        // Set standard checkout (DateTime) for this checkin.
+        if (isset($checkOut)) {
+            $checkin['dateCheckedOut'] = $checkOut->format('Y-m-d H:i:s');
+        }
+
+        // Create the checkin
         $checkin['node'] = 'nodes/'.$node['id'];
         if ($this->security->getUser()) {
             if (!isset($user)) {
@@ -81,13 +128,15 @@ class CheckinService
 
         $this->removeBalance($node);
 
+        // Send new checkin mail
         $data = [];
         $data['person'] = $person;
         $data['node'] = $node;
         $data['checkin'] = $checkin;
 
-        $this->mailingService->sendMail('mails/new_checkin.html.twig', 'no-reply@conduction.nl', $this->security->getUser()->getUsername(), $data, 'New Checkin');
+        $this->mailingService->sendMail('mails/new_checkin.html.twig', 'no-reply@conduction.nl', $this->security->getUser()->getUsername(), 'New Checkin', $data);
 
+        // Check if a high or maxcheckin count email needs to be send to the organization of the node.
         $results = $this->processCheckin($checkin);
         // Do something with the $results?
         // Can be var dumped for testing purposes
@@ -195,5 +244,52 @@ class CheckinService
 
     public function checkBalance($organization)
     {
+    }
+
+    public function getCheckinsInPeriod($checkins, $startPeriodString = null, $endPeriodString = null)
+    {
+        $checkinsInPeriod = [];
+
+        // Get/Set startPeriod
+        if (isset($startPeriodString)) {
+            $startPeriod = new \DateTime($startPeriodString, new \DateTimeZone('Europe/Paris'));
+        } else {
+            $startPeriod = new \DateTime('now');
+            $startPeriod->sub(new \DateInterval('P10Y'));
+            // TODO: set this^ to the datecreated of the oldest checkin.
+        }
+
+        // Get/Set endPeriod
+        if (isset($endPeriodString)) {
+            $endPeriod = new \DateTime($endPeriodString, new \DateTimeZone('Europe/Paris'));
+        } else {
+            $endPeriod = new \DateTime('now');
+        }
+
+        // Loop through all checkins
+        foreach ($checkins as $checkin) {
+            $dateCreated = new \DateTime($checkin['dateCreated']);
+            if (isset($checkin['$dateCheckedOut'])) {
+                $dateCheckedOut = new \DateTime($checkin['$dateCheckedOut']);
+            }
+
+            // if dateCreated is in the given period add this checkin
+            if (($dateCreated > $startPeriod and $dateCreated < $endPeriod)) {
+                array_push($checkinsInPeriod, $checkin);
+            }
+            // if dateCheckedOut is defined
+            elseif (isset($dateCheckedOut)) {
+                // if dateCheckedOut is in the given period add this checkin
+                if ($dateCheckedOut > $startPeriod and $dateCheckedOut < $endPeriod) {
+                    array_push($checkinsInPeriod, $checkin);
+                }
+                // if the given period is between the dateCreated and dateCheckedOut add this checkin
+                elseif ($dateCreated < $startPeriod and $dateCheckedOut > $endPeriod) {
+                    array_push($checkinsInPeriod, $checkin);
+                }
+            }
+        }
+
+        return $checkinsInPeriod;
     }
 }

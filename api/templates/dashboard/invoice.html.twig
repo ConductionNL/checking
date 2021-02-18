@@ -1,57 +1,32 @@
 {% extends '/dashboard/dashboard.html.twig' %}
 
 {% block dashboard %}
-    <section class="section bg-soft section-lg pt-5">
+    <section class="section bg-soft section-lg pt-8">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-10">
-                    <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between mb-4"><a
-                            href="{{ path('app_dashboard_invoices') }}" class="mb-4 mb-lg-0"><span class="icon icon-xs"><span class="fas fa-chevron-left mr-2"></span></span>{{ 'back to all invoices'|trans|capitalize }}</a>
-                        <div>
-                            <button class="btn btn-primary mr-2">
-                                <span class="far fa-file-pdf mr-2"></span>
-                                {{'download PDF'|trans|capitalize}}
-                            </button>
-                            <button class="btn btn-outline-gray"><span class="fas fa-print mr-2"></span> {{'print invoice'}}</button>
-                        </div>
-                    </div>
-                    <div class="card border-light p-4 p-md-5 position-relative">
-                        <div class="d-flex justify-content-between pb-4 pb-md-5 mb-4 mb-md-5 border-bottom border-light">
-                            <img src="../../assets/img/brand/dark.svg" class="d-none d-lg-block" alt="Spaces Logo" height="30">
-                            <div><h4>Spaces LLC.</h4>
-                                <ul class="list-group simple-list">
-                                    <li class="list-group-item font-weight-norma pl-0 py-1">112 Washington Square</li>
-                                    <li class="list-group-item font-weight-normal pl-0 py-1">New York, USA</li>
-                                    <li class="list-group-item font-weight-normal pl-0 py-1"><a
-                                            class="font-weight-bold text-primary" href="#">company@themesberg.com</a>
-                                    </li>
-                                </ul>
-                            </div>
+                    <div class="card shadow-soft border-light p-4 p-md-5 position-relative">
+                        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between mb-4">
+                            <a href="{{ path('app_dashboard_invoices') }}" class="mb-4 mb-lg-0">
+                                <span class="icon icon-xs"><span class="fas fa-chevron-left mr-2"></span></span>
+                                {{'Back to all invoices'|trans|capitalize}}
+                            </a>
                         </div>
                         <div class="mb-6 d-flex align-items-center justify-content-center">
-                            <h2 class="h1 mb-0">Invoice #120345</h2>
-                            <span class="badge badge-xl badge-success ml-2">Paid</span>
+                            <h2 class="h1 mb-0">{{ 'invoice details'|trans|capitalize }}</h2>
+                            <span class="badge badge-xl badge-success ml-2">{{ invoice.name }}</span>
                         </div>
                         <div class="row justify-content-between mb-4 mb-md-5">
-                            <div class="col-sm"><h5>Client Information:</h5>
-                                <div>
-                                    <ul class="list-group simple-list">
-                                        <li class="list-group-item font-weight-norma pl-0 py-1">Henry M. Pike</li>
-                                        <li class="list-group-item font-weight-norma pl-0 py-1">Themesberg LLC</li>
-                                        <li class="list-group-item font-weight-norma pl-0 py-1">311 West Mechanic Lane Middletown, NY 10940</li>
-                                        <li class="list-group-item font-weight-norma pl-0 py-1">
-                                            <a class="font-weight-bold text-primary" href="#">name@company.com</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-sm col-lg-4">
-                                <dl class="row text-sm-right">
-                                    <dt class="col-6"><strong>Invoice No.</strong></dt>
-                                    <dd class="col-6">00123</dd>
+                            <div class="col-sm col-lg-12">
+                                <dl class="row text-sm-left">
+                                    <dt class="col-6"><strong>invoice paid:</strong></dt>
+                                    {% if invoice.paid == false %}
+                                        <dd class="col-3 badge badge-warning">{{'pending payment'|trans|capitalize}}</dd>
+                                    {% else %}
+                                        <dd class="col-3 badge badge-success">{{'paid'|trans|capitalize}}</dd>
+                                    {% endif %}
                                     <dt class="col-6"><strong>Date Issued:</strong></dt>
-                                    <dd class="col-6">31/03/2020</dd>
-                                    <dt class="col-6"><strong>Date Due:</strong></dt>
-                                    <dd class="col-6">30/04/2020</dd>
+                                    <dd class="col-6">{{ invoice.dateCreated|date("d-m-Y") }}</dd>
                                 </dl>
                             </div>
                         </div>
@@ -61,42 +36,23 @@
                                     <table class="table mb-0">
                                         <thead class="bg-light border-top">
                                         <tr>
-                                            <th scope="row" class="border-0 text-left">Item</th>
-                                            <th scope="row" class="border-0">Description</th>
-                                            <th scope="row" class="border-0">Price</th>
+                                            <th scope="row" class="border-0 text-left">{{'item'|trans|capitalize}}</th>
+                                            <th scope="row" class="border-0">{{'description'|trans|capitalize}}</th>
+                                            <th scope="row" class="border-0">{{'price'|trans|capitalize}}</th>
                                             <th scope="row" class="border-0">Qty</th>
-                                            <th scope="row" class="border-0">Total</th>
+                                            <th scope="row" class="border-0">{{'total'|trans|capitalize}}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <th scope="row" class="text-left font-weight-bold h6">Origin License</th>
-                                            <td>Extended License</td>
-                                            <td>999,00</td>
-                                            <td>1</td>
-                                            <td>999,00</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row" class="text-left font-weight-bold h6">Custom Services</th>
-                                            <td>Instalation and Customization</td>
-                                            <td>$150,00</td>
-                                            <td>20</td>
-                                            <td>3000,00</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row" class="text-left font-weight-bold h6">Hosting</th>
-                                            <td>1 year subcription</td>
-                                            <td>$499,00</td>
-                                            <td>1</td>
-                                            <td>$499,00</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row" class="text-left font-weight-bold h6">Gold Support</th>
-                                            <td>1 year subcription 24/7</td>
-                                            <td>$3.999,00</td>
-                                            <td>1</td>
-                                            <td>$3.999,00</td>
-                                        </tr>
+                                        {% for item in invoice.items %}
+                                            <tr>
+                                                <th scope="row" class="text-left font-weight-bold h6">{{ item.name }}</th>
+                                                <td>{{item.description}}</td>
+                                                <td>{{ invoice.priceCurrency }} {{ item.price }}</td>
+                                                <td>{{ item.quantity }}</td>
+                                                <td>{{ item.price * item.quantity }}</td>
+                                            </tr>
+                                        {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
@@ -105,32 +61,25 @@
                                         <table class="table table-clear">
                                             <tbody>
                                             <tr>
-                                                <td class="left"><strong>Subtotal</strong></td>
-                                                <td class="right">$8.497,00</td>
+                                                <td class="left"><strong>{{'Subtotal'|trans|capitalize}}</strong></td>
+                                                <td class="right">{{ invoice.price }}</td>
                                             </tr>
                                             <tr>
-                                                <td class="left"><strong>Discount (20%)</strong></td>
-                                                <td class="right">$1,699,40</td>
+                                                <td class="left"><strong>{{'VAT'|trans}}</strong></td>
+                                                <td class="right"></td>
                                             </tr>
                                             <tr>
-                                                <td class="left"><strong>VAT (10%)</strong></td>
-                                                <td class="right">$679,76</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="left"><strong>Total</strong></td>
+                                                <td class="left"><strong>{{'total'|trans|capitalize}}</strong></td>
                                                 <td class="right"><strong>$7.477,36</strong></td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                                <h4>Payments to:</h4>
-                                <span>payment@company.com</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 {% endblock %}
