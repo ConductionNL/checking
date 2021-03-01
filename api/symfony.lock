@@ -159,7 +159,7 @@
         "version": "0.9.1"
     },
     "endroid/installer": {
-        "version": "1.2.3"
+        "version": "1.x-dev"
     },
     "endroid/qr-code": {
         "version": "3.9.3"
