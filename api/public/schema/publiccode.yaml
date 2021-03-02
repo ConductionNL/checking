@@ -6,8 +6,8 @@ url: "https://github.com/ConductionNL/checking"
 landingURL: "dev.checking.nu"
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git"
 softwareVersion: "V1.0"
-releaseDate: "2021-17-02"
-logo: www.checking.nu
+releaseDate: "2021-01-03"
+logo: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
 monochromeLogo: img/logo-mono.svg
 
 inputTypes:
@@ -121,6 +121,3 @@ installations:
     - type: helm
       url: "https://raw.githubusercontent.com/ConductionNL/checking/master/api/helm/"
 
-installations:
-    - type: helm
-      url: "https://raw.githubusercontent.com/ConductionNL/checking/master/api/helm/"
