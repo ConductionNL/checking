@@ -12,7 +12,7 @@
         "conduction/listybundle": "dev-master",
         "conduction/rocketbundle": "dev-main",
         "conduction/spacesbundle": "dev-main",
-        "dompdf/dompdf": "^0.8.5",
+        "dompdf/dompdf": "^2.0.0",
         "endroid/qr-code-bundle": "^3.4",
         "phpdocumentor/reflection-docblock": "^4.3",
         "phpoffice/phpword": "^0.17.0",
